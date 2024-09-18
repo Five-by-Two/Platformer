@@ -1,0 +1,16 @@
+name: Review Assign
+
+on:
+  pull_request:
+    types: [ opened, ready_for_review ]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
+          reviewers: anillen, chezeee, PavelZhandin, Timon27M, TokmakDA
+          max-num-of-reviewers: 2
+          github-token: ${{ secrets.GITHUB_TOKEN }}
