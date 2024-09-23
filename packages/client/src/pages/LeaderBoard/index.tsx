@@ -1,3 +1,3 @@
 export function LeaderBoardPage(): JSX.Element {
-  return <h1>This is leaderboard page</h1>
+    return <h1>This is leaderboard page</h1>;
 }
