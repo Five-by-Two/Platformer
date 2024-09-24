@@ -1,3 +1,3 @@
 export function ForumPage(): JSX.Element {
-    return <h1>This is Forum Page</h1>;
+    return <h1 className="text-3xl font-bold underline">Hello ForumPage!</h1>;
 }

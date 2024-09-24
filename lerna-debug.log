@@ -1,0 +1,11 @@
+0 silly argv {
+0 silly argv   _: [ 'add' ],
+0 silly argv   scope: 'client',
+0 silly argv   globs: [],
+0 silly argv   lernaVersion: '5.6.2',
+0 silly argv   '$0': 'node_modules/.bin/lerna',
+0 silly argv   pkg: '@hookform/resolvers,yup'
+0 silly argv }
+1 notice cli v5.6.2
+2 verbose rootPath /home/dmitry/Документы/WebDevelop/Practicum/Midl/Projects/Platformer
+3 error
