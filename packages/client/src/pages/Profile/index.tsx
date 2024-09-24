@@ -1,3 +1,3 @@
 export function ProfilePage(): JSX.Element {
-  return <h1>ProfilePage</h1>
+    return <h1>ProfilePage</h1>;
 }
