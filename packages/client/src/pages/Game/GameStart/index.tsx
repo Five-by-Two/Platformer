@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react';
-import style from './GameStart.module.scss';
+import styles from './gameStart.module.scss';
 
 interface GameStartProps {
     onStart: () => void;
@@ -15,14 +15,14 @@ const GameStart: FC<GameStartProps> = ({ onStart, onBackToMenu }) => {
     }, []);
 
     return (
-        <section className={style['game-start']}>
-            <div className={style['game-start__wrap']}>
-                <h2 className={style['game-start__title']}>Начать игру</h2>
-                <p className={style['blinking-text']}>
+        <section className={styles['game-start']}>
+            <div className={styles['game-start__wrap']}>
+                <h2 className={styles['game-start__title']}>Начать игру</h2>
+                <p className={styles['blinking-text']}>
                     Нажмите любую клавишу, чтобы начать игру
                 </p>
                 <button
-                    className={style['back-to-menu-btn']}
+                    className={styles['back-to-menu-btn']}
                     onClick={onBackToMenu}>
                     Выйти в главное меню
                 </button>
