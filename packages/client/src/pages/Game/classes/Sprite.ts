@@ -1,13 +1,13 @@
-import { IPosition } from '../models';
+import { ICoordinates } from '../models';
 
 interface ISpiteConstructor {
-    position: IPosition;
+    position: ICoordinates;
     imgSrc: string;
 }
 
 export class Sprite {
     canvasContext: CanvasRenderingContext2D;
-    position: IPosition;
+    position: ICoordinates;
     image: HTMLImageElement;
 
     constructor(

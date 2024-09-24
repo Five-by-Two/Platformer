@@ -1,8 +1,9 @@
 import { Sprite } from '../classes/Sprite';
-import { IPosition } from '../models';
-import BackgroundImage from '../assets/background.png';
 
-const gravity = 0.5;
+import BackgroundImage from '../assets/background.png';
+import { floorCollisions, platformCollisions } from '../collisions';
+import { Player } from '../classes/Player';
+import { CollisionBlock } from '../classes/CollisionBlock';
 
 const keys = {
     d: {
@@ -16,60 +17,56 @@ const keys = {
     },
 };
 
-class Player {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D | null;
-
-    height: number;
-
-    position: IPosition;
-
-    velocity: IPosition;
-
-    constructor(canvas: HTMLCanvasElement, position: IPosition) {
-        this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        this.position = position;
-        this.velocity = {
-            x: 0,
-            y: 1,
-        };
-        this.height = 100;
-    }
-
-    draw() {
-        if (this.context) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(
-                this.position.x,
-                this.position.y,
-                100,
-                this.height,
-            );
-        }
-    }
-
-    update() {
-        this.draw();
-        this.position.y += this.velocity.y;
-        this.position.x += this.velocity.x;
-        if (
-            this.position.y + this.height + this.velocity.y <
-            this.canvas.height
-        ) {
-            this.velocity.y += gravity;
-        } else {
-            this.velocity.y = 0;
-        }
-    }
-}
-
 export function initGame(canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
     const scaledCanvas = {
         width: canvas.width / 4,
         height: canvas.height / 4,
     };
+
+    const floorCollisions2D = [];
+    for (let i = 0; i < floorCollisions.length; i += 36) {
+        floorCollisions2D.push(floorCollisions.slice(i, i + 36));
+    }
+
+    const collisionBlocks: CollisionBlock[] = [];
+
+    floorCollisions2D.forEach((row, y) => {
+        row.forEach((symbol, x) => {
+            if (symbol === 202) {
+                collisionBlocks.push(
+                    new CollisionBlock(context, {
+                        position: {
+                            x: x * 16,
+                            y: y * 16,
+                        },
+                    }),
+                );
+            }
+        });
+    });
+
+    const platformCollisions2D: number[][] = [];
+
+    for (let i = 0; i < platformCollisions.length; i += 36) {
+        platformCollisions2D.push(platformCollisions.slice(i, i + 36));
+    }
+
+    const platformCollisionBlocks: CollisionBlock[] = [];
+    platformCollisions2D.forEach((row, y) => {
+        row.forEach((symbol, x) => {
+            if (symbol === 202) {
+                platformCollisionBlocks.push(
+                    new CollisionBlock(context, {
+                        position: {
+                            x: x * 16,
+                            y: y * 16,
+                        },
+                    }),
+                );
+            }
+        });
+    });
 
     canvas.width = 1024;
     canvas.height = 576;
@@ -97,9 +94,17 @@ export function initGame(canvas: HTMLCanvasElement) {
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         context.save();
-        context.scale(4, 4);
-        context.translate(0, -background.image.height + scaledCanvas.height);
+        // context.scale(4, 4);
+        // context.translate(0, -background.image.height + scaledCanvas.height);
         background.update();
+
+        collisionBlocks.forEach(block => {
+            block.update();
+        });
+        platformCollisionBlocks.forEach(block => {
+            block.update();
+        });
+
         context.restore();
 
         player.update();
