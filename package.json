@@ -29,6 +29,6 @@
         }
     },
     "dependencies": {
-        "husky": "8"
+        "husky": "^9.1.6"
     }
 }
