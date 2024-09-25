@@ -5958,11 +5958,6 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-nes.css@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/nes.css/-/nes.css-2.2.1.tgz"
-  integrity sha512-TlO0e7YCi69/wfyHCo5+FD5C+UhCkSThU4qg7/guRBIovVaq1MYs1RMKI2Pjf1lowNM3PBDHl1HHtND4aMOg+Q==
-
 node-addon-api@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-3.2.1.tgz"
