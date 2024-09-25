@@ -19,7 +19,7 @@ $danger-color: #DC0303;
     justify-content: center;
     align-items: center;
 
-    h1{
+    h1 {
         font-size: larger;
     }
 
@@ -52,13 +52,14 @@ $danger-color: #DC0303;
             border: none;
             cursor: pointer;
             padding: .5rem;
-            color: white;
+            color: black;
             outline: none;
             font-size: small;
         }
 
         .button_primary {
             border: 2px solid $focus-color;
+            color: white;
             background-color: $focus-color;
             min-width: 10rem;
         }
