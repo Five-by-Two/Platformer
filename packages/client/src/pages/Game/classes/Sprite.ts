@@ -18,7 +18,7 @@ export class Sprite {
     frameRate: number;
     currentFrame: number;
     frameBuffer: number;
-    elapsedFrames = 0;
+    elapsedFrames: number;
 
     constructor(
         canvasContext: CanvasRenderingContext2D,
@@ -43,6 +43,7 @@ export class Sprite {
         this.frameRate = frameRate;
         this.currentFrame = 0;
         this.frameBuffer = frameBuffer;
+        this.elapsedFrames = 0;
     }
 
     draw() {
@@ -54,7 +55,7 @@ export class Sprite {
                 y: 0,
             },
             width: this.image.width / this.frameRate,
-            height: 0,
+            height: this.image.height,
         };
 
         this.canvasContext.drawImage(

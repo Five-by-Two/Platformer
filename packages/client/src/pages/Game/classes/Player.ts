@@ -77,16 +77,8 @@ export class Player extends Sprite {
     }
 
     applyGravity() {
-        if (
-            this.position.y + this.height + this.velocity.y <
-            this.canvas.height
-        ) {
-            this.position.y += this.velocity.y;
-            this.velocity.y += gravity;
-        }
-        // else {
-        //     this.velocity.y = 0;
-        // }
+        this.velocity.y += gravity;
+        this.position.y += this.velocity.y;
     }
 
     checkForVerticalCollisions() {

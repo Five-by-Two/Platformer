@@ -76,21 +76,12 @@ export function initGame(canvas: HTMLCanvasElement) {
         canvas,
         {
             x: 100,
-            y: 0,
+            y: 300,
         },
         collisionBlocks,
         WarriorIdle,
         8,
     );
-
-    // const player2 = new Player(
-    //     canvas,
-    //     {
-    //         x: 300,
-    //         y: 100,
-    //     },
-    //     collisionBlocks,
-    // );
 
     const background = new Sprite(context, {
         position: {
@@ -116,10 +107,7 @@ export function initGame(canvas: HTMLCanvasElement) {
             block.update();
         });
 
-        context.restore();
-
         player.update();
-        // player2.update();
 
         player.velocity.x = 0;
 
@@ -128,6 +116,7 @@ export function initGame(canvas: HTMLCanvasElement) {
         } else if (keys.a.pressed) {
             player.velocity.x = -1;
         }
+        context.restore();
     }
 
     animate();
