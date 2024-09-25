@@ -1,14 +1,13 @@
 import { ICoordinates } from '../models';
 import { collision } from '../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
+import { Sprite } from './Sprite';
 
 const gravity = 0.5;
 
-export class Player {
+export class Player extends Sprite {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | null;
-    width: number;
-    height: number;
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
@@ -17,29 +16,36 @@ export class Player {
         canvas: HTMLCanvasElement,
         position: ICoordinates,
         collisionBlocks: CollisionBlock[],
+        imgSrc: string,
+        frameRate?: number,
+        scale = 0.5,
     ) {
+        super(canvas.getContext('2d') as CanvasRenderingContext2D, {
+            position,
+            imgSrc,
+            frameRate,
+            scale,
+        });
+        this.velocity = { x: 0, y: 1 };
+        this.position = position;
+
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
-        this.position = position;
-        this.velocity = { x: 0, y: 1 };
-        this.width = 100;
-        this.height = 100;
         this.collisionBlocks = collisionBlocks;
     }
 
-    draw() {
-        if (this.context) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(
-                this.position.x,
-                this.position.y,
-                this.width,
-                this.height,
-            );
-        }
-    }
-
     update() {
+        this.updateFrames();
+        if (this.context) {
+            this.context.fillStyle = 'rgba(0, 255, 0, 0.2)';
+        }
+        this.context?.fillRect(
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height,
+        );
+
         this.draw();
 
         this.position.x += this.velocity.x;

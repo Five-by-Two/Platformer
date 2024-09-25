@@ -3,6 +3,7 @@ import BackgroundImage from '../assets/background.png';
 import { floorCollisions, platformCollisions } from '../collisions';
 import { Player } from '../classes/Player';
 import { CollisionBlock } from '../classes/CollisionBlock';
+import WarriorIdle from '../assets/warrior/Idle.png';
 
 const keys = {
     d: {
@@ -78,16 +79,18 @@ export function initGame(canvas: HTMLCanvasElement) {
             y: 0,
         },
         collisionBlocks,
+        WarriorIdle,
+        8,
     );
 
-    const player2 = new Player(
-        canvas,
-        {
-            x: 300,
-            y: 100,
-        },
-        collisionBlocks,
-    );
+    // const player2 = new Player(
+    //     canvas,
+    //     {
+    //         x: 300,
+    //         y: 100,
+    //     },
+    //     collisionBlocks,
+    // );
 
     const background = new Sprite(context, {
         position: {
@@ -116,7 +119,7 @@ export function initGame(canvas: HTMLCanvasElement) {
         context.restore();
 
         player.update();
-        player2.update();
+        // player2.update();
 
         player.velocity.x = 0;
 
