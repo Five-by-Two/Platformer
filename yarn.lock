@@ -2842,7 +2842,7 @@ chokidar@^3.5.2:
 
 chokidar@^4.0.0:
   version "4.0.1"
-  resolved "https://registry.npmjs.org/chokidar/-/chokidar-4.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-4.0.1.tgz#4a6dff66798fb0f72a94f616abbd7e1a19f31d41"
   integrity sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==
   dependencies:
     readdirp "^4.0.1"
@@ -4539,7 +4539,7 @@ ignore@^5.0.4, ignore@^5.2.0:
 
 immutable@^4.0.0:
   version "4.3.7"
-  resolved "https://registry.npmjs.org/immutable/-/immutable-4.3.7.tgz"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.7.tgz#c70145fc90d89fb02021e65c84eb0226e4e5a381"
   integrity sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==
 
 import-fresh@^3.2.1:
@@ -7199,7 +7199,7 @@ readdir-scoped-modules@^1.1.0:
 
 readdirp@^4.0.1:
   version "4.0.1"
-  resolved "https://registry.npmjs.org/readdirp/-/readdirp-4.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-4.0.1.tgz#b2fe35f8dca63183cd3b86883ecc8f720ea96ae6"
   integrity sha512-GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==
 
 readdirp@~3.6.0:
@@ -7341,7 +7341,7 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
 
 sass@^1.79.3:
   version "1.79.3"
-  resolved "https://registry.npmjs.org/sass/-/sass-1.79.3.tgz"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.79.3.tgz#7811b000eb68195fe51dea89177e73e7ef7f546f"
   integrity sha512-m7dZxh0W9EZ3cw50Me5GOuYm/tVAJAn91SUnohLRo9cXBixGUOdvmryN+dXpwR831bhoY3Zv7rEFt85PUwTmzA==
   dependencies:
     chokidar "^4.0.0"
