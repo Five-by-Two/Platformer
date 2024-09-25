@@ -1,5 +1,4 @@
 import { Sprite } from '../classes/Sprite';
-
 import BackgroundImage from '../assets/background.png';
 import { floorCollisions, platformCollisions } from '../collisions';
 import { Player } from '../classes/Player';
@@ -53,6 +52,7 @@ export function initGame(canvas: HTMLCanvasElement) {
     }
 
     const platformCollisionBlocks: CollisionBlock[] = [];
+
     platformCollisions2D.forEach((row, y) => {
         row.forEach((symbol, x) => {
             if (symbol === 202) {
@@ -71,14 +71,23 @@ export function initGame(canvas: HTMLCanvasElement) {
     canvas.width = 1024;
     canvas.height = 576;
 
-    const player = new Player(canvas, {
-        x: 0,
-        y: 0,
-    });
-    const player2 = new Player(canvas, {
-        x: 300,
-        y: 100,
-    });
+    const player = new Player(
+        canvas,
+        {
+            x: 100,
+            y: 0,
+        },
+        collisionBlocks,
+    );
+
+    const player2 = new Player(
+        canvas,
+        {
+            x: 300,
+            y: 100,
+        },
+        collisionBlocks,
+    );
 
     const background = new Sprite(context, {
         position: {
@@ -94,12 +103,11 @@ export function initGame(canvas: HTMLCanvasElement) {
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         context.save();
-        // context.scale(4, 4);
-        // context.translate(0, -background.image.height + scaledCanvas.height);
+        context.scale(4, 4);
+        context.translate(0, -background.image.height + scaledCanvas.height);
         background.update();
-
-        collisionBlocks.forEach(block => {
-            block.update();
+        collisionBlocks.forEach(collisionBlock => {
+            collisionBlock.update();
         });
         platformCollisionBlocks.forEach(block => {
             block.update();
@@ -130,7 +138,7 @@ export function initGame(canvas: HTMLCanvasElement) {
                 keys.a.pressed = true;
                 break;
             case 'w':
-                player.velocity.y = -20;
+                player.velocity.y = -8;
                 break;
         }
     });
