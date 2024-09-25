@@ -24,6 +24,7 @@
         "lerna": "^5.4.3"
     },
     "dependencies": {
+        "react-hook-form": "^7.53.0",
         "sass": "^1.79.3"
     }
 }
