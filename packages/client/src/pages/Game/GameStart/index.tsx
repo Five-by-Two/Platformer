@@ -1,10 +1,10 @@
 import { useEffect, FC } from 'react';
 import styles from './gameStart.module.scss';
 
-interface GameStartProps {
-    onStart: () => void;
-    onBackToMenu: () => void;
-}
+type GameStartProps = {
+    onStart: VoidFunction;
+    onBackToMenu: VoidFunction;
+};
 
 const GameStart: FC<GameStartProps> = ({ onStart, onBackToMenu }) => {
     useEffect(() => {
