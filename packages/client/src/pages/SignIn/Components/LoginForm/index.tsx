@@ -2,11 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './index.module.scss';
 import { useNavigate } from 'react-router';
 import { EPageRoutes } from '../../../../router/Enums';
-
-interface IFormData {
-    login: string;
-    password: string;
-}
+import IFormData from './Models/IFormData';
 
 export default function LoginForm() {
     const { register, handleSubmit } = useForm<IFormData>();
