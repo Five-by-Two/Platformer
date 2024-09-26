@@ -24,7 +24,7 @@ export default function FormInput(props: Properties) {
                 placeholder={placeholder}
                 required={required}
             />
-            <span>{validateErrorText}</span>
+            {validateErrorText && <span>{validateErrorText}</span>}
         </div>
     );
 }
