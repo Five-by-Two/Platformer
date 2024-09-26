@@ -1,0 +1,22 @@
+@import "../../index.module.scss";
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    span {
+        display: none;
+        color: $danger-color;
+    }
+}
+
+.inputWrapper_validateError {
+    input {
+        border-color: $danger-color;
+    }
+
+    span {
+        display: inline;
+    }
+}

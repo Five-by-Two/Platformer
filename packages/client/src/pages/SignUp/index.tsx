@@ -1,3 +1,10 @@
+import RegisterForm from './Components/RegistrationForm';
+import styles from './index.module.scss';
+
 export function SignUpPage(): JSX.Element {
-    return <h1>Sign up page</h1>;
+    return (
+        <section className={styles.background}>
+            <RegisterForm />
+        </section>
+    );
 }
