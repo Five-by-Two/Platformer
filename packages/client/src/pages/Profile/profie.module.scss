@@ -1,0 +1,19 @@
+@import '../../assets/styles/mixins.scss';
+
+.profile {
+    @include background-container;
+}
+
+.container {
+    position: relative;
+    @include container;
+}
+
+.buttonBack {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 10px;
+    min-width: 110px;
+    padding: 10px 0;
+}
