@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import styles from './leaderBoard.module.scss';
 import catIcon from '../../images/Cat-Sheet.png';
 import leaderBoardData from './leaderBoardData';
-import Leader from '../../components/leader';
+import Leader from './Components/Leader';
 import Button from '../../components/button';
 
 export function LeaderBoardPage(): JSX.Element {
