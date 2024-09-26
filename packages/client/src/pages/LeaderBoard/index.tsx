@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import styles from './leaderBoard.module.scss';
-import catIcon from '../../images/Cat-Sheet.png';
+import catIcon from '../../assets/images/Cat-Sheet.png';
 import leaderBoardData from './leaderBoardData';
 import Leader from '../../components/leader';
 import Button from '../../components/button';

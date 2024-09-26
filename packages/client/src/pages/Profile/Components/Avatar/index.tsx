@@ -1,10 +1,11 @@
 import styles from './avatar.module.scss';
+import goldIcon from '../../../../assets/images/gold-icon.png';
 
 type TProps = {
     link?: string;
 };
 
-function Avatar({ link }: TProps): JSX.Element {
+function Avatar({ link = goldIcon }: TProps): JSX.Element {
     return (
         <div className={styles.container}>
             <img src={link} alt="avatar" />
