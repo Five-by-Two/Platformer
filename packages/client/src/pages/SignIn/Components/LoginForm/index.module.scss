@@ -1,0 +1,82 @@
+$main-color: #24A3AE;
+$focus-color: #B85800;
+$danger-color: #DC0303;
+
+.form {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 15rem;
+    min-height: 20rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        font-size: larger;
+    }
+
+    input {
+        background-color: transparent;
+        border: 2px solid $main-color;
+        border-radius: 5px;
+        padding: .3rem;
+        outline: none;
+        color: $focus-color;
+    }
+
+    input::placeholder {
+        color: $main-color;
+        font-size: medium;
+    }
+
+    input:focus {
+        border-color: $focus-color;
+    }
+
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        button {
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            padding: .5rem;
+            color: black;
+            outline: none;
+            font-size: small;
+        }
+
+        .button_primary {
+            border: 2px solid $focus-color;
+            color: white;
+            background-color: $focus-color;
+        }
+
+        .button_primary:focus {
+            border: 2px solid black;
+        }
+
+        .button_secondary {
+            background-color: transparent;
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        .button_secondary:focus {
+            color: $focus-color;
+        }
+    }
+
+
+}
