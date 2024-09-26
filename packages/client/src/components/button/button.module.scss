@@ -1,13 +1,12 @@
 .button {
   min-width: 300px;
   padding: 15px 0;
-  background-color: var(--yellow-light);
-  box-shadow: 6px 6px 0 0 var(--gray-dark);
-  border-radius: 15px;
+  background-color: var(--orange);
+  border-radius: 10px;
   transition: all 0.3s;
   border: none;
 
   &:hover {
-    background-color: var(--yellow-light-hover);
+    background-color: var(--orange-light);
   }
 }
