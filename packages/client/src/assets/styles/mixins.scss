@@ -1,0 +1,21 @@
+@mixin background-container() {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../../images/background-image.jpg');
+    background-size: cover;
+    color: var(--black);
+}
+
+@mixin container() {
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(4px);
+    border-radius: 32px;
+    background: rgba(241, 241, 241, 0.6);
+}
