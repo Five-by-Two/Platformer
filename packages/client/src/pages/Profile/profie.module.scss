@@ -7,6 +7,10 @@
 .container {
     position: relative;
     @include container;
+    min-width: 500px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
 }
 
 .buttonBack {
