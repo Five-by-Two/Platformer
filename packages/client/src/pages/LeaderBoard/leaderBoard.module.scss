@@ -32,15 +32,11 @@
   padding: 45px;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 0 220px;
+  gap: 20px 220px;
   max-height: 250px;
   min-width: 384px;
   box-shadow: 8px 8px 0 0 var(--gray-dark);
   backdrop-filter: blur(30px);
   border-radius: 15px;
-  margin-bottom: 40px;
-  // background: radial-gradient(
-  //   var(--game-start-wrap-gradient-40) 65%,
-  //   var(--game-start-wrap-gradient-85) 90%
-  // );
+  margin-bottom: 40px; 
 }
