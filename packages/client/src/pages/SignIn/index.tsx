@@ -1,3 +1,10 @@
+import LoginForm from './Components/LoginForm';
+import styles from './index.module.scss';
+
 export function SignInPage(): JSX.Element {
-    return <h1>Sign in page</h1>;
+    return (
+        <section className={styles.background}>
+            <LoginForm />
+        </section>
+    );
 }
