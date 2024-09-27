@@ -17,7 +17,7 @@ export function GamePage(): JSX.Element {
 
     return (
         <>
-            <h1>This is Game Page</h1>;
+            <h1>This is Game Page</h1>
             {!isGameStarted && (
                 <GameStart onStart={startGame} onBackToMenu={backToMenu} />
             )}
