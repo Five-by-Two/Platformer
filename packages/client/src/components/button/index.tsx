@@ -1,16 +1,16 @@
-import styles from './button.module.scss'
+import styles from './button.module.scss';
 
 type TProps = {
-  text: string
-  onClick?: () => void
-}
+    text: string;
+    onClick?: VoidFunction;
+};
 
 function Button({ text, onClick }: TProps) {
-  return (
-    <button className={`${styles.button}`} onClick={onClick}>
-      {text}
-    </button>
-  )
+    return (
+        <button className={`${styles.button}`} onClick={onClick}>
+            {text}
+        </button>
+    );
 }
 
-export default Button
+export default Button;
