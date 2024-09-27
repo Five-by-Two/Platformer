@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react';
-import styles from './gameStart.module.scss';
+import styles from './index.module.scss';
 
 type GameStartProps = {
     onStart: VoidFunction;

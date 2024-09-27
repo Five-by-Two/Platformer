@@ -1,0 +1,88 @@
+$game-start-text-color: white;
+$game-start-bg-color: rgba(0, 0, 0, 0.3);
+$game-start-wrap-gradient-40: rgba(39, 135, 186, 0.9);
+$game-start-wrap-gradient-85: rgba(184, 168, 80, 0.7);
+$game-start-wrap-border-color: rgba(0, 0, 0, 0.404);
+$game-start-wrap-shadow-color: rgb(45, 45, 45);
+$game-start-menu-btn-bg-color: rgb(206, 202, 87);
+$game-start-menu-btn-color: rgb(33, 33, 33);
+$game-start-menu-btn-bg-color-hover: rgb(107, 105, 60);
+$game-start-menu-btn-bg-color-active: rgb(81, 80, 44);
+$game-start-menu-btn-shadow-color: rgba(0, 0, 0, 0.288);
+
+.game-start {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: $game-start-bg-color;
+    color: $game-start-text-color;
+    text-align: center;
+    font-family: 'Press Start 2P';
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+
+    &__wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        background: radial-gradient(
+            $game-start-wrap-gradient-40 40%,
+            $game-start-wrap-gradient-85 85%
+        );
+        border: 1px solid $game-start-wrap-border-color;
+        border-radius: 32px;
+        padding: 5rem 6rem;
+        box-shadow: 0px 0px 60px $game-start-wrap-shadow-color;
+
+        &__title {
+            font-size: large;
+        }
+
+        .back-to-menu-btn {
+            background-color: $game-start-menu-btn-bg-color;
+            color: $game-start-menu-btn-color;
+            font-family: 'Press Start 2P';
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 2px 2px 7px $game-start-menu-btn-shadow-color;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: $game-start-menu-btn-bg-color-hover;
+                color: $game-start-text-color;
+            }
+
+            &:active {
+                background-color: $game-start-menu-btn-bg-color-active;
+                color: $game-start-text-color;
+            }
+        }
+
+        .blinking-text {
+            animation: blinking 1s infinite;
+        }
+
+        @keyframes blinking {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+}
