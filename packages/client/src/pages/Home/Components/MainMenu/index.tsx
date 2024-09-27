@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Button from '../../../../components/button';
 import { EPageRoutes } from '../../../../router/Enums';
 import styles from './index.module.scss';
 
@@ -24,38 +25,25 @@ export default function MainMenu(): JSX.Element {
             <p>Готов ли ты к бесконечному прыжку?</p>
             <p>Нажми "Играть" и начни свой путь к вершине!</p>
             <div className={styles['buttons-wrap']}>
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={() => handleNavigate(EPageRoutes.GAME_PAGE)}>
-                    Играть
-                </button>
-                <button
-                    className={styles.button}
-                    type="button"
+                <Button
+                    text="Играть"
+                    onClick={() => handleNavigate(EPageRoutes.GAME_PAGE)}
+                />
+                <Button
+                    text="Таблица лидеров"
                     onClick={() =>
                         handleNavigate(EPageRoutes.LEADER_BOARD_PAGE)
-                    }>
-                    Таблица лидеров
-                </button>
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={() => handleNavigate(EPageRoutes.PROFILE_PAGE)}>
-                    Профиль
-                </button>
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={() => handleNavigate(EPageRoutes.FORUM_PAGE)}>
-                    Форум
-                </button>
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={onLogout}>
-                    Выйти
-                </button>
+                    }
+                />
+                <Button
+                    text="Профиль"
+                    onClick={() => handleNavigate(EPageRoutes.PROFILE_PAGE)}
+                />
+                <Button
+                    text="Форум"
+                    onClick={() => handleNavigate(EPageRoutes.FORUM_PAGE)}
+                />
+                <Button text="Выйти" onClick={onLogout} />
             </div>
         </div>
     );

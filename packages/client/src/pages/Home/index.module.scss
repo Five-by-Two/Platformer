@@ -1,11 +1,5 @@
+@import '../../assets/styles/mixins.scss';
+
 .home-page {
-    background-image: url('../../assets/images/bg-page.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 734.21px;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include background-container;
 }
