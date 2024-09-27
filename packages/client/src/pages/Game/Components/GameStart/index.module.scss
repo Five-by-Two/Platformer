@@ -28,7 +28,7 @@ $game-start-menu-shadow-color: rgba(21, 21, 21, 0.623);
         background: radial-gradient(var(--gray-light) 50%, var(--blue) 140%);
         border: 1px solid $game-start-wrap-border-color;
         border-radius: 32px;
-        padding: 4rem;
+        padding: 5rem;
         box-shadow: 10px 10px 0px $game-start-menu-shadow-color;
 
         .title {
@@ -38,8 +38,7 @@ $game-start-menu-shadow-color: rgba(21, 21, 21, 0.623);
         button {
             background-color: var(--orange-primary);
             color: var(--white);
-            padding: 0.7rem 2rem;
-            font-size: small;
+            padding: 0.8rem 3rem;
             border: none;
             border-radius: 0;
             box-shadow: 6px 6px 0px $game-start-menu-shadow-color;
@@ -57,7 +56,7 @@ $game-start-menu-shadow-color: rgba(21, 21, 21, 0.623);
 
         .blinking-text {
             animation: blinking 1.5s infinite;
-            font-size: small;
+            font-size: medium;
         }
 
         @keyframes blinking {
