@@ -1,13 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import Input from './Components/Input';
+import Input from '../../Components/Input';
 import styles from './profileForm.module.scss';
-import { IFormProfileData } from '../../Models/IFormProfileData';
+import { TFormProfileData } from '../../Models/IFormProfileData';
 import { useEffect, useState } from 'react';
 import profileFormData from './profileFormData';
 import Button from '../../../../components/button';
 
 function ProfileForm() {
-    const methods = useForm<IFormProfileData>({
+    const methods = useForm<TFormProfileData>({
         mode: 'onBlur',
     });
 
@@ -17,7 +17,7 @@ function ProfileForm() {
         useState('Изменить данные');
     const [isInputDisabled, setIsInputDisabled] = useState(true);
 
-    function handleClickButtonChangeData(data: IFormProfileData) {
+    function submitForm(data: TFormProfileData) {
         if (!isInputDisabled) {
             console.log(data);
 
@@ -35,9 +35,7 @@ function ProfileForm() {
 
     return (
         <FormProvider {...methods}>
-            <form
-                className={styles.form}
-                onSubmit={handleSubmit(handleClickButtonChangeData)}>
+            <form className={styles.form} onSubmit={handleSubmit(submitForm)}>
                 <div className={styles.container}>
                     <p>email:</p>
                     <Input
@@ -83,9 +81,7 @@ function ProfileForm() {
                         disabled={isInputDisabled}
                     />
                 </div>
-                {/* <div className={styles.buttons}> */}
                 <Button text={textButtonChangeData} className={styles.button} />
-                {/* </div> */}
             </form>
         </FormProvider>
     );
