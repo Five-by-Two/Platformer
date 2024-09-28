@@ -7,7 +7,7 @@
     justify-content: center;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('../../assets/images/background-image.jpg');
+    background-image: url('../../assets/images/background-image.webp');
     background-size: cover;
     color: var(--black);
 }
@@ -17,5 +17,5 @@
     flex-direction: column;
     backdrop-filter: blur(4px);
     border-radius: 32px;
-    background: rgba(241, 241, 241, 0.6);
+    background: var(--container-bg-color);
 }
