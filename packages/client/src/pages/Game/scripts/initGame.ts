@@ -4,6 +4,13 @@ import { floorCollisions, platformCollisions } from '../collisions';
 import { Player } from '../classes/Player';
 import { CollisionBlock } from '../classes/CollisionBlock';
 import WarriorIdle from '../assets/warrior/Idle.png';
+import WarriorIdleLeft from '../assets/warrior/IdleLeft.png';
+import WarriorRun from '../assets/warrior/Run.png';
+import WarriorJump from '../assets/warrior/Jump.png';
+import WarriorJumpLeft from '../assets/warrior/JumpLeft.png';
+import WarriorFall from '../assets/warrior/Fall.png';
+import WarriorFallLeft from '../assets/warrior/FallLeft.png';
+import WarriorRunLeft from '../assets/warrior/RunLeft.png';
 
 const keys = {
     d: {
@@ -72,16 +79,72 @@ export function initGame(canvas: HTMLCanvasElement) {
     canvas.width = 1024;
     canvas.height = 576;
 
-    const player = new Player(
+    const player = new Player({
+        context,
+        velocity: {
+            x: 4,
+            y: 4,
+        },
+        scale: 0.5,
         canvas,
-        {
+        imgSrc: WarriorIdle,
+        position: {
             x: 100,
             y: 300,
         },
         collisionBlocks,
-        WarriorIdle,
-        8,
-    );
+        frameRate: 8,
+        animations: {
+            Idle: {
+                imageSrc: WarriorIdle,
+                image: new Image(),
+                frameRate: 8,
+                frameBuffer: 8,
+            },
+            IdleLeft: {
+                imageSrc: WarriorIdleLeft,
+                image: new Image(),
+                frameRate: 8,
+                frameBuffer: 8,
+            },
+            Run: {
+                imageSrc: WarriorRun,
+                image: new Image(),
+                frameRate: 8,
+                frameBuffer: 8,
+            },
+            Jump: {
+                imageSrc: WarriorJump,
+                image: new Image(),
+                frameRate: 2,
+                frameBuffer: 2,
+            },
+            JumpLeft: {
+                imageSrc: WarriorJumpLeft,
+                image: new Image(),
+                frameRate: 2,
+                frameBuffer: 2,
+            },
+            Fall: {
+                imageSrc: WarriorFall,
+                image: new Image(),
+                frameRate: 2,
+                frameBuffer: 2,
+            },
+            FallLeft: {
+                imageSrc: WarriorFallLeft,
+                image: new Image(),
+                frameRate: 2,
+                frameBuffer: 2,
+            },
+            RunLeft: {
+                imageSrc: WarriorRunLeft,
+                image: new Image(),
+                frameRate: 8,
+                frameBuffer: 8,
+            },
+        },
+    });
 
     const background = new Sprite(context, {
         position: {
@@ -110,11 +173,25 @@ export function initGame(canvas: HTMLCanvasElement) {
         player.update();
 
         player.velocity.x = 0;
-
         if (keys.d.pressed) {
-            player.velocity.x = 1;
+            player.switchSprite('Run');
+            player.velocity.x = 2;
+            player.lastDirection = 'right';
         } else if (keys.a.pressed) {
-            player.velocity.x = -1;
+            player.switchSprite('RunLeft');
+            player.velocity.x = -2;
+            player.lastDirection = 'left';
+        } else if (player.velocity.y === 0) {
+            if (player.lastDirection === 'right') player.switchSprite('Idle');
+            else player.switchSprite('IdleLeft');
+        }
+
+        if (player.velocity.y < 0) {
+            if (player.lastDirection === 'right') player.switchSprite('Jump');
+            else player.switchSprite('JumpLeft');
+        } else if (player.velocity.y > 0) {
+            if (player.lastDirection === 'right') player.switchSprite('Fall');
+            else player.switchSprite('FallLeft');
         }
         context.restore();
     }

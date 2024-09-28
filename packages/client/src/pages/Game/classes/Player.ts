@@ -5,22 +5,45 @@ import { Sprite } from './Sprite';
 
 const gravity = 0.5;
 
+interface IAnimations {
+    imageSrc: string;
+    frameRate: number;
+    image: HTMLImageElement;
+    frameBuffer: number;
+}
+
+interface IPlayerConstructor {
+    canvas: HTMLCanvasElement;
+    context: CanvasRenderingContext2D | null;
+    imgSrc: string;
+    position: ICoordinates;
+    velocity: ICoordinates;
+    collisionBlocks: CollisionBlock[];
+    animations: Record<string, IAnimations>;
+    frameRate?: number;
+    scale?: number;
+}
+
 export class Player extends Sprite {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | null;
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
+    animations: Record<string, IAnimations>;
+    //TODO : добавить типы
     hitbox: any;
+    lastDirection: string;
 
-    constructor(
-        canvas: HTMLCanvasElement,
-        position: ICoordinates,
-        collisionBlocks: CollisionBlock[],
-        imgSrc: string,
-        frameRate?: number,
+    constructor({
+        canvas,
+        position,
+        collisionBlocks,
+        imgSrc,
+        animations,
+        frameRate,
         scale = 0.5,
-    ) {
+    }: IPlayerConstructor) {
         super(canvas.getContext('2d') as CanvasRenderingContext2D, {
             position,
             imgSrc,
@@ -33,6 +56,7 @@ export class Player extends Sprite {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         this.collisionBlocks = collisionBlocks;
+        this.lastDirection = 'right';
         this.hitbox = {
             position: {
                 x: this.position.x,
@@ -41,6 +65,22 @@ export class Player extends Sprite {
             width: 10,
             height: 10,
         };
+        this.animations = animations;
+
+        for (const key in this.animations) {
+            const image = new Image();
+            image.src = this.animations[key].imageSrc;
+
+            this.animations[key].image = image;
+        }
+    }
+
+    switchSprite(key: string) {
+        if (this.image === this.animations[key].image || !this.loaded) return;
+
+        this.image = this.animations[key].image;
+        this.frameBuffer = this.animations[key].frameBuffer;
+        this.frameRate = this.animations[key].frameBuffer;
     }
 
     update() {

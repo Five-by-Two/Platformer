@@ -19,6 +19,7 @@ export class Sprite {
     currentFrame: number;
     frameBuffer: number;
     elapsedFrames: number;
+    loaded: boolean;
 
     constructor(
         canvasContext: CanvasRenderingContext2D,
@@ -32,12 +33,14 @@ export class Sprite {
     ) {
         this.position = position;
         this.scale = scale;
+        this.loaded = false;
         this.canvasContext = canvasContext;
         this.image = new Image();
 
         this.image.onload = () => {
             this.width = (this.image.width / this.frameRate) * this.scale;
             this.height = this.image.height * this.scale;
+            this.loaded = true;
         };
         this.image.src = imgSrc;
         this.frameRate = frameRate;
