@@ -4,8 +4,15 @@ import catIcon from '../../assets/images/Cat-Sheet.png';
 import leaderBoardData from './leaderBoardData';
 import Leader from './Components/Leader';
 import Button from '../../components/button';
+import { useNavigate } from 'react-router';
 
 export function LeaderBoardPage(): JSX.Element {
+    const navigate = useNavigate();
+
+    function handleClickButtonBack() {
+        navigate(-1);
+    }
+
     return (
         <section className={`${styles.leaderBoard}`}>
             <div className={`${styles.blockTitle}`}>
@@ -25,7 +32,7 @@ export function LeaderBoardPage(): JSX.Element {
                     );
                 })}
             </div>
-            <Button text="BACK" />
+            <Button text="BACK" onClick={handleClickButtonBack} />
         </section>
     );
 }

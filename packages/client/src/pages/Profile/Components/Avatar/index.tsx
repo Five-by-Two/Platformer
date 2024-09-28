@@ -4,12 +4,12 @@ import iconEdit from '../../../../assets/images/icon-edit.png';
 
 type TProps = {
     link?: string;
-    handleClick?: () => void;
+    onClick?: () => void;
 };
 
-function Avatar({ link = goldIcon, handleClick }: TProps): JSX.Element {
+function Avatar({ link = goldIcon, onClick }: TProps): JSX.Element {
     return (
-        <div className={styles.container} onClick={handleClick}>
+        <div className={styles.container} onClick={onClick}>
             <img className={styles.avatar} src={link} alt="avatar" />
             <span className={styles.avatarChange}>
                 <img className={styles.icon} src={iconEdit} alt="icon" />
