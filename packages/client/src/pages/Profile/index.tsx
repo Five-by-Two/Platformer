@@ -20,9 +20,17 @@ export function ProfilePage(): JSX.Element {
                     onClick={handleClickButtonBack}
                 />
                 <Avatar onClick={() => console.log('hello')} />
+                <h2 className={styles.login}>Ivan12</h2>
                 <div>
                     <ProfileForm />
                 </div>
+                <Button
+                    text="Сменить пароль"
+                    className={styles.button}
+                    onClick={() => {
+                        console.log('ee');
+                    }}
+                />
             </div>
         </section>
     );

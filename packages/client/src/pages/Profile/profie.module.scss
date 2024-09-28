@@ -10,14 +10,25 @@
     min-width: 500px;
     justify-content: center;
     align-items: center;
-    padding: 20px 10px;
+    padding: 55px 50px;
+}
+
+.login {
+    font-size: 22px;
+    margin-top: 20px;
 }
 
 .buttonBack {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 30px;
+    top: 30px;
     font-size: 10px;
     min-width: 110px;
     padding: 10px 0;
 }
+
+.button {
+    margin-top: 20px;
+    width: 330px;
+}
+

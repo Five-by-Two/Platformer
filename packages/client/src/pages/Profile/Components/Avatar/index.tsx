@@ -1,5 +1,5 @@
 import styles from './avatar.module.scss';
-import goldIcon from '../../../../assets/images/gold-icon.png';
+import avatar from '../../../../assets/images/avatar.png';
 import iconEdit from '../../../../assets/images/icon-edit.png';
 
 type TProps = {
@@ -7,7 +7,7 @@ type TProps = {
     onClick?: () => void;
 };
 
-function Avatar({ link = goldIcon, onClick }: TProps): JSX.Element {
+function Avatar({ link = avatar, onClick }: TProps): JSX.Element {
     return (
         <div className={styles.container} onClick={onClick}>
             <img className={styles.avatar} src={link} alt="avatar" />
