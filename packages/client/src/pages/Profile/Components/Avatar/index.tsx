@@ -4,7 +4,7 @@ import iconEdit from '../../../../assets/images/icon-edit.png';
 
 type TProps = {
     link?: string;
-    onClick?: () => void;
+    onClick?: VoidFunction;
 };
 
 function Avatar({ link = avatar, onClick }: TProps): JSX.Element {

@@ -14,9 +14,7 @@ const authApi = axios.create({
 export function getUser() {
     return authApi
         .get<TUser>('/user')
-        .then(res => {
-            return res.data;
-        })
+        .then(res => res.data)
         .catch(err => {
             alert('Ошибка: Вы не авторизированы');
             console.log(err.message);

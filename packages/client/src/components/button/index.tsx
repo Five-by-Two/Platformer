@@ -3,7 +3,7 @@ import styles from './button.module.scss';
 type TProps = {
     text: string;
     className?: string;
-    onClick?: () => void;
+    onClick?: VoidFunction;
 };
 
 function Button({ text, className, onClick }: TProps) {
