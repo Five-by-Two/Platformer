@@ -1,9 +1,9 @@
 import { ICoordinates } from '../models';
-import { collision } from '../utils/collision';
+import { collision, platformCollision } from '../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
 import { Sprite } from './Sprite';
 
-const gravity = 0.5;
+const gravity = 0.1;
 
 interface IAnimations {
     imageSrc: string;
@@ -19,6 +19,7 @@ interface IPlayerConstructor {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: CollisionBlock[];
     animations: Record<string, IAnimations>;
     frameRate?: number;
     scale?: number;
@@ -30,6 +31,7 @@ export class Player extends Sprite {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: CollisionBlock[];
     animations: Record<string, IAnimations>;
     //TODO : добавить типы
     hitbox: any;
@@ -39,6 +41,7 @@ export class Player extends Sprite {
         canvas,
         position,
         collisionBlocks,
+        platformCollisionBlocks,
         imgSrc,
         animations,
         frameRate,
@@ -56,6 +59,7 @@ export class Player extends Sprite {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         this.collisionBlocks = collisionBlocks;
+        this.platformCollisionBlocks = platformCollisionBlocks;
         this.lastDirection = 'right';
         this.hitbox = {
             position: {
@@ -78,6 +82,7 @@ export class Player extends Sprite {
     switchSprite(key: string) {
         if (this.image === this.animations[key].image || !this.loaded) return;
 
+        this.currentFrame = 0;
         this.image = this.animations[key].image;
         this.frameBuffer = this.animations[key].frameBuffer;
         this.frameRate = this.animations[key].frameBuffer;
@@ -189,6 +194,35 @@ export class Player extends Sprite {
                         0.01;
                     break;
                 }
+            }
+        }
+
+        // коллизии с платформами.
+        for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
+            const platformCollisionBlock = this.platformCollisionBlocks[i];
+
+            if (platformCollision(this.hitbox, platformCollisionBlock)) {
+                if (this.velocity.y > 0) {
+                    this.velocity.y = 0;
+
+                    const offset =
+                        this.hitbox.position.y -
+                        this.position.y +
+                        this.hitbox.height;
+
+                    this.position.y =
+                        platformCollisionBlock.position.y - offset - 0.01;
+                    break;
+                }
+
+                // if (this.velocity.y < 0) {
+                //     this.velocity.y = 0;
+                //     this.position.y =
+                //         platformCollisionBlock.position.y +
+                //         platformCollisionBlock.height +
+                //         0.01;
+                //     break;
+                // }
             }
         }
     }

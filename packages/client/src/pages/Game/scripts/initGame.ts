@@ -47,6 +47,7 @@ export function initGame(canvas: HTMLCanvasElement) {
                             x: x * 16,
                             y: y * 16,
                         },
+                        // height: ,
                     }),
                 );
             }
@@ -93,6 +94,7 @@ export function initGame(canvas: HTMLCanvasElement) {
             y: 300,
         },
         collisionBlocks,
+        platformCollisionBlocks,
         frameRate: 8,
         animations: {
             Idle: {
@@ -207,7 +209,7 @@ export function initGame(canvas: HTMLCanvasElement) {
                 keys.a.pressed = true;
                 break;
             case 'w':
-                player.velocity.y = -8;
+                player.velocity.y = -4;
                 break;
         }
     });
