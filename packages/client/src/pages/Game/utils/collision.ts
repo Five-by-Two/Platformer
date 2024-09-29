@@ -1,7 +1,7 @@
 import { CollisionBlock } from '../classes/CollisionBlock';
-import { Player } from '../classes/Player';
+import { IHitBox } from '../classes/Player';
 
-export function collision(object1: Player, object2: CollisionBlock) {
+export function collision(object1: IHitBox, object2: CollisionBlock) {
     return (
         object1.position.y + object1.height >= object2.position.y &&
         object1.position.y <= object2.position.y + object2.height &&
@@ -10,7 +10,7 @@ export function collision(object1: Player, object2: CollisionBlock) {
     );
 }
 
-export function platformCollision(object1: Player, object2: CollisionBlock) {
+export function platformCollision(object1: IHitBox, object2: CollisionBlock) {
     return (
         object1.position.y + object1.height >= object2.position.y &&
         object1.position.y + object1.height <=

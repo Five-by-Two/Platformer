@@ -12,6 +12,21 @@ interface IAnimations {
     frameBuffer: number;
 }
 
+interface ICamera {
+    position: ICoordinates;
+}
+
+interface ICameraBox {
+    position: ICoordinates;
+    width: number;
+    height: number;
+}
+export interface IHitBox {
+    position: ICoordinates;
+    width: number;
+    height: number;
+}
+
 interface IPlayerConstructor {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | null;
@@ -33,9 +48,9 @@ export class Player extends Sprite {
     collisionBlocks: CollisionBlock[];
     platformCollisionBlocks: CollisionBlock[];
     animations: Record<string, IAnimations>;
-    //TODO : добавить типы
-    hitbox: any;
+    hitbox: IHitBox;
     lastDirection: string;
+    cameraBox: ICameraBox;
 
     constructor({
         canvas,
@@ -69,14 +84,23 @@ export class Player extends Sprite {
             width: 10,
             height: 10,
         };
-        this.animations = animations;
 
+        this.animations = animations;
         for (const key in this.animations) {
             const image = new Image();
             image.src = this.animations[key].imageSrc;
 
             this.animations[key].image = image;
         }
+
+        this.cameraBox = {
+            position: {
+                x: this.position.x,
+                y: this.position.y,
+            },
+            width: 200,
+            height: 80,
+        };
     }
 
     switchSprite(key: string) {
@@ -88,39 +112,91 @@ export class Player extends Sprite {
         this.frameRate = this.animations[key].frameBuffer;
     }
 
+    updateCameraBox() {
+        this.cameraBox = {
+            position: {
+                x: this.position.x,
+                y: this.position.y,
+            },
+            width: 200,
+            height: 80,
+        };
+    }
+
+    checkForHorizontalCanvasCollision() {
+        if (
+            this.hitbox.position.x + this.hitbox.width + this.velocity.x >=
+                576 ||
+            this.hitbox.position.x + this.velocity.x <= 0
+        ) {
+            this.velocity.x = 0;
+        }
+    }
+
+    shouldPanCameraToTheLeft(canvas: HTMLCanvasElement, camera: ICamera) {
+        const cameraBoxRightSide =
+            this.cameraBox.position.x + this.cameraBox.width;
+        const scaledDownCanvasWIdth = canvas.width / 4;
+
+        if (cameraBoxRightSide >= 576) {
+            return;
+        }
+        if (
+            cameraBoxRightSide >=
+            scaledDownCanvasWIdth + Math.abs(camera.position.x)
+        ) {
+            camera.position.x -= this.velocity.x;
+        }
+    }
+    shouldPanCameraToTheRight(canvas: HTMLCanvasElement, camera: ICamera) {
+        if (this.cameraBox.position.x <= 0) return;
+
+        if (this.cameraBox.position.x <= Math.abs(camera.position.x)) {
+            camera.position.x -= this.velocity.x;
+        }
+    }
+
     update() {
         this.updateFrames();
-        this.updateHitbox();
+        this.updateHitBox();
 
         // draws out the image
         if (this.context) {
-            this.context.fillStyle = 'rgba(0, 255, 0, 0.2)';
+            this.context.fillStyle = 'rgba(0, 0, 255, 0.2)';
             this.context.fillRect(
-                this.position.x,
-                this.position.y,
-                this.width,
-                this.height,
+                this.cameraBox.position.x,
+                this.cameraBox.position.y,
+                this.cameraBox.width,
+                this.cameraBox.height,
             );
-            this.context.fillStyle = 'rgba(255, 0, 0, 0.2)';
-            this.context?.fillRect(
-                this.hitbox.position.x,
-                this.hitbox.position.y,
-                this.hitbox.width,
-                this.hitbox.height,
-            );
+
+            // this.context.fillStyle = 'rgba(0, 255, 0, 0.2)';
+            // this.context.fillRect(
+            //     this.position.x,
+            //     this.position.y,
+            //     this.width,
+            //     this.height,
+            // );
+            // this.context.fillStyle = 'rgba(255, 0, 0, 0.2)';
+            // this.context?.fillRect(
+            //     this.hitbox.position.x,
+            //     this.hitbox.position.y,
+            //     this.hitbox.width,
+            //     this.hitbox.height,
+            // );
         }
 
         this.draw();
 
         this.position.x += this.velocity.x;
-        this.updateHitbox();
+        this.updateHitBox();
         this.checkForHorizontalCollisions();
         this.applyGravity();
-        this.updateHitbox();
+        this.updateHitBox();
         this.checkForVerticalCollisions();
     }
 
-    updateHitbox() {
+    updateHitBox() {
         this.hitbox = {
             position: {
                 x: this.position.x + 35,

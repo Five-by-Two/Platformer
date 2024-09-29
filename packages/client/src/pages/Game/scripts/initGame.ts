@@ -156,6 +156,13 @@ export function initGame(canvas: HTMLCanvasElement) {
         imgSrc: BackgroundImage,
     });
 
+    const camera = {
+        position: {
+            x: 0,
+            y: 0,
+        },
+    };
+
     function animate() {
         window.requestAnimationFrame(animate);
         context.fillStyle = 'white';
@@ -163,7 +170,10 @@ export function initGame(canvas: HTMLCanvasElement) {
 
         context.save();
         context.scale(4, 4);
-        context.translate(0, -background.image.height + scaledCanvas.height);
+        context.translate(
+            camera.position.x,
+            -background.image.height + scaledCanvas.height,
+        );
         background.update();
         collisionBlocks.forEach(collisionBlock => {
             collisionBlock.update();
@@ -172,6 +182,7 @@ export function initGame(canvas: HTMLCanvasElement) {
             block.update();
         });
 
+        player.checkForHorizontalCanvasCollision();
         player.update();
 
         player.velocity.x = 0;
@@ -179,10 +190,12 @@ export function initGame(canvas: HTMLCanvasElement) {
             player.switchSprite('Run');
             player.velocity.x = 2;
             player.lastDirection = 'right';
+            player.shouldPanCameraToTheLeft(canvas, camera);
         } else if (keys.a.pressed) {
             player.switchSprite('RunLeft');
             player.velocity.x = -2;
             player.lastDirection = 'left';
+            player.shouldPanCameraToTheRight(canvas, camera);
         } else if (player.velocity.y === 0) {
             if (player.lastDirection === 'right') player.switchSprite('Idle');
             else player.switchSprite('IdleLeft');
