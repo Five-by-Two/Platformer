@@ -3,8 +3,10 @@ import Input from '../../Components/Input';
 import styles from './profileForm.module.scss';
 import { TFormProfileData } from '../../Models/IFormProfileData';
 import { useEffect, useState } from 'react';
-import profileFormData from './profileFormData';
 import Button from '../../../../components/button';
+import { updateUserData } from '../../../../api/user';
+import { getUser } from '../../../../api/auth';
+import profileFormData from './profileFormData';
 
 function ProfileForm() {
     const methods = useForm<TFormProfileData>({
@@ -60,6 +62,15 @@ function ProfileForm() {
                         name="second_name"
                         type="text"
                         placeholder="Фамилия"
+                        disabled={isInputDisabled}
+                    />
+                </div>
+                <div className={styles.container}>
+                    <p>Имя в игре:</p>
+                    <Input
+                        name="display_name"
+                        type="text"
+                        placeholder="Имя в игре"
                         disabled={isInputDisabled}
                     />
                 </div>

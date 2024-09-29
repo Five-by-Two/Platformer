@@ -2,12 +2,13 @@ import axios from 'axios';
 import {
     TFormAvatarData,
     TFormPasswordData,
+    TFormProfileData,
 } from '../pages/Profile/Models/IFormProfileData';
-
-const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+import { TProfileData, TUser } from '../utils/types';
+import { BASE_URL } from '../utils/constants';
 
 const userApi = axios.create({
-    baseURL: BASE_URL,
+    baseURL: `${BASE_URL}/user`,
     withCredentials: true,
 });
 
@@ -17,30 +18,34 @@ export function updateAvatar(data: TFormAvatarData) {
     const formData = new FormData();
     formData.append('avatar', avatar[0]);
 
+    return userApi.put<TUser>('/profile/avatar', formData).catch(err => {
+        console.log(err.message);
+    });
+}
+
+export function updatePassword(data: TFormPasswordData) {
+    const dataRequest = {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+    };
+
     return userApi
-        .put('/user/profile/avatar', formData)
-        .then(res => {
-            console.log(`code: ${res.status}`);
+        .put('/password', JSON.stringify(dataRequest), {
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
         .catch(err => {
             console.log(err.message);
         });
 }
 
-export function updatePassword(data: TFormPasswordData) {
-    const newData = {
-        oldPassword: data.oldPassword,
-        newPassword: data.newPassword,
-    };
-
+export function updateUserData(data: TFormProfileData) {
     return userApi
-        .put('/user/password', JSON.stringify(newData), {
+        .put('/profile', JSON.stringify(data), {
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
-        .then(res => {
-            console.log(`code: ${res.status}`);
         })
         .catch(err => {
             console.log(err.message);

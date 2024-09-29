@@ -17,7 +17,7 @@ $focus-color: #B85800;
     }
 
     input::placeholder {
-        color: $main-color;
+        color: var(--gray-dark);
         font-size: medium;
     }
 
@@ -31,7 +31,6 @@ $focus-color: #B85800;
     }
 
     span {
-        display: none;
         color: $danger-color;
     }
 }
