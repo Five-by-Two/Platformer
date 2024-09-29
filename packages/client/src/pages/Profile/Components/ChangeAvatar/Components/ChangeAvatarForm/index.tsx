@@ -3,15 +3,12 @@ import styles from './changeAvatarForm.module.scss';
 import Input from '../../../Input';
 import Button from '../../../../../../components/button';
 import { TFormAvatarData } from '../../../../Models/IFormProfileData';
+import { updateAvatar } from '../../../../../../api/user';
 
 type TProps = {
     setDisabledWindowChangeAvatar: React.Dispatch<
         React.SetStateAction<boolean>
     >;
-};
-
-type file = {
-    avatar: File[];
 };
 
 function ChangeAvatarForm({ setDisabledWindowChangeAvatar }: TProps) {
@@ -21,9 +18,15 @@ function ChangeAvatarForm({ setDisabledWindowChangeAvatar }: TProps) {
 
     const { handleSubmit } = methods;
 
-    function submitForm(data: file) {
-        console.log(data);
-        setDisabledWindowChangeAvatar(true);
+    function submitForm(data: TFormAvatarData) {
+        console.log(data.avatar.length);
+        if (data.avatar.length !== 0) {
+            updateAvatar(data);
+            setDisabledWindowChangeAvatar(true);
+        } else {
+            alert('Вставьте картинку');
+            throw Error('Вставьте картинку');
+        }
     }
 
     return (
@@ -32,7 +35,7 @@ function ChangeAvatarForm({ setDisabledWindowChangeAvatar }: TProps) {
                 <Input
                     name="avatar"
                     type="file"
-                    placeholder="Ввставтье ссылку"
+                    placeholder="Вставьте ссылку"
                 />
                 <Button text="Отправить" className={styles.button} />
             </form>

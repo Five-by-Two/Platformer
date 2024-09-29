@@ -13,7 +13,7 @@ export type TFormPasswordData = {
 };
 
 export type TFormAvatarData = {
-    avatar: File[];
+    avatar: FileList;
 };
 
 export type TAllTypesFormProfile = TFormProfileData &
