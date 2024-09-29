@@ -115,7 +115,7 @@ export class Player extends Sprite {
     updateCameraBox() {
         this.cameraBox = {
             position: {
-                x: this.position.x,
+                x: this.position.x - 50,
                 y: this.position.y,
             },
             width: 200,
@@ -138,9 +138,8 @@ export class Player extends Sprite {
             this.cameraBox.position.x + this.cameraBox.width;
         const scaledDownCanvasWIdth = canvas.width / 4;
 
-        if (cameraBoxRightSide >= 576) {
-            return;
-        }
+        if (cameraBoxRightSide >= 576) return;
+
         if (
             cameraBoxRightSide >=
             scaledDownCanvasWIdth + Math.abs(camera.position.x)
@@ -148,11 +147,37 @@ export class Player extends Sprite {
             camera.position.x -= this.velocity.x;
         }
     }
-    shouldPanCameraToTheRight(canvas: HTMLCanvasElement, camera: ICamera) {
+    shouldPanCameraToTheRight(camera: ICamera) {
         if (this.cameraBox.position.x <= 0) return;
 
         if (this.cameraBox.position.x <= Math.abs(camera.position.x)) {
             camera.position.x -= this.velocity.x;
+        }
+    }
+
+    shouldPanCameraDown(camera: ICamera) {
+        if (this.cameraBox.position.y + this.velocity.y <= 0) return;
+
+        if (this.cameraBox.position.y <= Math.abs(camera.position.y)) {
+            camera.position.y -= this.velocity.y;
+        }
+    }
+
+    shouldPanCameraUpwards(canvas: HTMLCanvasElement, camera: ICamera) {
+        if (
+            this.cameraBox.position.y +
+                this.cameraBox.height +
+                this.velocity.y >=
+            432
+        )
+            return;
+        const scaledCanvasHeight = canvas.height / 4;
+
+        if (
+            this.cameraBox.position.y + this.cameraBox.height >=
+            Math.abs(camera.position.y) + scaledCanvasHeight
+        ) {
+            camera.position.y -= this.velocity.y;
         }
     }
 
@@ -162,14 +187,13 @@ export class Player extends Sprite {
 
         // draws out the image
         if (this.context) {
-            this.context.fillStyle = 'rgba(0, 0, 255, 0.2)';
-            this.context.fillRect(
-                this.cameraBox.position.x,
-                this.cameraBox.position.y,
-                this.cameraBox.width,
-                this.cameraBox.height,
-            );
-
+            // this.context.fillStyle = 'rgba(0, 0, 255, 0.2)';
+            // this.context.fillRect(
+            //     this.cameraBox.position.x,
+            //     this.cameraBox.position.y,
+            //     this.cameraBox.width,
+            //     this.cameraBox.height,
+            // );
             // this.context.fillStyle = 'rgba(0, 255, 0, 0.2)';
             // this.context.fillRect(
             //     this.position.x,

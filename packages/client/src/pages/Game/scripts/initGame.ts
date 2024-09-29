@@ -156,10 +156,12 @@ export function initGame(canvas: HTMLCanvasElement) {
         imgSrc: BackgroundImage,
     });
 
+    const backgroundImageHeight = 432;
+
     const camera = {
         position: {
             x: 0,
-            y: 0,
+            y: -backgroundImageHeight + scaledCanvas.height,
         },
     };
 
@@ -170,17 +172,16 @@ export function initGame(canvas: HTMLCanvasElement) {
 
         context.save();
         context.scale(4, 4);
-        context.translate(
-            camera.position.x,
-            -background.image.height + scaledCanvas.height,
-        );
+        context.translate(camera.position.x, camera.position.y);
         background.update();
-        collisionBlocks.forEach(collisionBlock => {
-            collisionBlock.update();
-        });
-        platformCollisionBlocks.forEach(block => {
-            block.update();
-        });
+
+        // collisionBlocks.forEach(collisionBlock => {
+        //     collisionBlock.update();
+        // });
+
+        // platformCollisionBlocks.forEach(block => {
+        //     block.update();
+        // });
 
         player.checkForHorizontalCanvasCollision();
         player.update();
@@ -195,16 +196,18 @@ export function initGame(canvas: HTMLCanvasElement) {
             player.switchSprite('RunLeft');
             player.velocity.x = -2;
             player.lastDirection = 'left';
-            player.shouldPanCameraToTheRight(canvas, camera);
+            player.shouldPanCameraToTheRight(camera);
         } else if (player.velocity.y === 0) {
             if (player.lastDirection === 'right') player.switchSprite('Idle');
             else player.switchSprite('IdleLeft');
         }
 
         if (player.velocity.y < 0) {
+            player.shouldPanCameraDown(camera);
             if (player.lastDirection === 'right') player.switchSprite('Jump');
             else player.switchSprite('JumpLeft');
         } else if (player.velocity.y > 0) {
+            player.shouldPanCameraUpwards(canvas, camera);
             if (player.lastDirection === 'right') player.switchSprite('Fall');
             else player.switchSprite('FallLeft');
         }
