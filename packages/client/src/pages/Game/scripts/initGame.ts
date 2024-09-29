@@ -11,6 +11,8 @@ import WarriorJumpLeft from '../assets/warrior/JumpLeft.png';
 import WarriorFall from '../assets/warrior/Fall.png';
 import WarriorFallLeft from '../assets/warrior/FallLeft.png';
 import WarriorRunLeft from '../assets/warrior/RunLeft.png';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../consts';
+import { EPlayerState } from '../Enums';
 
 const keys = {
     d: {
@@ -47,7 +49,6 @@ export function initGame(canvas: HTMLCanvasElement) {
                             x: x * 16,
                             y: y * 16,
                         },
-                        // height: ,
                     }),
                 );
             }
@@ -77,8 +78,8 @@ export function initGame(canvas: HTMLCanvasElement) {
         });
     });
 
-    canvas.width = 1024;
-    canvas.height = 576;
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
 
     const player = new Player({
         context,
@@ -97,53 +98,53 @@ export function initGame(canvas: HTMLCanvasElement) {
         platformCollisionBlocks,
         frameRate: 8,
         animations: {
-            Idle: {
+            [EPlayerState.Idle]: {
                 imageSrc: WarriorIdle,
                 image: new Image(),
                 frameRate: 8,
                 frameBuffer: 8,
             },
-            IdleLeft: {
+            [EPlayerState.IdleLeft]: {
                 imageSrc: WarriorIdleLeft,
                 image: new Image(),
                 frameRate: 8,
                 frameBuffer: 8,
             },
-            Run: {
+            [EPlayerState.Run]: {
                 imageSrc: WarriorRun,
                 image: new Image(),
                 frameRate: 8,
                 frameBuffer: 8,
             },
-            Jump: {
+            [EPlayerState.RunLeft]: {
+                imageSrc: WarriorRunLeft,
+                image: new Image(),
+                frameRate: 8,
+                frameBuffer: 8,
+            },
+            [EPlayerState.Jump]: {
                 imageSrc: WarriorJump,
                 image: new Image(),
                 frameRate: 2,
                 frameBuffer: 2,
             },
-            JumpLeft: {
+            [EPlayerState.JumpLeft]: {
                 imageSrc: WarriorJumpLeft,
                 image: new Image(),
                 frameRate: 2,
                 frameBuffer: 2,
             },
-            Fall: {
+            [EPlayerState.Fall]: {
                 imageSrc: WarriorFall,
                 image: new Image(),
                 frameRate: 2,
                 frameBuffer: 2,
             },
-            FallLeft: {
+            [EPlayerState.FallLeft]: {
                 imageSrc: WarriorFallLeft,
                 image: new Image(),
                 frameRate: 2,
                 frameBuffer: 2,
-            },
-            RunLeft: {
-                imageSrc: WarriorRunLeft,
-                image: new Image(),
-                frameRate: 8,
-                frameBuffer: 8,
             },
         },
     });
@@ -175,41 +176,36 @@ export function initGame(canvas: HTMLCanvasElement) {
         context.translate(camera.position.x, camera.position.y);
         background.update();
 
-        // collisionBlocks.forEach(collisionBlock => {
-        //     collisionBlock.update();
-        // });
-
-        // platformCollisionBlocks.forEach(block => {
-        //     block.update();
-        // });
-
         player.checkForHorizontalCanvasCollision();
         player.update();
 
         player.velocity.x = 0;
         if (keys.d.pressed) {
-            player.switchSprite('Run');
+            player.switchSprite(EPlayerState.Run);
             player.velocity.x = 2;
             player.lastDirection = 'right';
             player.shouldPanCameraToTheLeft(canvas, camera);
         } else if (keys.a.pressed) {
-            player.switchSprite('RunLeft');
+            player.switchSprite(EPlayerState.RunLeft);
             player.velocity.x = -2;
             player.lastDirection = 'left';
             player.shouldPanCameraToTheRight(camera);
         } else if (player.velocity.y === 0) {
-            if (player.lastDirection === 'right') player.switchSprite('Idle');
-            else player.switchSprite('IdleLeft');
+            if (player.lastDirection === 'right')
+                player.switchSprite(EPlayerState.Idle);
+            else player.switchSprite(EPlayerState.IdleLeft);
         }
 
         if (player.velocity.y < 0) {
             player.shouldPanCameraDown(camera);
-            if (player.lastDirection === 'right') player.switchSprite('Jump');
-            else player.switchSprite('JumpLeft');
+            if (player.lastDirection === 'right')
+                player.switchSprite(EPlayerState.Jump);
+            else player.switchSprite(EPlayerState.JumpLeft);
         } else if (player.velocity.y > 0) {
             player.shouldPanCameraUpwards(canvas, camera);
-            if (player.lastDirection === 'right') player.switchSprite('Fall');
-            else player.switchSprite('FallLeft');
+            if (player.lastDirection === 'right')
+                player.switchSprite(EPlayerState.Fall);
+            else player.switchSprite(EPlayerState.FallLeft);
         }
         context.restore();
     }

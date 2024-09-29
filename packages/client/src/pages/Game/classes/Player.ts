@@ -1,3 +1,4 @@
+import { CANVAS_HEIGHT } from '../consts';
 import { ICoordinates } from '../models';
 import { collision, platformCollision } from '../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
@@ -126,7 +127,7 @@ export class Player extends Sprite {
     checkForHorizontalCanvasCollision() {
         if (
             this.hitbox.position.x + this.hitbox.width + this.velocity.x >=
-                576 ||
+                CANVAS_HEIGHT ||
             this.hitbox.position.x + this.velocity.x <= 0
         ) {
             this.velocity.x = 0;
@@ -138,7 +139,7 @@ export class Player extends Sprite {
             this.cameraBox.position.x + this.cameraBox.width;
         const scaledDownCanvasWIdth = canvas.width / 4;
 
-        if (cameraBoxRightSide >= 576) return;
+        if (cameraBoxRightSide >= CANVAS_HEIGHT) return;
 
         if (
             cameraBoxRightSide >=
@@ -185,30 +186,7 @@ export class Player extends Sprite {
         this.updateFrames();
         this.updateHitBox();
 
-        // draws out the image
-        if (this.context) {
-            // this.context.fillStyle = 'rgba(0, 0, 255, 0.2)';
-            // this.context.fillRect(
-            //     this.cameraBox.position.x,
-            //     this.cameraBox.position.y,
-            //     this.cameraBox.width,
-            //     this.cameraBox.height,
-            // );
-            // this.context.fillStyle = 'rgba(0, 255, 0, 0.2)';
-            // this.context.fillRect(
-            //     this.position.x,
-            //     this.position.y,
-            //     this.width,
-            //     this.height,
-            // );
-            // this.context.fillStyle = 'rgba(255, 0, 0, 0.2)';
-            // this.context?.fillRect(
-            //     this.hitbox.position.x,
-            //     this.hitbox.position.y,
-            //     this.hitbox.width,
-            //     this.hitbox.height,
-            // );
-        }
+        this.updateCameraBox();
 
         this.draw();
 
@@ -314,15 +292,6 @@ export class Player extends Sprite {
                         platformCollisionBlock.position.y - offset - 0.01;
                     break;
                 }
-
-                // if (this.velocity.y < 0) {
-                //     this.velocity.y = 0;
-                //     this.position.y =
-                //         platformCollisionBlock.position.y +
-                //         platformCollisionBlock.height +
-                //         0.01;
-                //     break;
-                // }
             }
         }
     }

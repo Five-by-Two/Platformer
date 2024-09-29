@@ -1,0 +1,31 @@
+@import '../../assets/styles/mixins.scss';
+
+.leaderBoard {
+  @include background-container;
+}
+
+.blockTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 26px;
+  color: var(--black)
+}
+
+.icon {
+  width: 100px;
+}
+
+.container {
+  @include container;
+  padding: 45px;
+  flex-wrap: wrap;
+  gap: 20px 220px;
+  max-height: 250px;
+  min-width: 384px;
+  margin-bottom: 40px; 
+}
