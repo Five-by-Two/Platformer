@@ -4,16 +4,14 @@ import Avatar from './Components/Avatar';
 import styles from './profie.module.scss';
 import ProfileForm from './Components/ProfileForm';
 import ChangePassword from './Components/ChangePassword';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ChangeAvatar from './Components/ChangeAvatar';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useAppSelector } from '../../hooks/redux-hooks';
 import authService from '../../services/AuthService/AuthService';
-import { setUser } from '../../store/userSlice';
 import { EPageRoutes } from '../../router/Enums';
 
 export function ProfilePage(): JSX.Element {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
     const userLogin = useAppSelector(state => state.user.user.login);
     const userAvatar = useAppSelector(state => state.user.user.avatar);
@@ -34,14 +32,6 @@ export function ProfilePage(): JSX.Element {
             }
         });
     }
-
-    useEffect(() => {
-        authService.GetUser().then(res => {
-            if (res) {
-                dispatch(setUser(res));
-            }
-        });
-    }, []);
 
     return (
         <section className={`${styles.profile}`}>
