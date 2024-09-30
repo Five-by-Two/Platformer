@@ -6,9 +6,7 @@ import { ErrorData } from './Models/ErrorData';
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
         return AxiosService.post('auth/signin', model)
-            .then(() => {
-                return true;
-            })
+            .then(() => true)
             .catch((ex: AxiosError) => {
                 if (ex.response?.status == 400) {
                     const error = ex.response.data as ErrorData;
