@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import AxiosService from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
+import { SignUpModel } from './Models/SignUpModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
@@ -28,6 +29,17 @@ class AuthService {
             })
             .catch((ex: AxiosError) => {
                 console.error('Ошибка выхода из системы', ex);
+                return false;
+            });
+    }
+
+    async SignUp(model: SignUpModel): Promise<boolean> {
+        return AxiosService.post('auth/signup', model)
+            .then(() => {
+                return true;
+            })
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка регистрации', ex);
                 return false;
             });
     }
