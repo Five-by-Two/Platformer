@@ -17,7 +17,6 @@ export default function MainMenu(): JSX.Element {
                 navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
             }
         });
-        console.count('Logout');
     };
 
     const handleNavigate = (path: string) => navigate(`/${path}`);
