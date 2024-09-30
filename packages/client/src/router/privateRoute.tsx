@@ -7,7 +7,7 @@ type Properties = {
     children: JSX.Element;
 };
 
-export default function privateRoute({ children }: Properties) {
+export default function PrivateRoute({ children }: Properties) {
     const isAuth = useAppSelector(state => state.auth.isAuth);
     const navigate = useNavigate();
 
