@@ -2,7 +2,6 @@
 @import url('./constants.scss');
 @import url('./normalize.scss');
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

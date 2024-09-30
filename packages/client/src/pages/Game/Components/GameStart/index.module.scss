@@ -4,9 +4,6 @@ $game-start-wrap-border-color: rgba(0, 0, 0, 0.404);
 $game-start-menu-shadow-color: rgba(21, 21, 21, 0.623);
 
 .game-start {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;

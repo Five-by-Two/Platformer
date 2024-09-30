@@ -10,10 +10,11 @@ type GameStartProps = {
 const GameStart: FC<GameStartProps> = ({ onStart, onBackToMenu }) => {
     useEffect(() => {
         window.addEventListener('keypress', onStart);
+
         return () => {
             window.removeEventListener('keypress', onStart);
         };
-    }, []);
+    }, [onStart]);
 
     return (
         <section className={styles['game-start']}>
