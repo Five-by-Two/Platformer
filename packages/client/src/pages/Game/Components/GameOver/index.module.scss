@@ -1,0 +1,31 @@
+@import '../../index.module.scss';
+
+.game-over-wrap {
+    gap: 2rem;
+    padding: 2.5rem 3rem;
+
+    .trophy {
+        width: 130px;
+    }
+
+    .title-score {
+        font-size: x-large;
+    }
+
+    .title-best-score {
+        font-size: large;
+    }
+
+    .buttons-wrap {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+
+        gap: 1.5rem;
+
+        button {
+            width: 100%;
+            font-size: small;
+        }
+    }
+}

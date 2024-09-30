@@ -2,6 +2,7 @@ import GameStart from './Components/GameStart';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { EPageRoutes } from '../../router/Enums';
+import GameOver from './Components/GameOver';
 
 export function GamePage(): JSX.Element {
     const [isGameStarted, setIsGameStarted] = useState(false);
@@ -14,6 +15,9 @@ export function GamePage(): JSX.Element {
     const backToMenu = () => {
         navigate(`/${EPageRoutes.HOME_PAGE}`);
     };
+    const toLeaderBoard = () => {
+        navigate(`/${EPageRoutes.LEADER_BOARD_PAGE}`);
+    };
 
     return (
         <>
@@ -21,7 +25,15 @@ export function GamePage(): JSX.Element {
             {!isGameStarted && (
                 <GameStart onStart={startGame} onBackToMenu={backToMenu} />
             )}
-            {isGameOver && <div>Game Over screen</div>}
+            {isGameOver && (
+                <GameOver
+                    onStart={startGame}
+                    onBackToMenu={backToMenu}
+                    onToLeaderboard={toLeaderBoard}
+                    score={1}
+                    bestScore={1000}
+                />
+            )}
         </>
     );
 }
