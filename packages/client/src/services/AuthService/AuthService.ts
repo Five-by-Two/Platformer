@@ -4,7 +4,7 @@ import { SignInModel } from './Models/SignInModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
-        return AxiosService.post('auth/signin', JSON.stringify(model))
+        return AxiosService.post('auth/signin', model)
             .then(() => {
                 return true;
             })
