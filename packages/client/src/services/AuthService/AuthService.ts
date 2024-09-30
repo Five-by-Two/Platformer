@@ -14,7 +14,20 @@ class AuthService {
                         return true;
                     }
                 }
-                throw new Error('Неверный логин или пароль');
+                if (ex.response?.status == 401) {
+                    throw new Error('Неверный логин или пароль');
+                }
+                throw new Error('Ошибка сервера');
+            });
+    }
+
+    async LogOut(): Promise<boolean> {
+        return AxiosService.post('auth/logout')
+            .then(() => {
+                return true;
+            })
+            .catch((ex: AxiosError) => {
+                throw new Error('Ошибка выхода из системы', ex);
             });
     }
 }
