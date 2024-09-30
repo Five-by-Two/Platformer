@@ -1,7 +1,7 @@
 export { HomePage } from './Home';
 export { SignInPage } from './SignIn';
 export { SignUpPage } from './SignUp';
-export { GamePage } from './Game/Components';
+export { GamePage } from './Game';
 export { ForumPage } from './Forum';
 export { ForumTopicPage } from './ForumTopic';
 export { ProfilePage } from './Profile';

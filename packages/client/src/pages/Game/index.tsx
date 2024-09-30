@@ -1,8 +1,8 @@
-import GameStart from './GameStart';
+import GameStart from './Components/GameStart';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { EPageRoutes } from '../../../router/Enums';
-import GameOver from './GameOver';
+import { EPageRoutes } from '../../router/Enums';
+import GameOver from './Components/GameOver';
 
 export function GamePage(): JSX.Element {
     const [isGameStarted, setIsGameStarted] = useState(false);
