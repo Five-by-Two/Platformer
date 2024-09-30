@@ -4,19 +4,15 @@ import { useNavigate } from 'react-router';
 import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
 import FormInput from './Components/FormInput';
-import { useAppDispatch } from '../../../../hooks/redux-hooks';
 import AuthService from '../../../../services/AuthService/AuthService';
-import { setIsAuth } from '../../../../store/authSlice';
 
 export default function RegisterForm() {
     const methods = useForm<IFormData>();
     const { handleSubmit } = methods;
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
     const onSumbit: SubmitHandler<IFormData> = async data => {
         AuthService.SignUp(data).then(result => {
-            dispatch(setIsAuth(result));
             if (result) {
                 navigate(`/${EPageRoutes.HOME_PAGE}`);
             }
