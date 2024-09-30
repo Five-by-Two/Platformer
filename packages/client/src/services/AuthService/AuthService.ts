@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import AxiosService from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
+import { ErrorData } from './Models/ErrorData';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
@@ -9,8 +10,13 @@ class AuthService {
                 return true;
             })
             .catch((ex: AxiosError) => {
-                console.error(ex);
-                return false;
+                if (ex.response?.status == 400) {
+                    const error = ex.response.data as ErrorData;
+                    if (error.reason == 'User already in system') {
+                        return true;
+                    }
+                }
+                throw new Error('Неверный логин или пароль');
             });
     }
 }

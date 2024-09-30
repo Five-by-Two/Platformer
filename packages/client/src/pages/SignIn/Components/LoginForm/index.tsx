@@ -17,11 +17,13 @@ export default function LoginForm() {
 
     const onSumbit: SubmitHandler<IFormData> = async data => {
         await AuthService.SignIn(data)
-            .then(result => dispatch(setIsAuth(result)))
-            .then(() => {
-                navigate(`/${EPageRoutes.HOME_PAGE}`);
+            .then(result => {
+                dispatch(setIsAuth(result));
+                if (result) {
+                    navigate(`/${EPageRoutes.HOME_PAGE}`);
+                }
             })
-            .catch((error: string) => setErrorText(error));
+            .catch((error: Error) => setErrorText(error.message));
     };
 
     return (

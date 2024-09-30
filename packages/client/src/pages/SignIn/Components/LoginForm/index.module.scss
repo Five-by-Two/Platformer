@@ -19,6 +19,12 @@ $danger-color: #DC0303;
     justify-content: center;
     align-items: center;
 
+
+    .errorText {
+        font-size: small;
+        color: $danger-color;
+    }
+
     h1 {
         font-size: larger;
     }
