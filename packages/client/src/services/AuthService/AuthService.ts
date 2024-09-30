@@ -3,6 +3,7 @@ import AxiosService from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
 import { SignUpModel } from './Models/SignUpModel';
+import { GetUserModel } from './Models/GetUserModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
@@ -30,6 +31,15 @@ class AuthService {
             .catch((ex: AxiosError) => {
                 console.error('Ошибка выхода из системы', ex);
                 return false;
+            });
+    }
+
+    async GetUser(): Promise<GetUserModel | void> {
+        return AxiosService.get<GetUserModel>('auth/user')
+            .then(res => res.data)
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка получения данных пользователя', ex);
+                return;
             });
     }
 

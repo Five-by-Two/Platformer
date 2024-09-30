@@ -3,7 +3,9 @@ import styles from './changeAvatarForm.module.scss';
 import Input from '../../../Input';
 import Button from '../../../../../../components/button';
 import { TFormAvatarData } from '../../../../Models/IFormProfileData';
-import { updateAvatar } from '../../../../../../api/user';
+import userService from '../../../../../../services/UserService/UserService';
+import { useAppDispatch } from '../../../../../../hooks/redux-hooks';
+import { setUser } from '../../../../../../store/userSlice';
 
 type TProps = {
     setDisabledWindowChangeAvatar: React.Dispatch<
@@ -12,6 +14,8 @@ type TProps = {
 };
 
 function ChangeAvatarForm({ setDisabledWindowChangeAvatar }: TProps) {
+    const dispatch = useAppDispatch();
+
     const methods = useForm<TFormAvatarData>({
         mode: 'onBlur',
     });
@@ -19,9 +23,12 @@ function ChangeAvatarForm({ setDisabledWindowChangeAvatar }: TProps) {
     const { handleSubmit } = methods;
 
     function submitForm(data: TFormAvatarData) {
-        console.log(data.avatar.length);
         if (data.avatar.length !== 0) {
-            updateAvatar(data);
+            userService.UpdateAvatar(data).then(res => {
+                if (res) {
+                    dispatch(setUser(res));
+                }
+            });
             setDisabledWindowChangeAvatar(true);
         } else {
             alert('Вставьте картинку');

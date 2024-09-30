@@ -4,14 +4,15 @@ import styles from './profileForm.module.scss';
 import { TFormProfileData } from '../../Models/IFormProfileData';
 import { useEffect, useState } from 'react';
 import Button from '../../../../components/button';
-import { updateUserData } from '../../../../api/user';
-import { getUser } from '../../../../api/auth';
-import profileFormData from './profileFormData';
+import userService from '../../../../services/UserService/UserService';
+import { useAppSelector } from '../../../../hooks/redux-hooks';
 
 function ProfileForm() {
     const methods = useForm<TFormProfileData>({
         mode: 'onBlur',
     });
+
+    const userData = useAppSelector(state => state.user.user);
 
     const { reset, handleSubmit } = methods;
 
@@ -21,7 +22,7 @@ function ProfileForm() {
 
     function submitForm(data: TFormProfileData) {
         if (!isInputDisabled) {
-            console.log(data);
+            userService.UpdateUserData(data);
 
             setTextButtonChangeData('Изменить данные');
         } else {
@@ -32,8 +33,15 @@ function ProfileForm() {
     }
 
     useEffect(() => {
-        reset(profileFormData);
-    }, []);
+        reset({
+            first_name: userData.first_name,
+            second_name: userData.second_name,
+            display_name: userData.display_name,
+            phone: userData.phone,
+            login: userData.login,
+            email: userData.email,
+        });
+    }, [userData]);
 
     return (
         <FormProvider {...methods}>

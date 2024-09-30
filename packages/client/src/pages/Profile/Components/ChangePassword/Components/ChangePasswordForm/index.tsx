@@ -3,7 +3,7 @@ import styles from './changePasswordForm.module.scss';
 import Input from '../../../Input';
 import Button from '../../../../../../components/button';
 import { TFormPasswordData } from '../../../../Models/IFormProfileData';
-import { updatePassword } from '../../../../../../api/user';
+import userService from '../../../../../../services/UserService/UserService';
 
 type TProps = {
     setDisabledWindowChangePassword: React.Dispatch<
@@ -24,7 +24,7 @@ function ChangePasswordForm({ setDisabledWindowChangePassword }: TProps) {
             data.newPassword === data.newPasswordAgain &&
             data.oldPassword !== data.newPassword
         ) {
-            updatePassword(data);
+            userService.UpdatePassword(data);
             setDisabledWindowChangePassword(true);
         } else {
             alert('Не корректный пароль');
