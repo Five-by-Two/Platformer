@@ -27,7 +27,8 @@ class AuthService {
                 return true;
             })
             .catch((ex: AxiosError) => {
-                throw new Error('Ошибка выхода из системы', ex);
+                console.error('Ошибка выхода из системы', ex);
+                return false;
             });
     }
 }
