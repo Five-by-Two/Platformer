@@ -2,13 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../components/button';
 import { EPageRoutes } from '../../../../router/Enums';
 import styles from './index.module.scss';
+import { useAppDispatch } from '../../../../hooks/redux-hooks';
+import AuthService from '../../../../services/AuthService/AuthService';
+import { setIsAuth } from '../../../../store/authSlice';
 
 export default function MainMenu(): JSX.Element {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const onLogout = () => {
-        //TODO: Обработка выхода из аккаунта
-        console.count('Logout');
+        AuthService.LogOut().then(result => {
+            if (result) {
+                dispatch(setIsAuth(false));
+                navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
+            }
+        });
     };
 
     const handleNavigate = (path: string) => navigate(`/${path}`);

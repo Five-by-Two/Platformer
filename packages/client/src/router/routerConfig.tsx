@@ -1,12 +1,17 @@
 import { RouteObject } from 'react-router-dom';
 import * as Pages from '../pages';
 import { EPageRoutes } from './Enums';
+import PrivateRoute from './privateRoute';
 
 /** Конфигурация используемых в проекте страниц. */
 export const routerConfig: RouteObject[] = [
     {
         path: EPageRoutes.HOME_PAGE,
-        element: <Pages.HomePage />,
+        element: (
+            <PrivateRoute>
+                <Pages.HomePage />
+            </PrivateRoute>
+        ),
     },
     {
         path: EPageRoutes.SIGN_IN_PAGE,
@@ -18,19 +23,35 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.GAME_PAGE,
-        element: <Pages.GamePage />,
+        element: (
+            <PrivateRoute>
+                <Pages.GamePage />
+            </PrivateRoute>
+        ),
     },
     {
         path: EPageRoutes.PROFILE_PAGE,
-        element: <Pages.ProfilePage />,
+        element: (
+            <PrivateRoute>
+                <Pages.ProfilePage />
+            </PrivateRoute>
+        ),
     },
     {
         path: EPageRoutes.FORUM_PAGE,
-        element: <Pages.ForumPage />,
+        element: (
+            <PrivateRoute>
+                <Pages.ForumPage />
+            </PrivateRoute>
+        ),
     },
     {
         path: EPageRoutes.FORUM_TOPIC_PAGE,
-        element: <Pages.ForumTopicPage />,
+        element: (
+            <PrivateRoute>
+                <Pages.ForumTopicPage />
+            </PrivateRoute>
+        ),
     },
     {
         path: EPageRoutes.SERVER_ERROR,
@@ -38,6 +59,10 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.LEADER_BOARD_PAGE,
-        element: <Pages.LeaderBoardPage />,
+        element: (
+            <PrivateRoute>
+                <Pages.LeaderBoardPage />
+            </PrivateRoute>
+        ),
     },
 ];

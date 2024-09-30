@@ -3,14 +3,27 @@ import styles from './index.module.scss';
 import { useNavigate } from 'react-router';
 import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
+import AuthService from '../../../../services/AuthService/AuthService';
+import { setIsAuth } from '../../../../store/authSlice';
+import { useAppDispatch } from '../../../../hooks/redux-hooks';
+import { useState } from 'react';
 
 export default function LoginForm() {
     const { register, handleSubmit } = useForm<IFormData>();
-    const navigate = useNavigate();
+    const [errorText, setErrorText] = useState<string | null>(null);
 
-    const onSumbit: SubmitHandler<IFormData> = data => {
-        //TODO: Обработка отправки формы
-        console.log(data);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const onSumbit: SubmitHandler<IFormData> = async data => {
+        await AuthService.SignIn(data)
+            .then(result => {
+                dispatch(setIsAuth(result));
+                if (result) {
+                    navigate(`/${EPageRoutes.HOME_PAGE}`);
+                }
+            })
+            .catch((error: Error) => setErrorText(error.message));
     };
 
     return (
@@ -23,6 +36,7 @@ export default function LoginForm() {
                 type="password"
                 required
             />
+            {errorText && <span className={styles.errorText}>{errorText}</span>}
             <div className={styles.actions}>
                 <button className={styles.button_primary} type="submit">
                     Войти
