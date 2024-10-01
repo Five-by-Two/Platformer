@@ -18,8 +18,8 @@ const GameStart: FC<GameStartProps> = ({ onStart, onBackToMenu }) => {
 
     return (
         <section className={styles['game-start']}>
-            <div className={styles['wrap']}>
-                <h2 className={styles['title']}>Начать игру</h2>
+            <div className={`${styles.wrap} ${styles['game-start-wrap']}`}>
+                <h2 className={styles.title}>Начать игру</h2>
                 <p className={styles['blinking-text']}>
                     Нажмите любую клавишу, чтобы начать игру
                 </p>
