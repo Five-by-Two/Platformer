@@ -16,6 +16,8 @@ type UserState = {
     user: User;
 };
 
+const BASE_URL = 'https://ya-praktikum.tech/api/v2/resources';
+
 const defaultState: UserState = {
     user: {
         id: null,
@@ -36,7 +38,7 @@ const userSlice = createSlice({
         setUser: (state, action: PayloadAction<Partial<User>>) => {
             state.user = action.payload;
             if (action.payload.avatar) {
-                state.user.avatar = `https://ya-praktikum.tech/api/v2/resources${action.payload.avatar}`;
+                state.user.avatar = `${BASE_URL}${action.payload.avatar}`;
             } else {
                 state.user.avatar = defaultAvatar;
             }
