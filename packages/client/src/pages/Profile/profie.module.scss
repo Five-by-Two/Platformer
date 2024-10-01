@@ -1,0 +1,44 @@
+@import '../../assets/styles/mixins.scss';
+
+.profile {
+    @include background-container;
+    position: relative;
+}
+
+.container {
+    position: relative;
+    @include container;
+    min-width: 500px;
+    justify-content: center;
+    align-items: center;
+    padding: 55px 50px;
+}
+
+.login {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+.buttonBack {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    font-size: 10px;
+    min-width: 110px;
+    padding: 10px 0;
+}
+
+.buttonLogout {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-size: 10px;
+    min-width: 110px;
+    padding: 10px 0;
+}
+
+.button {
+    margin-top: 20px;
+    width: 330px;
+}
+

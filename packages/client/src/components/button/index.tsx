@@ -2,12 +2,13 @@ import styles from './button.module.scss';
 
 type TProps = {
     text: string;
+    className?: string;
     onClick?: VoidFunction;
 };
 
-function Button({ text, onClick }: TProps) {
+function Button({ text, className, onClick }: TProps) {
     return (
-        <button className={`${styles.button}`} onClick={onClick}>
+        <button className={`${styles.button} ${className}`} onClick={onClick}>
             {text}
         </button>
     );

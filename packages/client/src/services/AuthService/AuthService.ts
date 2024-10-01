@@ -3,7 +3,7 @@ import AxiosService from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
 import { SignUpModel } from './Models/SignUpModel';
-import { User } from './Models/User';
+import { GetUserModel } from './Models/GetUserModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
@@ -34,8 +34,8 @@ class AuthService {
             });
     }
 
-    async GetUser(): Promise<User | void> {
-        return AxiosService.get<User>('auth/user')
+    async GetUser(): Promise<GetUserModel | void> {
+        return AxiosService.get<GetUserModel>('auth/user')
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения данных пользователя', ex);
