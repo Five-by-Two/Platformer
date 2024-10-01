@@ -10,34 +10,17 @@ import { useFormContext } from 'react-hook-form';
 
 type TProps = {
     name: ObjectKeys<TAllTypesFormProfile>;
-    type: 'text' | 'number' | 'password' | 'file';
-    placeholder: string;
     validateErrorText?: string;
-    disabled?: boolean;
-    required?: boolean;
 };
 
-function Input({
-    type,
-    name,
-    placeholder,
-    required,
-    disabled,
-    validateErrorText,
-}: TProps) {
+function Input({ validateErrorText, name, ...other }: TProps) {
     const { register } = useFormContext<
         TFormProfileData | TFormPasswordData | TFormAvatarData
     >();
 
     return (
         <div className={styles.inputWrapper}>
-            <input
-                {...register(name)}
-                disabled={disabled}
-                type={type}
-                placeholder={placeholder}
-                required={required}
-            />
+            <input {...register(name)} {...other} />
             {validateErrorText && <span>{validateErrorText}</span>}
         </div>
     );
