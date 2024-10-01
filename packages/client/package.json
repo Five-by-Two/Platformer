@@ -17,6 +17,7 @@
         "axios": "^1.7.7",
         "dotenv": "^16.0.2",
         "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-react-hooks": "^4.6.2",
         "lodash": "^4.17.21",
         "nanoid": "^5.0.7",
         "prettier": "^2.7.1",
