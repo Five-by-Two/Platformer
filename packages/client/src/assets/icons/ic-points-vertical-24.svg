@@ -1,0 +1,9 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<g id="ic:points-vertical-24">
+		<path id="Vector" d="M14 18H13V17H11V18H10V19H9V21H10V22H11V23H13V22H14V21H15V19H14V18ZM13 21H11V19H13V21Z"
+		      fill="black"/>
+		<path id="Vector_2" d="M14 10H13V9H11V10H10V11H9V13H10V14H11V15H13V14H14V13H15V11H14V10ZM13 13H11V11H13V13Z"
+		      fill="black"/>
+		<path id="Vector_3" d="M14 3V2H13V1H11V2H10V3H9V5H10V6H11V7H13V6H14V5H15V3H14ZM11 5V3H13V5H11Z" fill="black"/>
+	</g>
+</svg>

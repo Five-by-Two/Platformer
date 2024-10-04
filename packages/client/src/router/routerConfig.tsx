@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import * as Pages from '../pages';
+import * as Pages from '@/pages';
 import { EPageRoutes } from './Enums';
 
 /** Конфигурация используемых в проекте страниц. */
@@ -26,11 +26,12 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.FORUM_PAGE,
-        element: <Pages.ForumPage />,
-    },
-    {
-        path: EPageRoutes.FORUM_TOPIC_PAGE,
-        element: <Pages.ForumTopicPage />,
+        element: <Pages.Forum />,
+        children: [
+            { index: true, element: <Pages.ForumList /> },
+            { path: 'create', element: <Pages.CreateTopic /> },
+            { path: ':topicId', element: <Pages.ForumTopic /> },
+        ],
     },
     {
         path: EPageRoutes.SERVER_ERROR,
@@ -39,5 +40,9 @@ export const routerConfig: RouteObject[] = [
     {
         path: EPageRoutes.LEADER_BOARD_PAGE,
         element: <Pages.LeaderBoardPage />,
+    },
+    {
+        path: EPageRoutes.NOT_FOUND,
+        element: <Pages.NotFoundPage />,
     },
 ];

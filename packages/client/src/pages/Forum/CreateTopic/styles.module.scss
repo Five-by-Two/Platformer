@@ -1,0 +1,54 @@
+@use 'sass:color';
+
+.createTopicForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__error {
+        color: $error;
+        @include text-xs;
+    }
+
+    &__input {
+        @include text-base;
+        padding: 12px;
+        border: 1px solid $gray-dark;
+        background-color: color.adjust($white, $lightness: -20%, $alpha: -0.6);
+        color: $white;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: $orange-hover;
+        }
+    }
+
+    &__textarea {
+        height: 100%;
+        @include text-base;
+        padding: 12px;
+        border: 1px solid $gray-dark;
+        background-color: color.adjust($white, $lightness: -20%, $alpha: -0.6);
+        color: $white;
+        transition: border-color 0.3s ease;
+        min-height: 120px;
+        resize: vertical;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+            border-color: $orange-hover;
+        }
+    }
+}
+.full {
+    flex: 1;
+}

@@ -1,15 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
 import { routerConfig } from './routerConfig';
-import { NotFoundPage } from '../pages';
 
 export function Router() {
     return (
         <Routes>
-            {routerConfig.map(({ path, element }) => (
-                <Route key={path} path={path} element={element} />
+            {routerConfig.map(route => (
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    element={route.element}>
+                    {route.children &&
+                        route.children.map((child, i) => (
+                            <Route
+                                key={i}
+                                path={child?.path}
+                                element={child.element}
+                                index={child?.index || false}
+                            />
+                        ))}
+                </Route>
             ))}
-
-            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 }
