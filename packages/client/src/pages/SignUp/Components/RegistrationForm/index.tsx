@@ -4,15 +4,19 @@ import { useNavigate } from 'react-router';
 import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
 import FormInput from './Components/FormInput';
+import AuthService from '../../../../services/AuthService/AuthService';
 
 export default function RegisterForm() {
     const methods = useForm<IFormData>();
     const { handleSubmit } = methods;
     const navigate = useNavigate();
 
-    const onSumbit: SubmitHandler<IFormData> = data => {
-        //TODO: Обработка отправки формы
-        console.log(data);
+    const onSumbit: SubmitHandler<IFormData> = async data => {
+        AuthService.SignUp(data).then(result => {
+            if (result) {
+                navigate(`/${EPageRoutes.HOME_PAGE}`);
+            }
+        });
     };
 
     return (
