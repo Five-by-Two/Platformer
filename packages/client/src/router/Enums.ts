@@ -6,7 +6,6 @@ export enum EPageRoutes {
     PROFILE_PAGE = 'profile',
     LEADER_BOARD_PAGE = 'leaderboard',
     FORUM_PAGE = 'forum',
-    FORUM_TOPIC_PAGE = 'forum/:topic',
-    NOT_FOUND = 'not-found',
+    NOT_FOUND = '*',
     SERVER_ERROR = 'server-error',
 }

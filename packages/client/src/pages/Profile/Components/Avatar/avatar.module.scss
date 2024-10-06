@@ -9,7 +9,7 @@
     cursor: pointer;
 
     border-radius: 50%;
-    
+
     .avatarChange {
         display: none;
         justify-content: center;
@@ -18,21 +18,21 @@
         width: 100%;
         height: 100%;
         z-index: 2;
-        
+
         background-color: rgb(255, 255, 255, 0.7);
-        
+
         .icon {
             width: 50px;
         }
     }
-    
+
     &:hover {
         border: 1px solid var(--gray-light);
-        
+
         .avatarChange {
             display: flex;
         }
-    } 
+    }
 
     .avatar {
         width: 120px;
