@@ -1,4 +1,4 @@
-import { Topic } from '@/@types/forumTypes';
+import { Topic } from '@/pages/Forum/models/forumTypes';
 
 export const mockTopics: Topic[] = [
     {

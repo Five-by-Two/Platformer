@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import { Comment } from '@/@types/forumTypes';
-import styles from './styles.module.scss'; // Импортируем стили
+import styles from './styles.module.scss';
+import { Comment } from '@/pages/Forum/models/forumTypes'; // Импортируем стили
 
 interface CommentListProps {
     comments: Comment[];

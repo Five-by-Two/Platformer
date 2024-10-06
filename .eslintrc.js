@@ -18,7 +18,7 @@ module.exports = {
         '@typescript-eslint/ban-ts-comment': 1,
         'no-unused-expressions': 'error',
         '@typescript-eslint/no-explicit-any': 'warn',
-        indent: ['warn', 4],
+        'indent': ['error', 4, { "SwitchCase": 1 }],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
     },

@@ -2,11 +2,13 @@ import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { CommentList, CreateComment } from '../components';
-import { Topic } from '@/@types/forumTypes';
 import { mockTopics } from '../mocks';
+import { Topic } from '@/pages/Forum/models/forumTypes';
 
 export const ForumTopic: FC = () => {
-    const { topicId } = useParams<{ topicId: string }>();
+    const { topicId } = useParams<{
+        topicId: string;
+    }>();
     const [topic, setTopic] = useState<Topic | null>(null);
 
     useEffect(() => {

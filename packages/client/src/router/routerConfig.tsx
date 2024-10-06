@@ -39,29 +39,35 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.FORUM_PAGE,
-	    element: (
-		    <PrivateRoute>
-			    <Pages.Forum />
-		    </PrivateRoute>
-	    ),
+        element: (
+            <PrivateRoute>
+                <Pages.Forum />
+            </PrivateRoute>
+        ),
         children: [
-            { index: true, element: (
-					<PrivateRoute>
-		                <Pages.ForumList />
-					</PrivateRoute>
-	            )
+            {
+                index: true,
+                element: (
+                    <PrivateRoute>
+                        <Pages.ForumList />
+                    </PrivateRoute>
+                ),
             },
-            { path: 'create', element: (
-					<PrivateRoute>
-						<Pages.CreateTopic />
-					</PrivateRoute>
-	            )
+            {
+                path: 'create',
+                element: (
+                    <PrivateRoute>
+                        <Pages.CreateTopic />
+                    </PrivateRoute>
+                ),
             },
-            { path: ':topicId', element: (
-		            <PrivateRoute>
-			            <Pages.ForumTopic />
-		            </PrivateRoute>
-	            )
+            {
+                path: ':topicId',
+                element: (
+                    <PrivateRoute>
+                        <Pages.ForumTopic />
+                    </PrivateRoute>
+                ),
             },
         ],
     },

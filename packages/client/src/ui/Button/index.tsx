@@ -2,18 +2,18 @@ import React, { FC, ReactNode } from 'react';
 import styles from './styles.module.scss';
 
 interface ButtonProps {
-    onClick?: VoidFunction;
-    children?: ReactNode;
-    leftIcon?: ReactNode;
-    rightIcon?: ReactNode;
-    color?: string;
-    className?: string;
-    variant?: 'primary' | 'secondary';
-    disabled?: boolean;
-    type?: 'button' | 'submit' | 'reset';
+    onClick: VoidFunction;
+    children: ReactNode;
+    leftIcon: ReactNode;
+    rightIcon: ReactNode;
+    color: string;
+    className: string;
+    variant: 'primary' | 'secondary';
+    disabled: boolean;
+    type: 'button' | 'submit' | 'reset';
 }
 
-export const Button: FC<ButtonProps> = ({
+export const Button: FC<Partial<ButtonProps>> = ({
     onClick,
     children,
     leftIcon,

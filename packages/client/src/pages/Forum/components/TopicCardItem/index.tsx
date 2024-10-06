@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import styles from './styles.module.scss';
-import { Topic } from '@/@types/forumTypes';
+import { Topic } from '@/pages/Forum/models/forumTypes';
 
 interface TopicCardItemProps {
     topic: Topic;
