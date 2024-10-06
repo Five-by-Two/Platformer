@@ -6,7 +6,7 @@ export function ServerErrorPage(): JSX.Element {
     const navigate = useNavigate();
 
     const handleClick = (): void => {
-        navigate('..');
+        navigate(-1);
     };
 
     return (
@@ -16,7 +16,7 @@ export function ServerErrorPage(): JSX.Element {
                     <h1>500</h1>
                     <p>Ошибка обращения к серверу</p>
                 </div>
-                <Button text="На главную" onClick={handleClick} />
+                <Button text="Назад" onClick={handleClick} />
             </section>
         </div>
     );
