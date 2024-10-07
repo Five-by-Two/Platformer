@@ -4,10 +4,12 @@ import styles from './profileForm.module.scss';
 import { TFormProfileData } from '../../Models/IFormProfileData';
 import { useEffect, useState } from 'react';
 import Button from '../../../../components/button';
-import userService from '../../../../services/UserService/UserService';
-import { useAppSelector } from '../../../../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux-hooks';
+import { changeUser } from '@/store/thunks';
 
 function ProfileForm() {
+    const dispatch = useAppDispatch();
+
     const methods = useForm<TFormProfileData>({
         mode: 'onBlur',
     });
@@ -22,7 +24,7 @@ function ProfileForm() {
 
     function submitForm(data: TFormProfileData) {
         if (!isInputDisabled) {
-            userService.UpdateUserData(data);
+            dispatch(changeUser(data));
 
             setTextButtonChangeData('Изменить данные');
         } else {
