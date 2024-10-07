@@ -6,6 +6,7 @@ import IFormData from './Models/IFormData';
 import FormInput from './Components/FormInput';
 import AuthService from '../../../../services/AuthService/AuthService';
 import ValidationConstants from './Models/ValidationConstants';
+import { Button } from '@/ui';
 
 export default function RegisterForm() {
     const methods = useForm<IFormData>();
@@ -68,9 +69,7 @@ export default function RegisterForm() {
                     validateErrorText={ValidationConstants.PASSWORD_ERROR}
                 />
                 <div className={styles.actions}>
-                    <button className={styles.button_primary} type="submit">
-                        Регистрация
-                    </button>
+                    <Button type="submit">Регистрация</Button>
                     <button
                         className={styles.button_secondary}
                         type="button"
