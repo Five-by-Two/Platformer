@@ -8,7 +8,7 @@ type User = {
     display_name: string;
     phone: string;
     login: string;
-    avatar: string | undefined;
+    avatar?: string;
     email: string;
 };
 
