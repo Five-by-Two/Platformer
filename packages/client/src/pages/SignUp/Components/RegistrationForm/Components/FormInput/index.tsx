@@ -14,17 +14,22 @@ type Properties = {
 
 export default function FormInput(props: Properties) {
     const { validateErrorText, name, placeholder, required, type } = props;
-    const { register } = useFormContext<IFormData>();
-
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext<IFormData>();
     return (
-        <div className={styles.inputWrapper}>
+        <div
+            className={`${styles.inputWrapper} ${
+                errors[name] != undefined && styles.inputWrapper_validateError
+            }`}>
             <input
                 type={type}
-                {...register(name)}
+                {...register(name, { pattern: props.pattern })}
                 placeholder={placeholder}
                 required={required}
             />
-            {validateErrorText && <span>{validateErrorText}</span>}
+            {errors[name] != undefined && <span>{validateErrorText}</span>}
         </div>
     );
 }
