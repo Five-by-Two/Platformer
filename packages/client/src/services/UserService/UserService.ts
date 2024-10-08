@@ -37,15 +37,21 @@ class UserService {
         });
     }
 
-    UpdateUserData(data: UpdateUserDataModel) {
-        return AxiosService.put('user/profile', JSON.stringify(data), {
-            headers: {
-                'Content-Type': 'application/json',
+    UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
+        return AxiosService.put<UserModel>(
+            'user/profile',
+            JSON.stringify(data),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             },
-        }).catch((ex: AxiosError) => {
-            console.error('Ошибка изменения данных', ex);
-            return false;
-        });
+        )
+            .then(res => res.data)
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка изменения данных', ex);
+                return false;
+            });
     }
 }
 
