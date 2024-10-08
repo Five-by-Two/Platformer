@@ -1,0 +1,42 @@
+@use 'sass:color';
+
+.createComment {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    gap: 1.5rem;
+
+    &__textareaContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__textarea {
+        height: 100%;
+        @include text-base;
+        padding: 12px;
+        border: 1px solid $gray-dark;
+        background-color: color.adjust($white, $lightness: -20%, $alpha: -0.6);
+        color: $white;
+        transition: border-color 0.3s ease;
+        resize: vertical;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+            border-color: $orange-hover;
+        }
+    }
+
+    &__error {
+        color: $error;
+        @include text-xs;
+    }
+
+    &__buttonContainer {
+        display: flex;
+        justify-content: center;
+    }
+}

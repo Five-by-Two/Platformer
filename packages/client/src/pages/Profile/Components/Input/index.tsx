@@ -7,11 +7,12 @@ import {
     TFormProfileData,
 } from '../../Models/IFormProfileData';
 import { useFormContext } from 'react-hook-form';
+import { InputHTMLAttributes } from 'react';
 
 type TProps = {
     name: ObjectKeys<TAllTypesFormProfile>;
     validateErrorText?: string;
-};
+} & InputHTMLAttributes<HTMLInputElement>;
 
 function Input({ validateErrorText, name, ...other }: TProps) {
     const { register } = useFormContext<

@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import * as Pages from '../pages';
+import * as Pages from '@/pages';
 import { EPageRoutes } from './Enums';
 import PrivateRoute from './privateRoute';
 
@@ -41,21 +41,39 @@ export const routerConfig: RouteObject[] = [
         path: EPageRoutes.FORUM_PAGE,
         element: (
             <PrivateRoute>
-                <Pages.ForumPage />
+                <Pages.Forum />
             </PrivateRoute>
         ),
-    },
-    {
-        path: EPageRoutes.FORUM_TOPIC_PAGE,
-        element: (
-            <PrivateRoute>
-                <Pages.ForumTopicPage />
-            </PrivateRoute>
-        ),
+        children: [
+            {
+                index: true,
+                element: (
+                    <PrivateRoute>
+                        <Pages.ForumList />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: 'create',
+                element: (
+                    <PrivateRoute>
+                        <Pages.CreateTopic />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: ':topicId',
+                element: (
+                    <PrivateRoute>
+                        <Pages.ForumTopic />
+                    </PrivateRoute>
+                ),
+            },
+        ],
     },
     {
         path: EPageRoutes.SERVER_ERROR,
-        element: <Pages.NotFoundPage />,
+        element: <Pages.ServerErrorPage />,
     },
     {
         path: EPageRoutes.LEADER_BOARD_PAGE,
@@ -64,5 +82,9 @@ export const routerConfig: RouteObject[] = [
                 <Pages.LeaderBoardPage />
             </PrivateRoute>
         ),
+    },
+    {
+        path: EPageRoutes.NOT_FOUND,
+        element: <Pages.NotFoundPage />,
     },
 ];

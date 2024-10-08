@@ -1,6 +1,6 @@
-$danger-color: #DC0303;
-$main-color: #24A3AE;
-$focus-color: #B85800;
+$danger-color: #dc0303;
+$main-color: #24a3ae;
+$focus-color: #b85800;
 
 .inputWrapper {
     display: flex;
@@ -11,7 +11,7 @@ $focus-color: #B85800;
         background-color: transparent;
         border: 2px solid $main-color;
         border-radius: 5px;
-        padding: .3rem;
+        padding: 0.3rem;
         outline: none;
         color: $focus-color;
     }
