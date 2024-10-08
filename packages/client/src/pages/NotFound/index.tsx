@@ -7,7 +7,7 @@ export function NotFoundPage(): JSX.Element {
     const navigate = useNavigate();
 
     const handleClick = (): void => {
-        navigate('..');
+        navigate(-1);
     };
 
     return (
