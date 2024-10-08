@@ -5,7 +5,7 @@ export const LASTNAME_PATTERN = /^([А-ЯЁA-Z][а-яёa-z-]*)$/;
 export const LASTNAME_ERROR = 'Фамилия должна начинаться с заглавной буквы';
 
 export const FIRSTNAME_PATTERN = /^([А-ЯЁA-Z][а-яёa-z-]*)$/;
-export const FIRSTNAME_ERROR = 'Фамилия должна начинаться с заглавной буквы';
+export const FIRSTNAME_ERROR = 'Имя должно начинаться с заглавной буквы';
 
 export const PHONE_PATTERN = /^\+?\d{10,15}$/;
 export const PHONE_ERROR = 'Номер телефона должен быть в формате +79111111111';
