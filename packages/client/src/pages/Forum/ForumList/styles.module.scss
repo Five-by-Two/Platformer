@@ -1,0 +1,51 @@
+@use 'sass:color';
+
+.forumList {
+    max-height: 100%;
+    width: 100%;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    &__title {
+        width: 100%;
+        @include text-2xl;
+        color: $white;
+        text-align: center;
+    }
+
+    &__search {
+        padding: 8px;
+        border: 1px solid $gray-dark;
+        background-color: color.adjust($white, $lightness: -20%, $alpha: -0.6);
+        color: $white;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: $orange-hover;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        color: color.adjust($white, $lightness: -10%, $alpha: -0.2);
+    }
+}

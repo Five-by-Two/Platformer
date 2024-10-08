@@ -1,0 +1,52 @@
+@use 'sass:color';
+
+.forum {
+    @include background-container;
+    box-sizing: border-box;
+    position: relative;
+    background-attachment: fixed;
+    overflow: auto;
+
+    &__container {
+        @include container;
+        margin: 2rem;
+        min-width: 80%;
+        max-width: 80%;
+        min-height: 80%;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 1rem;
+        overflow: auto;
+    }
+    &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        gap: 1rem;
+        border-bottom: 1px solid color.adjust($white, $alpha: -0.7);
+    }
+    &__navigation {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+    &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    &__title {
+        width: 100%;
+        @include text-3xl;
+        text-align: center;
+        color: $white;
+    }
+
+    &__content {
+        height: 100%;
+    }
+}

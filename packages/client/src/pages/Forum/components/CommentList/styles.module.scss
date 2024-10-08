@@ -1,0 +1,41 @@
+@use 'sass:color';
+
+.commentList {
+    padding: 16px;
+    border: 1px solid color.adjust($white, $alpha: -0.1);
+    border-radius: 8px;
+    background-color: color.adjust($gray-dark, $alpha: -0.5);
+    margin-top: 16px;
+    max-height: 100%;
+    overflow-y: auto;
+
+    &__item {
+        padding: 8px;
+        border-bottom: 1px solid color.adjust($white, $alpha: -0.1);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__content {
+        color: $white;
+        margin: 0 0 4px;
+    }
+
+    &__author {
+        color: $gray-light;
+        @include text-xs;
+    }
+
+    &__date {
+        margin-left: 0.75rem;
+        color: $gray-light;
+        @include text-xs;
+    }
+
+    &__noComments {
+        color: $gray-light;
+        text-align: center;
+    }
+}
