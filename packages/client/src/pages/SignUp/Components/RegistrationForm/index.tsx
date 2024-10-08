@@ -5,7 +5,7 @@ import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
 import FormInput from './Components/FormInput';
 import AuthService from '../../../../services/AuthService/AuthService';
-import ValidationConstants from './Models/ValidationConstants';
+import * as ValidationConstants from './Validation/ValidationConstants';
 import { Button } from '@/ui';
 
 export default function RegisterForm() {
