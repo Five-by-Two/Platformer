@@ -11,7 +11,7 @@ export const changeUser = createAsyncThunk(
         try {
             const response = await UserService.UpdateUserData(data);
 
-            if (!response) {
+            if (response === false) {
                 throw new Error('Ошибка изменения данных');
             }
             dispatch(setUser(data));
@@ -47,7 +47,7 @@ export const deleteUser = createAsyncThunk(
         try {
             const response = await AuthService.LogOut();
 
-            if (!response) {
+            if (response === false) {
                 throw new Error('Ошибка выхода из системы');
             }
 
