@@ -73,7 +73,7 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.SERVER_ERROR,
-        element: <Pages.NotFoundPage />,
+        element: <Pages.ServerErrorPage />,
     },
     {
         path: EPageRoutes.LEADER_BOARD_PAGE,
