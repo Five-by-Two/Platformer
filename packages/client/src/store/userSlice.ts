@@ -1,9 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import defaultAvatar from '../assets/images/avatar.png';
-import { TUser } from '@/utils/types';
+
+type User = {
+    id: number | null;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    phone: string;
+    login: string;
+    avatar?: string;
+    email: string;
+};
 
 type UserState = {
-    user: TUser<number | null>;
+    user: User;
 };
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2/resources';
@@ -25,10 +35,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: defaultState,
     reducers: {
-        setUser: (
-            state,
-            action: PayloadAction<Partial<TUser<number | null>>>,
-        ) => {
+        setUser: (state, action: PayloadAction<Partial<User>>) => {
             state.user = Object.assign(state.user, action.payload);
             if (action.payload.avatar) {
                 state.user.avatar = `${BASE_URL}${action.payload.avatar}`;
