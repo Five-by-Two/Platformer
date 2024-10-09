@@ -5,6 +5,8 @@ import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
 import FormInput from './Components/FormInput';
 import AuthService from '../../../../services/AuthService/AuthService';
+import * as ValidationConstants from './Validation/ValidationConstants';
+import { Button } from '@/ui';
 
 export default function RegisterForm() {
     const methods = useForm<IFormData>();
@@ -23,33 +25,51 @@ export default function RegisterForm() {
         <FormProvider {...methods}>
             <form className={styles.form} onSubmit={handleSubmit(onSumbit)}>
                 <h1>Регистрация</h1>
-                <FormInput placeholder="Email" name="email" required={true} />
+                <FormInput
+                    placeholder="Email"
+                    name="email"
+                    required={true}
+                    pattern={ValidationConstants.EMAIL_PATTERN}
+                    validateErrorText={ValidationConstants.EMAIL_ERROR}
+                />
                 <FormInput
                     placeholder="Фамилия"
                     name="second_name"
                     required={true}
+                    pattern={ValidationConstants.LASTNAME_PATTERN}
+                    validateErrorText={ValidationConstants.LASTNAME_ERROR}
                 />
                 <FormInput
                     placeholder="Имя"
                     name="first_name"
                     required={true}
+                    pattern={ValidationConstants.FIRSTNAME_PATTERN}
+                    validateErrorText={ValidationConstants.FIRSTNAME_ERROR}
                 />
                 <FormInput
                     placeholder="Номер телефона"
                     name="phone"
                     required={true}
+                    pattern={ValidationConstants.PHONE_PATTERN}
+                    validateErrorText={ValidationConstants.PHONE_ERROR}
                 />
-                <FormInput placeholder="Логин" name="login" required={true} />
+                <FormInput
+                    placeholder="Логин"
+                    name="login"
+                    required={true}
+                    pattern={ValidationConstants.LOGIN_PATTERN}
+                    validateErrorText={ValidationConstants.LOGIN_ERROR}
+                />
                 <FormInput
                     placeholder="Пароль"
                     name="password"
                     type="password"
                     required={true}
+                    pattern={ValidationConstants.PASSWORD_PATTERN}
+                    validateErrorText={ValidationConstants.PASSWORD_ERROR}
                 />
                 <div className={styles.actions}>
-                    <button className={styles.button_primary} type="submit">
-                        Регистрация
-                    </button>
+                    <Button type="submit">Регистрация</Button>
                     <button
                         className={styles.button_secondary}
                         type="button"

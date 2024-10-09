@@ -5,6 +5,7 @@ import { EPageRoutes } from '../../../../router/Enums';
 import IFormData from './Models/IFormData';
 import AuthService from '../../../../services/AuthService/AuthService';
 import { useState } from 'react';
+import { Button } from '@/ui';
 
 export default function LoginForm() {
     const { register, handleSubmit } = useForm<IFormData>();
@@ -34,9 +35,7 @@ export default function LoginForm() {
             />
             {errorText && <span className={styles.errorText}>{errorText}</span>}
             <div className={styles.actions}>
-                <button className={styles.button_primary} type="submit">
-                    Войти
-                </button>
+                <Button type="submit">Войти</Button>
                 <button
                     className={styles.button_secondary}
                     type="button"
