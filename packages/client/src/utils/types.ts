@@ -1,5 +1,5 @@
-export type TUser<T = number> = {
-    id: T;
+export type TUser = {
+    id: number;
     first_name: string;
     second_name: string;
     display_name: string;
