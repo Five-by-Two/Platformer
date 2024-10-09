@@ -23,11 +23,7 @@ export const routerConfig: RouteObject[] = [
     },
     {
         path: EPageRoutes.GAME_PAGE,
-        element: (
-            <PrivateRoute>
-                <Pages.GamePage />
-            </PrivateRoute>
-        ),
+        element: <Pages.GamePage />,
     },
     {
         path: EPageRoutes.PROFILE_PAGE,

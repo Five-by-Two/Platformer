@@ -1,4 +1,4 @@
-import { ICoordinates } from '../models';
+import { ICoordinates } from '../../models';
 
 interface IConstructor {
     position: ICoordinates;
@@ -19,11 +19,10 @@ export class CollisionBlock {
         this.position = position;
         this.width = 16;
         this.height = height;
+        this.context.fillStyle = 'rgba(255, 0, 0, 0.5)';
     }
 
     draw() {
-        this.context.fillStyle = 'rgba(255, 0, 0, 0.5)';
-
         this.context?.fillRect(
             this.position.x,
             this.position.y,

@@ -1,5 +1,5 @@
-import { CollisionBlock } from '../classes/CollisionBlock';
-import { IHitBox } from '../classes/Player';
+import { CollisionBlock } from '../GameLogic/classes/CollisionBlock';
+import { IHitBox } from '../GameLogic/classes/Player';
 
 export function collision(object1: IHitBox, object2: CollisionBlock) {
     return (

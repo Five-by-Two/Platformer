@@ -1,6 +1,6 @@
-import { CANVAS_HEIGHT } from '../consts';
-import { ICoordinates } from '../models';
-import { collision, platformCollision } from '../utils/collision';
+import { CANVAS_HEIGHT } from '../configs/main';
+import { ICoordinates } from '../../models';
+import { collision, platformCollision } from '../../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
 import { Sprite } from './Sprite';
 

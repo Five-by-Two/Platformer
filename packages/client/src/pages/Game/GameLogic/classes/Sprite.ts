@@ -1,4 +1,4 @@
-import { ICoordinates } from '../models';
+import { ICoordinates } from '../../models';
 
 interface ISpiteConstructor {
     position: ICoordinates;

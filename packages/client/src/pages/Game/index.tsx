@@ -5,16 +5,15 @@ import { EPageRoutes } from '../../router/Enums';
 import GameOver from './Components/GameOver';
 import styles from './index.module.scss';
 import { useEffect, useRef } from 'react';
-import { initGame } from './scripts/initGame';
+import { initGame } from './GameLogic/scripts/initGame';
 
 export function GamePage(): JSX.Element {
-    const [isGameStarted, setIsGameStarted] = useState(false);
+    const [isGameStarted, setIsGameStarted] = useState(true);
     const [isGameOver, setIsGameOver] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        console.log(canvas);
         if (canvas) {
             initGame(canvas);
         }
