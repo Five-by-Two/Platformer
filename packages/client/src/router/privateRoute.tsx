@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks/redux-hooks';
 import { useNavigate } from 'react-router';
 import { EPageRoutes } from './Enums';
-import AuthService from '../services/AuthService/AuthService';
-import { setUser } from '../store/userSlice';
+import { getUser } from '@/store/thunks';
 
 type Properties = {
     children: JSX.Element;
@@ -15,11 +14,9 @@ export default function PrivateRoute({ children }: Properties) {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        AuthService.GetUser().then(res => {
-            if (!res) {
+        dispatch(getUser()).then(res => {
+            if (res.meta.requestStatus === 'rejected') {
                 navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
-            } else {
-                dispatch(setUser(res));
             }
         });
     }, []);

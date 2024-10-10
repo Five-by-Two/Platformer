@@ -4,10 +4,12 @@ import styles from './profileForm.module.scss';
 import { TFormProfileData } from '../../Models/IFormProfileData';
 import { useEffect, useState } from 'react';
 import Button from '../../../../components/button';
-import userService from '../../../../services/UserService/UserService';
-import { useAppSelector } from '../../../../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux-hooks';
+import { changeUser } from '@/store/thunks';
 
 function ProfileForm() {
+    const dispatch = useAppDispatch();
+
     const methods = useForm<TFormProfileData>({
         mode: 'onBlur',
     });
@@ -22,7 +24,7 @@ function ProfileForm() {
 
     function submitForm(data: TFormProfileData) {
         if (!isInputDisabled) {
-            userService.UpdateUserData(data);
+            dispatch(changeUser(data));
 
             setTextButtonChangeData('Изменить данные');
         } else {
@@ -47,7 +49,7 @@ function ProfileForm() {
         <FormProvider {...methods}>
             <form className={styles.form} onSubmit={handleSubmit(submitForm)}>
                 <div className={styles.container}>
-                    <p>email:</p>
+                    <p className={styles.inputTitle}>email:</p>
                     <Input
                         name="email"
                         type="text"
@@ -56,7 +58,7 @@ function ProfileForm() {
                     />
                 </div>
                 <div className={styles.container}>
-                    <p>Имя:</p>
+                    <p className={styles.inputTitle}>Имя:</p>
                     <Input
                         name="first_name"
                         type="text"
@@ -65,7 +67,7 @@ function ProfileForm() {
                     />
                 </div>
                 <div className={styles.container}>
-                    <p>Фамилия:</p>
+                    <p className={styles.inputTitle}>Фамилия:</p>
                     <Input
                         name="second_name"
                         type="text"
@@ -74,7 +76,7 @@ function ProfileForm() {
                     />
                 </div>
                 <div className={styles.container}>
-                    <p>Имя в игре:</p>
+                    <p className={styles.inputTitle}>Имя в игре:</p>
                     <Input
                         name="display_name"
                         type="text"
@@ -83,7 +85,7 @@ function ProfileForm() {
                     />
                 </div>
                 <div className={styles.container}>
-                    <p>Телефон:</p>
+                    <p className={styles.inputTitle}>Телефон:</p>
                     <Input
                         name="phone"
                         type="text"
@@ -92,7 +94,7 @@ function ProfileForm() {
                     />
                 </div>
                 <div className={styles.container}>
-                    <p>Логин:</p>
+                    <p className={styles.inputTitle}>Логин:</p>
                     <Input
                         name="login"
                         type="text"
