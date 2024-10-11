@@ -6,17 +6,15 @@
     gap: 0.1rem;
 
     span {
-        display: none;
         color: $danger-color;
+        max-width: 20rem;
+        text-align: center;
+        font-size: x-small;
     }
 }
 
 .inputWrapper_validateError {
     input {
         border-color: $danger-color;
-    }
-
-    span {
-        display: inline;
     }
 }
