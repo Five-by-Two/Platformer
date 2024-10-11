@@ -20,19 +20,28 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
     const e = event as FetchEvent;
+    const request = e.request.clone();
 
     e.respondWith(
-        caches.match(e.request).then(response => {
-            if (response) return response;
+        fetch(request).then(response => {
+            if (!response) return response;
 
-            const fetchRequest = e.request.clone();
-            return fetch(fetchRequest).then(response => {
-                const responseToCahche = response.clone();
+            const responseToCache = response.clone();
+
+            if (responseToCache.status === 200) {
                 caches.open(CACHE_NAME).then(cache => {
-                    cache.put(e.request, responseToCahche);
+                    console.log('cache put');
+                    cache.put(e.request, responseToCache);
                 });
                 return response;
+            }
+
+            console.log('not result. check cache');
+            caches.match(e.request).then(cacheResponse => {
+                if (cacheResponse) return cacheResponse;
             });
+
+            return response;
         }),
     );
 });
