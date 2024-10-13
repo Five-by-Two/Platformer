@@ -12,6 +12,7 @@ import WarriorFall from '../assets/warrior/Fall.png';
 import WarriorFallLeft from '../assets/warrior/FallLeft.png';
 import WarriorRunLeft from '../assets/warrior/RunLeft.png';
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../consts';
+import { ICoordinates } from '../models';
 import { EPlayerState } from '../Enums';
 
 const keys = {
@@ -26,7 +27,17 @@ const keys = {
     },
 };
 
-export function initGame(canvas: HTMLCanvasElement) {
+const initPlayerPosition: ICoordinates = {
+    x: 100,
+    y: 350,
+};
+
+export function initGame(
+    canvas: HTMLCanvasElement,
+    isGameStarted: boolean,
+    isGameStart: VoidFunction,
+    isGameOver: VoidFunction,
+) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
     const scaledCanvas = {
         width: canvas.width / 4,
@@ -90,10 +101,7 @@ export function initGame(canvas: HTMLCanvasElement) {
         scale: 0.5,
         canvas,
         imgSrc: WarriorIdle,
-        position: {
-            x: 100,
-            y: 300,
-        },
+        position: initPlayerPosition,
         collisionBlocks,
         platformCollisionBlocks,
         frameRate: 8,
@@ -166,8 +174,11 @@ export function initGame(canvas: HTMLCanvasElement) {
         },
     };
 
+    let animationId: number;
+    let lowerCameraLimit: number;
+
     function animate() {
-        window.requestAnimationFrame(animate);
+        animationId = window.requestAnimationFrame(animate);
         context.fillStyle = 'white';
         context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -177,63 +188,94 @@ export function initGame(canvas: HTMLCanvasElement) {
         background.update();
 
         player.checkForHorizontalCanvasCollision();
+
         player.update();
 
         player.velocity.x = 0;
-        if (keys.d.pressed) {
-            player.switchSprite(EPlayerState.Run);
-            player.velocity.x = 2;
-            player.lastDirection = 'right';
-            player.shouldPanCameraToTheLeft(canvas, camera);
-        } else if (keys.a.pressed) {
-            player.switchSprite(EPlayerState.RunLeft);
-            player.velocity.x = -2;
-            player.lastDirection = 'left';
-            player.shouldPanCameraToTheRight(camera);
-        } else if (player.velocity.y === 0) {
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Idle);
-            else player.switchSprite(EPlayerState.IdleLeft);
-        }
-
-        if (player.velocity.y < 0) {
-            player.shouldPanCameraDown(camera);
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Jump);
-            else player.switchSprite(EPlayerState.JumpLeft);
-        } else if (player.velocity.y > 0) {
-            player.shouldPanCameraUpwards(canvas, camera);
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Fall);
-            else player.switchSprite(EPlayerState.FallLeft);
-        }
         context.restore();
+        // console.log('lowerLimit', lowerCameraLimit);
+        if (isGameStarted) {
+            player.position = initPlayerPosition;
+            if (keys.d.pressed) {
+                player.switchSprite(EPlayerState.Run);
+                player.velocity.x = 2;
+                player.lastDirection = 'right';
+                player.shouldPanCameraToTheLeft(canvas, camera);
+            } else if (keys.a.pressed) {
+                player.switchSprite(EPlayerState.RunLeft);
+                player.velocity.x = -2;
+                player.lastDirection = 'left';
+                player.shouldPanCameraToTheRight(camera);
+            } else if (player.velocity.y === 0) {
+                if (player.lastDirection === 'right')
+                    player.switchSprite(EPlayerState.Idle);
+                else player.switchSprite(EPlayerState.IdleLeft);
+            }
+
+            if (player.velocity.y < 0) {
+                player.shouldPanCameraDown(camera);
+                if (player.lastDirection === 'right')
+                    player.switchSprite(EPlayerState.Jump);
+                else player.switchSprite(EPlayerState.JumpLeft);
+            } else if (player.velocity.y > 0) {
+                // Запрет движения камеры вниз за движением персонажа
+                // player.shouldPanCameraUpwards(canvas, camera);
+                if (player.lastDirection === 'right')
+                    player.switchSprite(EPlayerState.Fall);
+                else player.switchSprite(EPlayerState.FallLeft);
+            }
+
+            // console.log('CAMERA', camera.position.y);
+            // console.log('Player', -player.position.y);
+            // console.log('lowerCameraLimit', lowerCameraLimit);
+
+            lowerCameraLimit = camera.position.y - scaledCanvas.height;
+            console.log('lowerLimit', lowerCameraLimit);
+
+            if (-player.position.y - 45 < lowerCameraLimit) {
+                window.cancelAnimationFrame(animationId);
+                // console.log('lowerLimit', lowerCameraLimit);
+                // console.log(
+                //     'Math.abs(player.position.y)',
+                //     Math.abs(player.position.y)
+                // );
+                gameOver();
+            }
+            window.addEventListener('keydown', event => {
+                switch (event.key) {
+                    case 'd':
+                        keys.d.pressed = true;
+                        break;
+                    case 'a':
+                        keys.a.pressed = true;
+                        break;
+                    case 'w':
+                        player.velocity.y = -2.5;
+                        break;
+                }
+            });
+
+            window.addEventListener('keyup', event => {
+                switch (event.key) {
+                    case 'd':
+                        keys.d.pressed = false;
+                        break;
+                    case 'a':
+                        keys.a.pressed = false;
+                        break;
+                }
+            });
+        } else {
+            window.addEventListener('keypress', () => {
+                window.cancelAnimationFrame(animationId);
+            });
+        }
+    }
+
+    function gameOver() {
+        console.log('КОНЕЦ ИГРЫ!');
+        isGameOver();
     }
 
     animate();
-
-    window.addEventListener('keydown', event => {
-        switch (event.key) {
-            case 'd':
-                keys.d.pressed = true;
-                break;
-            case 'a':
-                keys.a.pressed = true;
-                break;
-            case 'w':
-                player.velocity.y = -4;
-                break;
-        }
-    });
-
-    window.addEventListener('keyup', event => {
-        switch (event.key) {
-            case 'd':
-                keys.d.pressed = false;
-                break;
-            case 'a':
-                keys.a.pressed = false;
-                break;
-        }
-    });
 }

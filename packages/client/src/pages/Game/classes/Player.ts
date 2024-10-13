@@ -4,7 +4,7 @@ import { collision, platformCollision } from '../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
 import { Sprite } from './Sprite';
 
-const gravity = 0.1;
+const gravity = 0.05;
 
 interface IAnimations {
     imageSrc: string;
@@ -116,7 +116,7 @@ export class Player extends Sprite {
     updateCameraBox() {
         this.cameraBox = {
             position: {
-                x: this.position.x - 50,
+                x: this.position.x - 60,
                 y: this.position.y,
             },
             width: 200,

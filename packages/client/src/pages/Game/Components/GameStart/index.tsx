@@ -1,6 +1,6 @@
 import { useEffect, FC } from 'react';
-import styles from './index.module.scss';
-import Button from '../../../../components/button';
+import Button from '@/components/button';
+import styles from '@/pages/Game/Components/GameStart/index.module.scss';
 
 type GameStartProps = {
     onStart: VoidFunction;

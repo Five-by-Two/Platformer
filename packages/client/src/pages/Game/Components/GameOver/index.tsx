@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import Button from '../../../../components/button';
-import trophyIcon from '../../../../assets/icons/trophy.png';
-import styles from './index.module.scss';
+import Button from '@/components/button';
+import trophyIcon from '@/assets/icons/trophy.png';
+import styles from '@/pages/Game/Components/GameOver/index.module.scss';
 
 type GameOverProps = {
     onStart: VoidFunction;

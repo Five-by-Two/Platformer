@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../../../components/button';
-import { EPageRoutes } from '../../../../router/Enums';
-import styles from './index.module.scss';
-import AuthService from '../../../../services/AuthService/AuthService';
+import Button from '@/components/button';
+import { EPageRoutes } from '@/router/Enums';
+import styles from '@/pages/Home/Components/MainMenu/index.module.scss';
+import AuthService from '@/services/AuthService/AuthService';
 
 export default function MainMenu(): JSX.Element {
     const navigate = useNavigate();
