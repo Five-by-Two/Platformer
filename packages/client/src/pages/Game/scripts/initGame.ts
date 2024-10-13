@@ -171,18 +171,17 @@ export function initGame(
         },
     };
 
-    let animationId: number;
-    let lowerCameraLimit: number;
+    let isAnimationStarted = false;
 
     function animate() {
+        let lowerCameraLimit: number;
+        const animationId: number = window.requestAnimationFrame(animate);
+
         if (!isGameStarted) {
-            // player.position.x = initPlayerPosition.x;
-            // player.position.y = initPlayerPosition.y;
             player.position.x = 120;
             player.position.y = 347;
         }
 
-        animationId = window.requestAnimationFrame(animate);
         context.fillStyle = 'white';
         context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -230,9 +229,8 @@ export function initGame(
             }
 
             lowerCameraLimit = camera.position.y - scaledCanvas.height;
-            console.log('lowerLimit', lowerCameraLimit);
 
-            if (-player.position.y - 45 < lowerCameraLimit) {
+            if (-player.position.y - 47 < lowerCameraLimit) {
                 window.cancelAnimationFrame(animationId);
                 gameOver();
             }
@@ -272,5 +270,8 @@ export function initGame(
         setGameOverState();
     }
 
-    animate();
+    if (!isAnimationStarted) {
+        isAnimationStarted = true;
+        animate();
+    }
 }
