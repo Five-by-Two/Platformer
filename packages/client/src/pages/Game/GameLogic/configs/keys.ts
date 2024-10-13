@@ -8,4 +8,7 @@ export const GAME_KEYS = {
     w: {
         pressed: false,
     },
+    mbl: {
+        pressed: false,
+    },
 };

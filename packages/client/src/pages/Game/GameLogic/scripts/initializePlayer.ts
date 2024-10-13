@@ -10,11 +10,13 @@ import {
     WarriorJumpLeft,
     WarriorRun,
     WarriorRunLeft,
+    WarriorAttack,
+    WarriorAttackLeft,
 } from '../configs/playerConfig';
+
 export function initializePlayers(canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const { collisionBlocks, platformCollisionBlocks } =
-        initializeCollisions(context);
+    const { collisionBlocks, platformCollisionBlocks } = initializeCollisions(context);
 
     return new Player({
         context,
@@ -80,6 +82,18 @@ export function initializePlayers(canvas: HTMLCanvasElement) {
                 image: new Image(),
                 frameRate: 2,
                 frameBuffer: 2,
+            },
+            [EPlayerState.Attack]: {
+                imageSrc: WarriorAttack,
+                image: new Image(),
+                frameRate: 4,
+                frameBuffer: 4,
+            },
+            [EPlayerState.AttackLeft]: {
+                imageSrc: WarriorAttackLeft,
+                image: new Image(),
+                frameRate: 4,
+                frameBuffer: 4,
             },
         },
     });

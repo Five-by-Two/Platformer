@@ -26,4 +26,12 @@ export const addEventListeners = (player: Player) => {
                 break;
         }
     });
+
+    window.addEventListener('click', () => {
+        GAME_KEYS.mbl.pressed = true;
+        console.log('click');
+        setTimeout(() => {
+            GAME_KEYS.mbl.pressed = false;
+        }, 100);
+    });
 };

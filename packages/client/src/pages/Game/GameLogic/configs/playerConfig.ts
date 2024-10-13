@@ -6,3 +6,5 @@ export { default as WarriorJumpLeft } from '../assets/warrior/JumpLeft.png';
 export { default as WarriorFall } from '../assets/warrior/Fall.png';
 export { default as WarriorFallLeft } from '../assets/warrior/FallLeft.png';
 export { default as WarriorRunLeft } from '../assets/warrior/RunLeft.png';
+export { default as WarriorAttack } from '../assets/warrior/Attack1.png';
+export { default as WarriorAttackLeft } from '../assets/warrior/Attack1Left.png';

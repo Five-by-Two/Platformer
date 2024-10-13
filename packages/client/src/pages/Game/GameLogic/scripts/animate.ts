@@ -1,14 +1,11 @@
+/* eslint-disable no-unused-expressions */
 import { EPlayerState } from '../../Enums';
 import { Player } from '../classes/Player';
 import { Sprite } from '../classes/Sprite';
 import { GAME_KEYS } from '../configs/keys';
 import { camera } from '../configs/main';
 
-export function animateGame(
-    player: Player,
-    canvas: HTMLCanvasElement,
-    background: Sprite,
-) {
+export function animateGame(player: Player, canvas: HTMLCanvasElement, background: Sprite) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     function animate() {
@@ -24,7 +21,12 @@ export function animateGame(
         player.update();
 
         player.velocity.x = 0;
-        if (GAME_KEYS.d.pressed) {
+
+        if (GAME_KEYS.mbl.pressed) {
+            player.lastDirection === 'right'
+                ? player.switchSprite(EPlayerState.Attack)
+                : player.switchSprite(EPlayerState.AttackLeft);
+        } else if (GAME_KEYS.d.pressed) {
             player.switchSprite(EPlayerState.Run);
             player.velocity.x = 2;
             player.lastDirection = 'right';
@@ -35,20 +37,17 @@ export function animateGame(
             player.lastDirection = 'left';
             player.shouldPanCameraToTheRight(camera);
         } else if (player.velocity.y === 0) {
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Idle);
+            if (player.lastDirection === 'right') player.switchSprite(EPlayerState.Idle);
             else player.switchSprite(EPlayerState.IdleLeft);
         }
 
         if (player.velocity.y < 0) {
             player.shouldPanCameraDown(camera);
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Jump);
+            if (player.lastDirection === 'right') player.switchSprite(EPlayerState.Jump);
             else player.switchSprite(EPlayerState.JumpLeft);
         } else if (player.velocity.y > 0) {
             player.shouldPanCameraUpwards(canvas, camera);
-            if (player.lastDirection === 'right')
-                player.switchSprite(EPlayerState.Fall);
+            if (player.lastDirection === 'right') player.switchSprite(EPlayerState.Fall);
             else player.switchSprite(EPlayerState.FallLeft);
         }
         context.restore();

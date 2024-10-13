@@ -7,4 +7,6 @@ export enum EPlayerState {
     JumpLeft = 'JumpLeft',
     Fall = 'Fall',
     FallLeft = 'FallLeft',
+    Attack = 'Attack',
+    AttackLeft = 'AttackLeft',
 }
