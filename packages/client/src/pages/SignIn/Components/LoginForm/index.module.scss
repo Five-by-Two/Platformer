@@ -49,32 +49,17 @@ $danger-color: #dc0303;
     .actions {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
 
-        button {
-            border-radius: 5px;
+        .button_secondary {
             border: none;
             cursor: pointer;
-            padding: 0.5rem;
             color: black;
             outline: none;
             font-size: small;
-        }
 
-        .button_primary {
-            border: 2px solid $focus-color;
-            color: white;
-            background-color: $focus-color;
-        }
-
-        .button_primary:focus {
-            border: 2px solid black;
-        }
-
-        .button_secondary {
             background-color: transparent;
             text-decoration: underline;
-            padding: 0;
         }
 
         .button_secondary:focus {

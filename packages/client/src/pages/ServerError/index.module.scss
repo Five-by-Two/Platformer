@@ -1,0 +1,36 @@
+@import '../../assets/styles/mixins.scss';
+
+.container {
+    @include background-container;
+    background-image: url('../../assets/images/background-blurred.jpg');
+
+    .content_section {
+        min-height: 500px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 30px;
+        align-items: center;
+        border: 6px solid brown;
+        box-shadow: (6px 6px 0px rgb(90, 22, 22));
+        background-color: white;
+        color: black;
+        padding: 40px;
+        font-size: 24px;
+    }
+
+    h1 {
+        font-size: 64px;
+        text-shadow: 3px 3px 2px brown;
+    }
+
+    button {
+        font-size: 24px;
+    }
+
+    a {
+        text-decoration: underline;
+        align-self: flex-end;
+    }
+}

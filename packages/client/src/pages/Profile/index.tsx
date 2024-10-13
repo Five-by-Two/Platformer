@@ -6,11 +6,12 @@ import ProfileForm from './Components/ProfileForm';
 import ChangePassword from './Components/ChangePassword';
 import { useState } from 'react';
 import ChangeAvatar from './Components/ChangeAvatar';
-import { useAppSelector } from '../../hooks/redux-hooks';
-import authService from '../../services/AuthService/AuthService';
-import { EPageRoutes } from '../../router/Enums';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { deleteUser } from '@/store/thunks';
+import { EPageRoutes } from '@/router/Enums';
 
 export function ProfilePage(): JSX.Element {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const userLogin = useAppSelector(state => state.user.user.login);
@@ -26,8 +27,8 @@ export function ProfilePage(): JSX.Element {
     }
 
     function handleClickButtonLogout() {
-        authService.LogOut().then(res => {
-            if (res === true) {
+        dispatch(deleteUser()).then(res => {
+            if (res.meta.requestStatus === 'fulfilled') {
                 navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
             }
         });

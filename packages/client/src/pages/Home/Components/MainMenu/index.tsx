@@ -1,15 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/button';
-import { EPageRoutes } from '@/router/Enums';
-import styles from '@/pages/Home/Components/MainMenu/index.module.scss';
-import AuthService from '@/services/AuthService/AuthService';
+import Button from '../../../../components/button';
+import { EPageRoutes } from '../../../../router/Enums';
+import styles from './index.module.scss';
+import { useAppDispatch } from '@/hooks/redux-hooks';
+import { deleteUser } from '@/store/thunks';
 
 export default function MainMenu(): JSX.Element {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const onLogout = () => {
-        AuthService.LogOut().then(result => {
-            if (result) {
+        dispatch(deleteUser()).then(res => {
+            if (res.meta.requestStatus === 'fulfilled') {
                 navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
             }
         });
