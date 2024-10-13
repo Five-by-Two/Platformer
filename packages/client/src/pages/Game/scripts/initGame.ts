@@ -1,19 +1,22 @@
-import { Sprite } from '../classes/Sprite';
-import BackgroundImage from '../assets/background.png';
-import { floorCollisions, platformCollisions } from '../collisions';
-import { Player } from '../classes/Player';
-import { CollisionBlock } from '../classes/CollisionBlock';
-import WarriorIdle from '../assets/warrior/Idle.png';
-import WarriorIdleLeft from '../assets/warrior/IdleLeft.png';
-import WarriorRun from '../assets/warrior/Run.png';
-import WarriorJump from '../assets/warrior/Jump.png';
-import WarriorJumpLeft from '../assets/warrior/JumpLeft.png';
-import WarriorFall from '../assets/warrior/Fall.png';
-import WarriorFallLeft from '../assets/warrior/FallLeft.png';
-import WarriorRunLeft from '../assets/warrior/RunLeft.png';
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../consts';
-import { ICoordinates } from '../models';
-import { EPlayerState } from '../Enums';
+import { Sprite } from '@/pages/Game/classes/Sprite';
+import BackgroundImage from '@/pages/Game/assets/background.png';
+import { floorCollisions, platformCollisions } from '@/pages/Game/collisions';
+import { Player } from '@/pages/Game/classes/Player';
+import { CollisionBlock } from '@/pages/Game/classes/CollisionBlock';
+import WarriorIdle from '@/pages/Game/assets/warrior/Idle.png';
+import WarriorIdleLeft from '@/pages/Game/assets/warrior/IdleLeft.png';
+import WarriorRun from '@/pages/Game/assets/warrior/Run.png';
+import WarriorJump from '@/pages/Game/assets/warrior/Jump.png';
+import WarriorJumpLeft from '@/pages/Game/assets/warrior/JumpLeft.png';
+import WarriorFall from '@/pages/Game/assets/warrior/Fall.png';
+import WarriorFallLeft from '@/pages/Game/assets/warrior/FallLeft.png';
+import WarriorRunLeft from '@/pages/Game/assets/warrior/RunLeft.png';
+import {
+    CANVAS_HEIGHT,
+    CANVAS_WIDTH,
+    initPlayerPosition,
+} from '@/pages/Game/consts';
+import { EPlayerState } from '@/pages/Game/Enums';
 
 const keys = {
     d: {
@@ -27,16 +30,10 @@ const keys = {
     },
 };
 
-const initPlayerPosition: ICoordinates = {
-    x: 100,
-    y: 350,
-};
-
 export function initGame(
     canvas: HTMLCanvasElement,
     isGameStarted: boolean,
-    isGameStart: VoidFunction,
-    isGameOver: VoidFunction,
+    setGameOverState: VoidFunction,
 ) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
     const scaledCanvas = {
@@ -178,6 +175,13 @@ export function initGame(
     let lowerCameraLimit: number;
 
     function animate() {
+        if (!isGameStarted) {
+            // player.position.x = initPlayerPosition.x;
+            // player.position.y = initPlayerPosition.y;
+            player.position.x = 120;
+            player.position.y = 347;
+        }
+
         animationId = window.requestAnimationFrame(animate);
         context.fillStyle = 'white';
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -193,7 +197,7 @@ export function initGame(
 
         player.velocity.x = 0;
         context.restore();
-        // console.log('lowerLimit', lowerCameraLimit);
+
         if (isGameStarted) {
             player.position = initPlayerPosition;
             if (keys.d.pressed) {
@@ -225,20 +229,11 @@ export function initGame(
                 else player.switchSprite(EPlayerState.FallLeft);
             }
 
-            // console.log('CAMERA', camera.position.y);
-            // console.log('Player', -player.position.y);
-            // console.log('lowerCameraLimit', lowerCameraLimit);
-
             lowerCameraLimit = camera.position.y - scaledCanvas.height;
             console.log('lowerLimit', lowerCameraLimit);
 
             if (-player.position.y - 45 < lowerCameraLimit) {
                 window.cancelAnimationFrame(animationId);
-                // console.log('lowerLimit', lowerCameraLimit);
-                // console.log(
-                //     'Math.abs(player.position.y)',
-                //     Math.abs(player.position.y)
-                // );
                 gameOver();
             }
             window.addEventListener('keydown', event => {
@@ -274,7 +269,7 @@ export function initGame(
 
     function gameOver() {
         console.log('КОНЕЦ ИГРЫ!');
-        isGameOver();
+        setGameOverState();
     }
 
     animate();
