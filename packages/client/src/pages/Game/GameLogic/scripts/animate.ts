@@ -3,7 +3,7 @@ import { EPlayerState } from '../../Enums';
 import { Player } from '../classes/Player';
 import { Sprite } from '../classes/Sprite';
 import { GAME_KEYS } from '../configs/keys';
-import { BG_IMAGE_HEIGHT, camera, initPlayerPosition, scaledCanvas } from '../configs/main';
+import { BG_IMAGE_HEIGHT, camera, scaledCanvas } from '../configs/main';
 
 export function animateGame(
     player: Player,
