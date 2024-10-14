@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import dotenv from 'dotenv';
 import sass from 'sass';
+import { VitePWA } from 'vite-plugin-pwa';
 
 dotenv.config();
 
@@ -26,6 +27,14 @@ export default defineConfig({
                 icon: true,
             },
             include: '**/*.svg',
+        }),
+        VitePWA({
+            strategies: 'injectManifest',
+            srcDir: 'src',
+            filename: 'service-worker.ts',
+            injectManifest: {
+                injectionPoint: undefined,
+            },
         }),
     ],
     css: {

@@ -1,4 +1,4 @@
-import { ICoordinates } from '../models';
+import { ICoordinates } from '../../models';
 
 interface ISpiteConstructor {
     position: ICoordinates;
@@ -23,13 +23,7 @@ export class Sprite {
 
     constructor(
         canvasContext: CanvasRenderingContext2D,
-        {
-            position,
-            imgSrc,
-            frameRate = 1,
-            frameBuffer = 3,
-            scale = 1,
-        }: ISpiteConstructor,
+        { position, imgSrc, frameRate = 1, frameBuffer = 3, scale = 1 }: ISpiteConstructor,
     ) {
         this.position = position;
         this.scale = scale;

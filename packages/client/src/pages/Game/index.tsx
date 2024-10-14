@@ -1,65 +1,63 @@
-import GameStart from '@/pages/Game/Components/GameStart';
+import GameStart from './Components/GameStart';
 import { useNavigate } from 'react-router-dom';
-import { EPageRoutes } from '@/router/Enums';
-import GameOver from '@/pages/Game/Components/GameOver';
+import { EPageRoutes } from '../../router/Enums';
+import GameOver from './Components/GameOver';
+import styles from './index.module.scss';
 import { useCallback, useEffect, useRef } from 'react';
-import { initGame } from '@/pages/Game/scripts/initGame';
+import { initGame } from './GameLogic/scripts/initGame';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { gameOver, restartGame, startGame } from '@/store/gameSlice';
-import styles from '@/pages/Game/index.module.scss';
+import { gameOverSelector, gameStartedSelector } from '@/store/gameSlice/Selectors';
+import { setGameOverAction, setGameStartedAction } from '@/store/gameSlice/Actions';
 
 export function GamePage(): JSX.Element {
-    const dispatch = useAppDispatch();
-    const { isGameStarted, isGameOver } = useAppSelector(state => state.game);
+    const isGameStarted = useAppSelector(gameStartedSelector);
+    const isGameOver = useAppSelector(gameOverSelector);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-    const setStartGameState = useCallback(() => {
-        dispatch(startGame());
-    }, [dispatch]);
-
-    const setGameOverState = useCallback(() => {
-        dispatch(gameOver());
-    }, [dispatch]);
-
-    const setRestartGameState = useCallback(() => {
-        dispatch(restartGame());
-    }, [dispatch]);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        console.log(canvas);
-        if (canvas) {
-            initGame(canvas, isGameStarted, setGameOverState);
-        }
-    }, [isGameStarted, setGameOverState]);
+    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
-    const backToMenu = () => {
-        setRestartGameState();
+    const startGame = useCallback(() => {
+        dispatch(setGameStartedAction(true));
+        dispatch(setGameOverAction(false));
+    }, [dispatch]);
+
+    const gameOver = useCallback(() => {
+        dispatch(setGameOverAction(true));
+    }, [dispatch]);
+
+    const restartGame = useCallback(() => {
+        dispatch(setGameStartedAction(false));
+        dispatch(setGameOverAction(false));
+    }, [dispatch]);
+
+    const handleBackToMenu = () => {
+        restartGame();
         navigate(`/${EPageRoutes.HOME_PAGE}`);
     };
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+
+        if (canvas) {
+            initGame(canvas, isGameStarted, gameOver);
+        }
+    }, [isGameStarted, gameOver]);
 
     return (
         <>
             <section className={styles['game-start']}>
-                <canvas ref={canvasRef}></canvas>
+                <canvas className={styles['canvas']} ref={canvasRef}></canvas>
             </section>
 
             {!isGameStarted && (
-                <GameStart
-                    onStart={setStartGameState}
-                    onBackToMenu={backToMenu}
-                />
+                <>
+                    <GameStart onStart={startGame} onBackToMenu={handleBackToMenu} />
+                </>
             )}
 
             {isGameOver && isGameStarted && (
-                <GameOver
-                    onStart={setRestartGameState}
-                    onBackToMenu={backToMenu}
-                    score={1}
-                    bestScore={1000}
-                />
+                <GameOver onStart={restartGame} onBackToMenu={handleBackToMenu} score={1} bestScore={1000} />
             )}
         </>
     );
