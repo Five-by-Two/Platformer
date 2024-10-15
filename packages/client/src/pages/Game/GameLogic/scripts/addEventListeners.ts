@@ -11,7 +11,7 @@ export const addEventListeners = (player: Player) => {
                 GAME_KEYS.a.pressed = true;
                 break;
             case 'w':
-                player.velocity.y = -4;
+                player.velocity.y = -2.5;
                 break;
         }
     });

@@ -1,6 +1,7 @@
 import { EPlayerState } from '../../Enums';
 import { Player } from '../classes/Player';
 import { initializeCollisions } from './initializeCollisions';
+import { initPlayerPosition } from '../configs/main';
 import {
     WarriorFall,
     WarriorFallLeft,
@@ -27,10 +28,7 @@ export function initializePlayers(canvas: HTMLCanvasElement) {
         scale: 0.5,
         canvas,
         imgSrc: WarriorIdle,
-        position: {
-            x: 100,
-            y: 300,
-        },
+        position: initPlayerPosition,
         collisionBlocks,
         platformCollisionBlocks,
         frameRate: 8,

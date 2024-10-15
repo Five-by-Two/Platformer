@@ -15,40 +15,50 @@ export function GamePage(): JSX.Element {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-
-        if (canvas) {
-            initGame(canvas);
-        }
-    }, []);
-
     const navigate = useNavigate();
-
-    const backToMenu = () => {
-        navigate(`/${EPageRoutes.HOME_PAGE}`);
-    };
 
     const startGame = useCallback(() => {
         dispatch(setGameStartedAction(true));
         dispatch(setGameOverAction(false));
     }, [dispatch]);
 
+    const gameOver = useCallback(() => {
+        dispatch(setGameOverAction(true));
+    }, [dispatch]);
+
+    const restartGame = useCallback(() => {
+        dispatch(setGameStartedAction(false));
+        dispatch(setGameOverAction(false));
+    }, [dispatch]);
+
+    const handleBackToMenu = () => {
+        restartGame();
+        navigate(`/${EPageRoutes.HOME_PAGE}`);
+    };
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+
+        if (canvas) {
+            initGame(canvas, isGameStarted, gameOver);
+        }
+    }, [isGameStarted, gameOver]);
+
     return (
         <>
-            <section className={`${styles['game-start']} ${isGameStarted ? '' : styles['hidden']}`}>
+            <section className={styles['game-start']}>
                 <canvas className={styles['canvas']} ref={canvasRef}></canvas>
             </section>
 
-            {isGameStarted ? (
-                <></>
-            ) : (
+            {!isGameStarted && (
                 <>
-                    <GameStart onStart={startGame} onBackToMenu={backToMenu} />
+                    <GameStart onStart={startGame} onBackToMenu={handleBackToMenu} />
                 </>
             )}
 
-            {isGameOver && <GameOver onStart={startGame} onBackToMenu={backToMenu} score={1} bestScore={1000} />}
+            {isGameOver && isGameStarted && (
+                <GameOver onStart={restartGame} onBackToMenu={handleBackToMenu} score={1} bestScore={1000} />
+            )}
         </>
     );
 }

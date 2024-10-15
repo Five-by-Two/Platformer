@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import Button from '../../../../components/button';
-import trophyIcon from '../../../../assets/icons/trophy.png';
-import styles from './index.module.scss';
-import { EPageRoutes } from '@/router/Enums';
 import { useNavigate } from 'react-router';
+import Button from '@/components/button';
+import trophyIcon from '@/assets/icons/trophy.png';
+import { EPageRoutes } from '@/router/Enums';
+import styles from '@/pages/Game/Components/GameOver/index.module.scss';
 
 type GameOverProps = {
     onStart: VoidFunction;
@@ -11,13 +11,12 @@ type GameOverProps = {
     score: number;
     bestScore: number;
 };
+
 const GameOver: FC<GameOverProps> = ({ onStart, onBackToMenu, score, bestScore }) => {
     const navigate = useNavigate();
-
-    const handleLeadTableButtonClick = () => {
+    const handleLeadTableButtonClick: VoidFunction = () => {
         navigate(`/${EPageRoutes.LEADER_BOARD_PAGE}`);
     };
-
     return (
         <section className={styles['game-start']}>
             <div className={`${styles.wrap} ${styles['game-over-wrap']}`}>

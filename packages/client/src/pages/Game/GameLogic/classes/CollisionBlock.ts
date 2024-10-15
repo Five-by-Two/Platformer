@@ -11,10 +11,7 @@ export class CollisionBlock {
     height: number;
     context: CanvasRenderingContext2D;
 
-    constructor(
-        context: CanvasRenderingContext2D,
-        { position, height = 16 }: IConstructor,
-    ) {
+    constructor(context: CanvasRenderingContext2D, { position, height = 16 }: IConstructor) {
         this.context = context;
         this.position = position;
         this.width = 16;
@@ -23,12 +20,7 @@ export class CollisionBlock {
     }
 
     draw() {
-        this.context?.fillRect(
-            this.position.x,
-            this.position.y,
-            this.width,
-            this.height,
-        );
+        this.context?.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     update() {

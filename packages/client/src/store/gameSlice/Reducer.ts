@@ -9,7 +9,7 @@ export interface IGameReducerState {
 }
 
 const INITIAL_STATE: IGameReducerState = {
-    isStarted: true,
+    isStarted: false,
     isGameOver: false,
     currentScore: 0,
     bestScore: 0,

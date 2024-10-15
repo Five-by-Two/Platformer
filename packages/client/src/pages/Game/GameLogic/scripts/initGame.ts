@@ -5,13 +5,14 @@ import { initializePlayers } from './initializePlayer';
 import { addEventListeners } from './addEventListeners';
 import { animateGame } from './animate';
 
-export function initGame(canvas: HTMLCanvasElement) {
+export function initGame(canvas: HTMLCanvasElement, isGameStarted: boolean, gameOver: VoidFunction) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
 
     const player = initializePlayers(canvas);
-    addEventListeners(player);
+
+    if (isGameStarted) addEventListeners(player);
 
     const background = new Sprite(context, {
         position: {
@@ -21,6 +22,6 @@ export function initGame(canvas: HTMLCanvasElement) {
         imgSrc: BackgroundImage,
     });
 
-    const animate = animateGame(player, canvas, background);
+    const animate = animateGame(player, canvas, background, isGameStarted, gameOver);
     animate();
 }

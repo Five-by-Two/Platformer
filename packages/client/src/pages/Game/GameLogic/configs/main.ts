@@ -1,3 +1,5 @@
+import { ICoordinates } from '../../models';
+
 export const CANVAS_WIDTH = 1280;
 export const CANVAS_HEIGHT = 900;
 export const BG_IMAGE_HEIGHT = 432;
@@ -12,4 +14,9 @@ export const camera = {
         x: 0,
         y: -BG_IMAGE_HEIGHT + scaledCanvas.height,
     },
+};
+
+export const initPlayerPosition: ICoordinates = {
+    x: 120,
+    y: 347,
 };
