@@ -1,0 +1,46 @@
+$danger-color: #dc0303;
+$main-color: #24a3ae;
+$focus-color: #b85800;
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    input {
+        background-color: transparent;
+        border: 2px solid $main-color;
+        border-radius: 5px;
+        padding: 0.3rem;
+        outline: none;
+        color: $focus-color;
+    }
+
+    input::placeholder {
+        color: var(--gray-dark);
+        font-size: medium;
+    }
+
+    input:focus {
+        border-color: $focus-color;
+    }
+
+    input:disabled {
+        color: var(--gray-dark);
+        border: 2px solid var(--gray-dark);
+    }
+
+    span {
+        color: $danger-color;
+    }
+}
+
+.inputWrapper_validateError {
+    input {
+        border-color: $danger-color;
+    }
+
+    span {
+        display: inline;
+    }
+}

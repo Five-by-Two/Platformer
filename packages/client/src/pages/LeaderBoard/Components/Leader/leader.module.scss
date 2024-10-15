@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    font-size: 20px;
+    min-width: 470px;
+}
+
+.name {
+    margin-left: 20px;
+}
+
+.points {
+    margin-left: auto;
+    color: var(--orange);
+}

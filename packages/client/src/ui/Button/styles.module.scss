@@ -1,0 +1,60 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.25rem 1rem;
+    border: none;
+    cursor: pointer;
+    transform: translate(-3px, -3px);
+    box-shadow: (6px 6px 0px $btn-shadow);
+    transition: background-color 0.3s ease, transform 0.3s ease,
+        box-shadow 0.3s ease;
+    @include text-base;
+
+    &.primary {
+        background-color: $main-page-btn-bg-color;
+        color: $white;
+        &:hover:not([disabled]) {
+            background-color: $orange-hover;
+        }
+    }
+
+    &.secondary {
+        background-color: $gray-light;
+        color: $orange;
+        &:hover:not([disabled]) {
+            background-color: $gray-light-hover;
+        }
+    }
+
+    &:active {
+        transform: translate(3px, 3px);
+        box-shadow: none;
+    }
+
+    &:disabled {
+        background-color: $disabled;
+        color: $gray-dark;
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 0.6;
+        transform: none;
+    }
+
+    .icon {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        & [fill] {
+            fill: currentColor;
+        }
+        & [stroke] {
+            stroke: currentColor;
+        }
+    }
+
+    &.text {
+        text-align: center;
+    }
+}

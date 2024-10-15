@@ -1,0 +1,20 @@
+@import '../../index.module.scss';
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    span {
+        color: $danger-color;
+        max-width: 20rem;
+        text-align: center;
+        font-size: x-small;
+    }
+}
+
+.inputWrapper_validateError {
+    input {
+        border-color: $danger-color;
+    }
+}

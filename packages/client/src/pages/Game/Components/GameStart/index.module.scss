@@ -1,0 +1,31 @@
+@import '../index.module.scss';
+
+.game-start-wrap {
+    gap: 3.5rem;
+    padding: 5rem;
+
+    .title {
+        font-size: xx-large;
+    }
+
+    button {
+        font-size: small;
+    }
+
+    .blinking-text {
+        animation: blinking 1.5s infinite;
+        font-size: medium;
+    }
+
+    @keyframes blinking {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
