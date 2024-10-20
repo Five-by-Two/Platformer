@@ -18,22 +18,22 @@ export const Button: FC<Partial<ButtonProps>> = ({
     children,
     leftIcon,
     rightIcon,
-    className,
+    className = '',
     variant = 'primary',
-    disabled,
+    disabled = false,
     type = 'button',
 }) => {
+    
     return (
         <button
-            className={`${styles.button} ${styles[variant]} ${className || ''}`}
+            className={`${styles.button} ${styles[variant]} ${className}`}
             onClick={onClick}
             disabled={disabled}
             type={type}>
             {leftIcon && <span className={styles.icon}>{leftIcon}</span>}
-            {children && !React.isValidElement(children) && (
+            {typeof children === 'string' ? (
                 <span className={styles.text}>{children}</span>
-            )}
-            {React.isValidElement(children) && (
+            ) : (
                 <span className={styles.icon}>{children}</span>
             )}
             {rightIcon && <span className={styles.icon}>{rightIcon}</span>}
