@@ -71,8 +71,8 @@ export function LeaderBoardPage(): JSX.Element {
             </div>
             <div className={styles.buttons}>
                 <Button text="BACK" onClick={handleClickButtonBack} />
-                {leaderBoardIsMoreLeaders && <Button text="-->" onClick={handleClickButtonNext} />}
                 {leaderBoardCursor > 0 && <Button text="<--" onClick={handleClickButtonBackLeaders} />}
+                {leaderBoardIsMoreLeaders && <Button text="-->" onClick={handleClickButtonNext} />}
             </div>
         </section>
     );
