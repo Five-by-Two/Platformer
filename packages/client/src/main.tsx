@@ -10,8 +10,4 @@ const app = (
     </React.StrictMode>
 );
 
-if (rootElement.innerHTML === '<!--ssr-outlet-->') {
-    ReactDOM.createRoot(rootElement).render(app);
-} else {
-    ReactDOM.hydrateRoot(rootElement, app);
-}
+ReactDOM.hydrateRoot(rootElement, app);
