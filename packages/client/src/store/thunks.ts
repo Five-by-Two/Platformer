@@ -7,7 +7,7 @@ import AuthService from '@/services/AuthService/AuthService';
 import { RootState } from './store';
 import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
 import { setLeaders } from './leaderBoardSlice/leaderBoardSlice';
-import setSessionStorage from '@/utils/setSessionStorage';
+import { setSessionStorage } from '@/utils/storageUtill';
 
 export const changeUser = createAsyncThunk(
     'user/changeUser',

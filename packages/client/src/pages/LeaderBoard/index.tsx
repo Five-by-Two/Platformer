@@ -13,7 +13,7 @@ import {
     leadersSelector,
 } from '@/store/leaderBoardSlice/selectors';
 import { LEADERS_PER_PAGE } from '@/utils/constants';
-import getSessionStorage from '@/utils/getSessionStorage';
+import { getSessionStorage } from '@/utils/storageUtill';
 
 export function LeaderBoardPage(): JSX.Element {
     const navigate = useNavigate();
