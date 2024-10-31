@@ -1,19 +1,19 @@
 import { nanoid } from 'nanoid';
 import styles from './leaderBoard.module.scss';
 import catIcon from '../../assets/images/Cat-Sheet.png';
-import leaderBoardData from './leaderBoardData';
 import Leader from './Components/Leader';
 import Button from '../../components/button';
 import { useNavigate } from 'react-router';
-import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { useEffect } from 'react';
-import { postPoints, setLeaderBoards } from '@/store/thunks';
+import { setLeaderBoards } from '@/store/thunks';
 import {
     leaderBoardCursorSelector,
     leaderBoardIsMoreLeadersSelector,
     leadersSelector,
 } from '@/store/leaderBoardSlice/selectors';
+import { LEADERS_PER_PAGE } from '@/utils/constants';
+import getSessionStorage from '@/utils/getSessionStorage';
 
 export function LeaderBoardPage(): JSX.Element {
     const navigate = useNavigate();
@@ -28,17 +28,15 @@ export function LeaderBoardPage(): JSX.Element {
     }
 
     function handleClickButtonNext() {
-        sessionStorage.setItem('cursor', (leaderBoardCursor + 6).toString());
-        dispatch(setLeaderBoards(leaderBoardCursor + 6));
+        dispatch(setLeaderBoards(leaderBoardCursor + LEADERS_PER_PAGE));
     }
 
     function handleClickButtonBackLeaders() {
-        sessionStorage.setItem('cursor', (leaderBoardCursor - 6).toString());
-        dispatch(setLeaderBoards(leaderBoardCursor - 6));
+        dispatch(setLeaderBoards(leaderBoardCursor - LEADERS_PER_PAGE));
     }
 
     useEffect(() => {
-        const cursorHistory = sessionStorage.getItem('cursor');
+        const cursorHistory = getSessionStorage('cursor');
         if (cursorHistory) {
             dispatch(setLeaderBoards(Number(cursorHistory)));
         } else {

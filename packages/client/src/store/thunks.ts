@@ -7,6 +7,7 @@ import AuthService from '@/services/AuthService/AuthService';
 import { RootState } from './store';
 import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
 import { setLeaders } from './leaderBoardSlice/leaderBoardSlice';
+import setSessionStorage from '@/utils/setSessionStorage';
 
 export const changeUser = createAsyncThunk(
     'user/changeUser',
@@ -98,6 +99,8 @@ export const setLeaderBoards = createAsyncThunk<void, number | undefined>(
             if (!response) {
                 throw new Error('Ошибка получения данных таблицы лидеров');
             }
+
+            setSessionStorage('cursor', cursor.toString());
 
             const data = {
                 leaders: response,
