@@ -27,7 +27,7 @@ app.get('/', (_, res) => {
 
 app.post('/api/yandex-callback', req => {
     const code = req.body as string;
-    axios
+    return axios
         .post(`${API_URL}/api/v2/oauth/yandex`, {
             code: code,
             redirect_url: CLIENT_URL,
