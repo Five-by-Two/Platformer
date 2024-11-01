@@ -23,6 +23,12 @@ export default function LoginForm() {
             .catch((error: Error) => setErrorText(error.message));
     };
 
+    const onYandexOAuth = () => {
+        AuthService.SignInByYandex().then(url => {
+            if (url) window.location.href = url;
+        });
+    };
+
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSumbit)}>
             <h1>Авторизация</h1>
@@ -39,7 +45,7 @@ export default function LoginForm() {
                 </button>
             </div>
             <div className={styles.oauthContainer}>
-                <YandexButtonIcon className={styles.oauthButton} />
+                <YandexButtonIcon className={styles.oauthButton} onClick={onYandexOAuth} />
             </div>
         </form>
     );
