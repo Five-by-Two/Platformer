@@ -38,7 +38,7 @@ class UserService {
     }
 
     UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
-        return AxiosService.put<UserModel>('user/profile', JSON.stringify(data), {
+        return AxiosService.put<UserModel>('yandex-api/v2/user/profile', JSON.stringify(data), {
             headers: {
                 'Content-Type': 'application/json',
             },
