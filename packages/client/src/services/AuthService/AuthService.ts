@@ -1,13 +1,13 @@
 import { AxiosError } from 'axios';
 import AxiosService from '../AxiosService/AxiosService';
-import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
-import { SignUpModel } from './Models/SignUpModel';
 import { GetUserModel } from './Models/GetUserModel';
+import { SignInModel } from './Models/SignInModel';
+import { SignUpModel } from './Models/SignUpModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
-        return AxiosService.post('auth/signin', model)
+        return AxiosService.post('yandex-api/v2/auth/signin', model)
             .then(() => true)
             .catch((ex: AxiosError) => {
                 if (ex.response?.status == 400) {
@@ -24,7 +24,7 @@ class AuthService {
     }
 
     async LogOut(): Promise<boolean> {
-        return AxiosService.post('auth/logout')
+        return AxiosService.post('yandex-api/v2/auth/logout')
             .then(() => {
                 return true;
             })
@@ -35,7 +35,7 @@ class AuthService {
     }
 
     async GetUser(): Promise<GetUserModel | void> {
-        return AxiosService.get<GetUserModel>('auth/user')
+        return AxiosService.get<GetUserModel>('yandex-api/v2/auth/user')
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения данных пользователя', ex);
@@ -44,7 +44,7 @@ class AuthService {
     }
 
     async SignUp(model: SignUpModel): Promise<boolean> {
-        return AxiosService.post('auth/signup', model)
+        return AxiosService.post('yandex-api/v2/auth/signup', model)
             .then(() => {
                 return true;
             })
