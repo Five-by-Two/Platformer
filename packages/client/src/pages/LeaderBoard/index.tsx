@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import styles from './leaderBoard.module.scss';
 import catIcon from '../../assets/images/Cat-Sheet.png';
 import Leader from './Components/Leader';
@@ -49,7 +48,6 @@ export function LeaderBoardPage(): JSX.Element {
             <div className={`${styles.container}`}>
                 {leaders.length > 0 ? (
                     leaders.map((item, index) => {
-                        console.log(item);
                         return (
                             <Leader
                                 key={item.id}
