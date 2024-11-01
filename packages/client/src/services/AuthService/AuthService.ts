@@ -53,6 +53,14 @@ class AuthService {
                 return false;
             });
     }
+
+    async SignInByYandex() {
+        return AxiosService.post('api/signin-by-yandex')
+            .then(result => result.data as string)
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка авторизации через Яндекс', ex);
+            });
+    }
 }
 
 export default new AuthService();
