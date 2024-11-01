@@ -1,6 +1,5 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-
-const API_URL = 'https://ya-praktikum.tech';
+import { API_URL } from '../constants/constants';
 
 export const yandexApiProxyMiddleware = createProxyMiddleware({
     changeOrigin: true,
