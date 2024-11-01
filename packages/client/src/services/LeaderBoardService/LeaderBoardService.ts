@@ -9,9 +9,7 @@ class LeaderBoardService {
             cursor: cursor,
             limit: 7,
         })
-            .then(res => {
-                return res.data;
-            })
+            .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения лидеров', ex);
                 return;

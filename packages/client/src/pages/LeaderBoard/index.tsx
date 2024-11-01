@@ -7,11 +7,7 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { useEffect } from 'react';
 import { setLeaderBoards } from '@/store/thunks';
-import {
-    leaderBoardCursorSelector,
-    leaderBoardIsMoreLeadersSelector,
-    leadersSelector,
-} from '@/store/leaderBoardSlice/selectors';
+import { leaderBoardCursorSelector, isMoreLeadersSelector, leadersSelector } from '@/store/leaderBoardSlice/selectors';
 import { LEADERS_PER_PAGE } from '@/utils/constants';
 import { getSessionStorage } from '@/utils/storageUtill';
 
@@ -19,19 +15,19 @@ export function LeaderBoardPage(): JSX.Element {
     const navigate = useNavigate();
     const leaders = useAppSelector(leadersSelector);
     const leaderBoardCursor = useAppSelector(leaderBoardCursorSelector);
-    const leaderBoardIsMoreLeaders = useAppSelector(leaderBoardIsMoreLeadersSelector);
+    const isMoreLeaders = useAppSelector(isMoreLeadersSelector);
 
     const dispatch = useAppDispatch();
 
-    function handleClickButtonBack() {
+    function handleBackClick() {
         navigate(-1);
     }
 
-    function handleClickButtonNext() {
+    function handleNextLeadersClick() {
         dispatch(setLeaderBoards(leaderBoardCursor + LEADERS_PER_PAGE));
     }
 
-    function handleClickButtonBackLeaders() {
+    function handlePrevLeadersClick() {
         dispatch(setLeaderBoards(leaderBoardCursor - LEADERS_PER_PAGE));
     }
 
@@ -53,10 +49,10 @@ export function LeaderBoardPage(): JSX.Element {
             <div className={`${styles.container}`}>
                 {leaders.length > 0 ? (
                     leaders.map((item, index) => {
-                        const key = nanoid();
+                        console.log(item);
                         return (
                             <Leader
-                                key={key}
+                                key={item.id}
                                 index={index + leaderBoardCursor}
                                 name={item.data.login}
                                 points={item.data.infinityJumpPoint}
@@ -68,9 +64,9 @@ export function LeaderBoardPage(): JSX.Element {
                 )}
             </div>
             <div className={styles.buttons}>
-                <Button text="BACK" onClick={handleClickButtonBack} />
-                {leaderBoardCursor > 0 && <Button text="<--" onClick={handleClickButtonBackLeaders} />}
-                {leaderBoardIsMoreLeaders && <Button text="-->" onClick={handleClickButtonNext} />}
+                <Button text="BACK" onClick={handleBackClick} />
+                {leaderBoardCursor > 0 && <Button text="<--" onClick={handlePrevLeadersClick} />}
+                {isMoreLeaders && <Button text="-->" onClick={handleNextLeadersClick} />}
             </div>
         </section>
     );
