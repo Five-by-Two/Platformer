@@ -21,7 +21,8 @@
         "types": ["node", "jest"],
         "baseUrl": ".",
         "paths": {
-            "*": ["types/*"]
+            "*": ["types/*"],
+            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"]
         },
         "outDir": "dist"
     }
