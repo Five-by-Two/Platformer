@@ -2,11 +2,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import axios from 'axios';
 import express from 'express';
+import { API_URL, CLIENT_URL, OAUTH_URL } from './constants/constants';
 import { createClientAndConnect } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
-
-const CLIENT_URL = 'http://localhost:3000';
+import { GetServiceIdModel } from './models/GetServiceIdModel';
 
 const app = express();
 app.use(
@@ -22,6 +23,33 @@ createClientAndConnect();
 
 app.get('/', (_, res) => {
     res.json('👋 Howdy from the server :)');
+});
+
+app.post('/api/yandex-callback', req => {
+    const code = req.body as string;
+    axios
+        .post(`${API_URL}/api/v2/oauth/yandex`, {
+            code: code,
+            redirect_url: CLIENT_URL,
+        })
+        .catch(error => {
+            console.error('Error oauth authorize', error);
+            throw error;
+        });
+});
+
+app.post('/api/signin-by-yandex', (_, res) => {
+    axios
+        .get(`${API_URL}/api/v2/oauth/yandex/service-id`)
+        .then(result => {
+            const model = result.data as GetServiceIdModel;
+            const url = OAUTH_URL.replace('{CLIENT_ID}', model.service_id);
+            res.json(url);
+        })
+        .catch(error => {
+            console.error(error);
+            throw error;
+        });
 });
 
 app.use(yandexApiProxyMiddleware);
