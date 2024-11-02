@@ -3,7 +3,7 @@ import { createServer as createViteServer, ViteDevServer } from 'vite';
 import express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import { createClientAndConnect } from './db';
+// import { createClientAndConnect } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -86,4 +86,4 @@ async function startServer() {
 
 startServer();
 
-createClientAndConnect();
+// createClientAndConnect();
