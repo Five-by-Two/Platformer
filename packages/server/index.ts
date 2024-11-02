@@ -8,8 +8,8 @@ import { createClientAndConnect } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import { GetServiceIdModel } from './models/GetServiceIdModel';
 
-const { CLIENT_URL, SERVER_URL, OAUTH_URL, API_URL, SERVER_PORT } = process.env;
-console.log(CLIENT_URL, SERVER_URL, OAUTH_URL, API_URL, SERVER_PORT);
+const { CLIENT_URL, SERVER_URL, API_URL, SERVER_PORT } = process.env;
+console.log(CLIENT_URL, SERVER_URL, API_URL, SERVER_PORT);
 const app = express();
 app.use(
     cors({
@@ -44,7 +44,7 @@ app.post('/api/signin-by-yandex', (_, res) => {
         .get(`${API_URL}/api/v2/oauth/yandex/service-id`)
         .then(result => {
             const model = result.data as GetServiceIdModel;
-            const url = OAUTH_URL?.replace('{CLIENT_ID}', model.service_id).replace('{SERVER_URL}', SERVER_URL ?? '');
+            const url = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${model.service_id}&redirect_uri=${SERVER_URL}/api/yandex-callback`;
             res.json(url);
         })
         .catch(error => {
