@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-unused-expressions */
 import { EPlayerState } from '../../Enums';
 import { Player } from '../classes/Player';
