@@ -25,7 +25,7 @@ export default function LoginForm() {
 
     const onYandexOAuth = () => {
         AuthService.SignInByYandex().then(url => {
-            if (url) window.location.href = url;
+            if (url) navigate(url);
         });
     };
 
