@@ -1,18 +1,26 @@
-import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-dotenv.config();
-
-import express, { Request, Response } from 'express';
+import express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-// import { createClientAndConnect } from './db';
+import { createClientAndConnect } from './db';
+import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
+const CLIENT_URL = 'http://localhost:3000';
+
 async function startServer() {
     const app = express();
-    app.use(cors());
+    app.use(
+        cors({
+            origin: CLIENT_URL,
+            optionsSuccessStatus: 200,
+            credentials: true,
+        }),
+    );
     const port = Number(process.env.SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
@@ -29,10 +37,6 @@ async function startServer() {
 
         app.use(vite.middlewares);
     }
-
-    app.get('/api', (_req: Request, res: Response) => {
-        res.json('👋 Howdy from the server :)');
-    });
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
@@ -73,6 +77,8 @@ async function startServer() {
         }
     });
 
+    app.use(yandexApiProxyMiddleware);
+
     app.listen(port, () => {
         console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
     });
@@ -80,4 +86,4 @@ async function startServer() {
 
 startServer();
 
-// createClientAndConnect();
+createClientAndConnect();
