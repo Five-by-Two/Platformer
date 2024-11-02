@@ -4,11 +4,12 @@ dotenv.config();
 
 import axios from 'axios';
 import express from 'express';
-import { API_URL, CLIENT_URL, OAUTH_URL } from './constants/constants';
 import { createClientAndConnect } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import { GetServiceIdModel } from './models/GetServiceIdModel';
 
+const { CLIENT_URL, SERVER_URL, OAUTH_URL, API_URL, SERVER_PORT } = process.env;
+console.log(CLIENT_URL, SERVER_URL, OAUTH_URL, API_URL, SERVER_PORT);
 const app = express();
 app.use(
     cors({
@@ -17,7 +18,7 @@ app.use(
         credentials: true,
     }),
 );
-const port = Number(process.env.SERVER_PORT) || 3001;
+const port = Number(SERVER_PORT) || 3001;
 
 createClientAndConnect();
 
@@ -28,7 +29,7 @@ app.get('/', (_, res) => {
 app.post('/api/yandex-callback', req => {
     const code = req.body as string;
     return axios
-        .post(`${API_URL}/api/v2/oauth/yandex`, {
+        .post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
             code: code,
             redirect_url: CLIENT_URL,
         })
@@ -43,7 +44,7 @@ app.post('/api/signin-by-yandex', (_, res) => {
         .get(`${API_URL}/api/v2/oauth/yandex/service-id`)
         .then(result => {
             const model = result.data as GetServiceIdModel;
-            const url = OAUTH_URL.replace('{CLIENT_ID}', model.service_id);
+            const url = OAUTH_URL?.replace('{CLIENT_ID}', model.service_id).replace('{SERVER_URL}', SERVER_URL ?? '');
             res.json(url);
         })
         .catch(error => {
