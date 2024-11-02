@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { setGameStartedAction, setGameOverAction, setCurrentScore, setBestScore, resetStoreState } from './Actions';
+import { setGameStartedAction, setGameOverAction, setCurrentScore, resetStoreState } from './Actions';
 
 export interface IGameReducerState {
     isStarted: boolean;
