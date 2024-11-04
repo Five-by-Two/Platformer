@@ -1,4 +1,4 @@
-import { RootState } from '../store';
+import { RootState } from '..';
 
 export const leadersSelector = (state: RootState) => state.leaderBoard.leaders;
 export const leaderBoardCursorSelector = (state: RootState) => state.leaderBoard.cursor;

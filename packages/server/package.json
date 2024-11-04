@@ -19,7 +19,8 @@
         "http-proxy-middleware": "^3.0.3",
         "pg": "^8.8.0",
         "prettier": "^2.7.1",
-        "rimraf": "^6.0.1"
+        "rimraf": "^6.0.1",
+        "serialize-javascript": "^6.0.2"
     },
     "devDependencies": {
         "@types/cors": "^2.8.12",
@@ -27,6 +28,7 @@
         "@types/jest": "^29.5.13",
         "@types/node": "^18.11.17",
         "@types/pg": "^8.6.5",
+        "@types/serialize-javascript": "^5.0.4",
         "@typescript-eslint/eslint-plugin": "^8.10.0",
         "@typescript-eslint/parser": "^8.10.0",
         "babel-jest": "^29.0.1",
