@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setGameStartedAction, setGameOverAction, setCurrentScore, setBestScore, resetStoreState } from './Actions';
+import { setGameStartedAction, setGameOverAction, setCurrentScore, resetStoreState } from './Actions';
 
 export interface IGameReducerState {
     isStarted: boolean;

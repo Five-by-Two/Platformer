@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './assets/styles/index.scss';
 import App from './App';
+import '@/assets/styles/index.scss';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const rootElement = document.getElementById('root') as HTMLElement;
+const app = (
     <React.StrictMode>
         <App />
-    </React.StrictMode>,
+    </React.StrictMode>
 );
+
+ReactDOM.hydrateRoot(rootElement, app);
