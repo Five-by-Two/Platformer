@@ -1,3 +1,4 @@
+import serialize from 'serialize-javascript';
 import cors from 'cors';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import express from 'express';
@@ -55,7 +56,7 @@ async function startServer() {
                 template = await vite!.transformIndexHtml(url, template);
             }
 
-            let render: () => Promise<string>;
+            let render: () => Promise<{ html: string; initialState: unknown }>;
 
             if (!isDev()) {
                 render = (await import(ssrClientPath)).render;
@@ -63,9 +64,14 @@ async function startServer() {
                 render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))).render;
             }
 
-            const appHtml = await render();
-
-            const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+            const { html: appHtml, initialState } = await render();
+            console.log(initialState);
+            const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+                `<!--ssr-initial-state-->`,
+                `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+                    isJSON: true,
+                })}</script>`,
+            );
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
         } catch (e) {

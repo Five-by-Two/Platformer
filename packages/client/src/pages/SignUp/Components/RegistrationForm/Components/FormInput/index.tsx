@@ -1,10 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import styles from './index.module.scss';
 import IFormData from '../../Models/IFormData';
-import { ObjectKeys } from 'react-hook-form/dist/types/path/common';
 
 type Properties = {
-    name: ObjectKeys<IFormData>;
+    name: keyof IFormData;
     placeholder?: string;
     required?: boolean;
     type?: 'text' | 'number' | 'password';
@@ -19,10 +18,7 @@ export default function FormInput(props: Properties) {
         formState: { errors },
     } = useFormContext<IFormData>();
     return (
-        <div
-            className={`${styles.inputWrapper} ${
-                errors[name] != undefined && styles.inputWrapper_validateError
-            }`}>
+        <div className={`${styles.inputWrapper} ${errors[name] != undefined && styles.inputWrapper_validateError}`}>
             <input
                 type={type}
                 {...register(name, { pattern: props.pattern })}

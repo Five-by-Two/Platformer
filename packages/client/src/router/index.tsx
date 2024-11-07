@@ -7,6 +7,6 @@ if (typeof window !== 'undefined') {
     router = createBrowserRouter(routerConfig);
 }
 
-const Routes = () => (router ? <RouterProvider router={router} /> : null);
+const AppRouter = () => (router ? <RouterProvider router={router} /> : null);
 
-export default Routes;
+export default AppRouter;
