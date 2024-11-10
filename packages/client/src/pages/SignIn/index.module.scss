@@ -1,5 +1,3 @@
-@import '../../assets/styles/mixins.scss';
-
 .background {
-    @include background-container;
+    @include page-container;
 }

@@ -44,11 +44,7 @@ $letter-spacing-xs: 0;
 }
 
 @mixin text-base {
-    @include text-style(
-        $font-size-base,
-        $line-height-base,
-        $letter-spacing-base
-    );
+    @include text-style($font-size-base, $line-height-base, $letter-spacing-base);
 }
 
 @mixin text-xs {

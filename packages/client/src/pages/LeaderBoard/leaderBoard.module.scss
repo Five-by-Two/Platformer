@@ -1,7 +1,5 @@
-@import '../../assets/styles/mixins.scss';
-
 .leaderBoard {
-    @include background-container;
+    @include page-container;
 }
 
 .blockTitle {

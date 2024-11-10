@@ -1,8 +1,5 @@
-@import '../../assets/styles/mixins.scss';
-
 .container {
-    @include background-container;
-    background-image: url('../../assets/images/background-blurred.jpg');
+    @include page-container;
 
     .content_section {
         min-height: 500px;

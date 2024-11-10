@@ -1,7 +1,5 @@
-@import '../../assets/styles/mixins.scss';
-
 .profile {
-    @include background-container;
+    @include page-container;
     position: relative;
 }
 
