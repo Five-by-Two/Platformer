@@ -30,7 +30,6 @@ export function animateGame(
 
         if (isGameStarted) {
             if (GAME_KEYS.mbl.pressed) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 player.lastDirection === 'right'
                     ? player.switchSprite(EPlayerState.Attack)
                     : player.switchSprite(EPlayerState.AttackLeft);

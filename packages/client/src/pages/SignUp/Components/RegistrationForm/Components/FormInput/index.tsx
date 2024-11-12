@@ -1,9 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 import styles from './index.module.scss';
 import IFormData from '../../Models/IFormData';
+import { ObjectKeys } from 'react-hook-form/dist/types/path/common';
 
 type Properties = {
-    name: keyof IFormData;
+    name: ObjectKeys<IFormData>;
     placeholder?: string;
     required?: boolean;
     type?: 'text' | 'number' | 'password';

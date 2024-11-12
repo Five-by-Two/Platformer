@@ -17,12 +17,11 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["DOM", "es2019", "esnext.asynciterable"],
+        "lib": ["es2019", "esnext.asynciterable"],
         "types": ["node", "jest"],
         "baseUrl": ".",
         "paths": {
-            "*": ["types/*"],
-            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"]
+            "*": ["types/*"]
         },
         "outDir": "dist"
     }

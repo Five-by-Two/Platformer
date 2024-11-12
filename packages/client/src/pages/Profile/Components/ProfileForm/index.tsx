@@ -34,17 +34,15 @@ function ProfileForm() {
     }
 
     useEffect(() => {
-        const { first_name, second_name, display_name, phone, login, email } = userData || {};
-
         reset({
-            first_name,
-            second_name,
-            display_name,
-            phone,
-            login,
-            email,
+            first_name: userData.first_name,
+            second_name: userData.second_name,
+            display_name: userData.display_name,
+            phone: userData.phone,
+            login: userData.login,
+            email: userData.email,
         });
-    }, [reset, userData]);
+    }, [userData]);
 
     return (
         <FormProvider {...methods}>

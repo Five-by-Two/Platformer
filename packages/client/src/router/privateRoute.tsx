@@ -19,7 +19,7 @@ export default function PrivateRoute({ children }: Properties) {
                 navigate(`/${EPageRoutes.SIGN_IN_PAGE}`);
             }
         });
-    }, [dispatch, navigate]);
+    }, []);
 
     return <>{children}</>;
 }

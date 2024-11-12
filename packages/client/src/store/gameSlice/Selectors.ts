@@ -1,4 +1,4 @@
-import { RootState } from '..';
+import { RootState } from '../store';
 
 export const gameStartedSelector = (state: RootState) => state.game.isStarted;
 

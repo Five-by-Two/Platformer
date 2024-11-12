@@ -8,7 +8,7 @@
 
 ---
 
-Подробный видеоразбор проекта находится по [ссылке](https://disk.yandex.ru/i/vuCF3eut0RLusQ) 
+Подрбробный видеоразбор проекта находится по [ссылке](https://disk.yandex.ru/i/vuCF3eut0RLusQ) 
 
 ---
 

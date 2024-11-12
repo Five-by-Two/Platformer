@@ -4,10 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { clearUser, setUser } from './userSlice';
 import { UpdateAvatarModel } from '@/services/UserService/Models/UpdateAvatarModel';
 import AuthService from '@/services/AuthService/AuthService';
-import { RootState } from '.';
-import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
-import { setLeaders } from './leaderBoardSlice/leaderBoardSlice';
-import { setSessionStorage } from '@/utils/storageUtill';
 
 export const changeUser = createAsyncThunk(
     'user/changeUser',
@@ -75,46 +71,3 @@ export const getUser = createAsyncThunk('user/getUser', async function (_, { rej
         }
     }
 });
-
-export const postPoints = createAsyncThunk<void, number, { state: RootState }>(
-    'leaderBoard/postLeaderData',
-    async function (points: number, { rejectWithValue, getState }) {
-        try {
-            const login = getState().user.user?.login;
-
-            if (login) {
-                await LeaderBoardService.PostUserPoints(login, points);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                return rejectWithValue(error.message);
-            }
-        }
-    },
-);
-
-export const setLeaderBoards = createAsyncThunk<void, number | undefined>(
-    'leaderBoard/setLeaders',
-    async function (cursor = 0, { rejectWithValue, dispatch }) {
-        try {
-            const response = await LeaderBoardService.GetLeaders(cursor);
-
-            if (!response) {
-                throw new Error('Ошибка получения данных таблицы лидеров');
-            }
-
-            setSessionStorage('cursor', cursor.toString());
-
-            const data = {
-                leaders: response,
-                cursor: cursor,
-            };
-
-            dispatch(setLeaders(data));
-        } catch (error) {
-            if (error instanceof Error) {
-                return rejectWithValue(error.message);
-            }
-        }
-    },
-);

@@ -1,5 +1,5 @@
 import { gameStartedSelector, gameOverSelector } from './Selectors';
-import { RootState } from '@/store';
+import { RootState } from '@/store/store';
 
 describe('Game Selectors', () => {
     const mockState = {

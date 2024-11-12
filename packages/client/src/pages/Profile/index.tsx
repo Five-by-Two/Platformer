@@ -14,8 +14,8 @@ export function ProfilePage(): JSX.Element {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const userLogin = useAppSelector(state => state.user.user?.login);
-    const userAvatar = useAppSelector(state => state.user.user?.avatar);
+    const userLogin = useAppSelector(state => state.user.user.login);
+    const userAvatar = useAppSelector(state => state.user.user.avatar);
 
     const [disabledWindowChangePassword, setDisabledWindowChangePassword] = useState(true);
     const [disabledWindowChangeAvatar, setDisabledWindowChangeAvatar] = useState(true);

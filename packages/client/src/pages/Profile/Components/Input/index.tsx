@@ -1,3 +1,4 @@
+import { ObjectKeys } from 'react-hook-form/dist/types/path/common';
 import styles from './input.module.scss';
 import {
     TAllTypesFormProfile,
@@ -9,7 +10,7 @@ import { useFormContext } from 'react-hook-form';
 import { InputHTMLAttributes } from 'react';
 
 type TProps = {
-    name: keyof TAllTypesFormProfile;
+    name: ObjectKeys<TAllTypesFormProfile>;
     validateErrorText?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
