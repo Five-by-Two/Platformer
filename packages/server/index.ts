@@ -9,7 +9,7 @@ import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware
 import { GetServiceIdModel } from './models/GetServiceIdModel';
 
 const { CLIENT_URL, SERVER_URL, API_URL, SERVER_PORT } = process.env;
-console.log(CLIENT_URL, SERVER_URL, API_URL, SERVER_PORT);
+
 const app = express();
 app.use(
     cors({
@@ -21,10 +21,6 @@ app.use(
 const port = Number(SERVER_PORT) || 3001;
 
 createClientAndConnect();
-
-app.get('/', (_, res) => {
-    res.json('👋 Howdy from the server :)');
-});
 
 app.post('/api/yandex-callback', req => {
     const code = req.body as string;
