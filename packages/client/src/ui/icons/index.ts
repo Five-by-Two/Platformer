@@ -17,3 +17,5 @@ export { default as IconTelegram } from '@/assets/icons/pic-telegram-24.svg';
 export { default as IconVk } from '@/assets/icons/pic-vk-24.svg';
 export { default as IconYandex } from '@/assets/icons/pic-yandex-24.svg';
 export { default as IconYoutube } from '@/assets/icons/pic-youtube-24.svg';
+export { default as IconHome } from '@/assets/icons/ic-home.svg';
+export { default as IconAccount } from '@/assets/icons/ic-account.svg';

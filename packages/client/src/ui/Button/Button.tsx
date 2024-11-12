@@ -23,7 +23,6 @@ export const Button: FC<Partial<ButtonProps>> = ({
     disabled = false,
     type = 'button',
 }) => {
-    
     return (
         <button
             className={`${styles.button} ${styles[variant]} ${className}`}

@@ -1,6 +1,4 @@
-$main-color: #24a3ae;
-$focus-color: #b85800;
-$danger-color: #dc0303;
+@use '../../../../assets/styles/_vars.scss' as *;
 
 .form {
     background: rgba(255, 255, 255, 0.3);

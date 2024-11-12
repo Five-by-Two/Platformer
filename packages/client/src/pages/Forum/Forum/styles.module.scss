@@ -1,7 +1,8 @@
 @use 'sass:color';
 
 .forum {
-    @include background-container;
+    @include page-container;
+
     box-sizing: border-box;
     position: relative;
     background-attachment: fixed;

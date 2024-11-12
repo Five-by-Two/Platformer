@@ -1,1 +1,3 @@
-@import '../SignIn/index.module.scss';
+.background {
+    @include page-container;
+}
