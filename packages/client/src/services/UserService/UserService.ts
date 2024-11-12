@@ -1,9 +1,9 @@
-import { AxiosError } from 'axios';
 import AxiosService from '../AxiosService/AxiosService';
+import { AxiosError } from 'axios';
 import { UpdateAvatarModel } from './Models/UpdateAvatarModel';
-import { UpdatePasswordModel } from './Models/UpdatePasswordModel';
-import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
 import { UserModel } from './Models/UserModel';
+import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
+import { UpdatePasswordModel } from './Models/UpdatePasswordModel';
 
 class UserService {
     UpdateAvatar(data: UpdateAvatarModel): Promise<void | UserModel> {
@@ -12,7 +12,7 @@ class UserService {
         const formData = new FormData();
         formData.append('avatar', avatar[0]);
 
-        return AxiosService.put<UserModel>('yandex-api/v2/user/profile/avatar', formData)
+        return AxiosService.put<UserModel>('user/profile/avatar', formData)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 alert('Ошибка изменения аватара');
@@ -27,7 +27,7 @@ class UserService {
             newPassword: data.newPassword,
         };
 
-        return AxiosService.put('yandex-api/v2/user/password', JSON.stringify(dataRequest), {
+        return AxiosService.put('user/password', JSON.stringify(dataRequest), {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -38,11 +38,15 @@ class UserService {
     }
 
     UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
-        return AxiosService.put<UserModel>('yandex-api/v2/user/profile', JSON.stringify(data), {
-            headers: {
-                'Content-Type': 'application/json',
+        return AxiosService.put<UserModel>(
+            'user/profile',
+            JSON.stringify(data),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             },
-        })
+        )
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка изменения данных', ex);

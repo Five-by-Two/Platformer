@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { clearUser, setUser } from './userSlice';
 import { UpdateAvatarModel } from '@/services/UserService/Models/UpdateAvatarModel';
 import AuthService from '@/services/AuthService/AuthService';
-import { RootState } from './store';
+import { RootState } from '.';
 import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
 import { setLeaders } from './leaderBoardSlice/leaderBoardSlice';
 import { setSessionStorage } from '@/utils/storageUtill';
@@ -80,8 +80,11 @@ export const postPoints = createAsyncThunk<void, number, { state: RootState }>(
     'leaderBoard/postLeaderData',
     async function (points: number, { rejectWithValue, getState }) {
         try {
-            const login = getState().user.user.login;
-            await LeaderBoardService.PostUserPoints(login, points);
+            const login = getState().user.user?.login;
+
+            if (login) {
+                await LeaderBoardService.PostUserPoints(login, points);
+            }
         } catch (error) {
             if (error instanceof Error) {
                 return rejectWithValue(error.message);
