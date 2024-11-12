@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import YandexButtonIcon from '../../../../assets/icons/yandex-button.svg';
-import { EPageRoutes } from '../../../../router/Enums';
-import AuthService from '../../../../services/AuthService/AuthService';
+import { EPageRoutes } from '@/router/Enums';
+import AuthService from '@/services/AuthService/AuthService';
 import styles from './index.module.scss';
 import IFormData from './Models/IFormData';
 export default function LoginForm() {
