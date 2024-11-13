@@ -10,8 +10,4 @@ export const Comment = SequelizeService.define('Comment', {
         type: DataTypes.BIGINT,
         allowNull: false,
     },
-    createDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
 });
