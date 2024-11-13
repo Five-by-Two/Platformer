@@ -1,11 +1,11 @@
-import serialize from 'serialize-javascript';
 import cors from 'cors';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
-import express from 'express';
-import * as path from 'path';
-import * as fs from 'fs';
-import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import dotenv from 'dotenv';
+import express from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import serialize from 'serialize-javascript';
+import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 dotenv.config();
 
 const isDev = () => process.env.NODE_ENV === 'development';
@@ -42,6 +42,11 @@ async function startServer() {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
     }
 
+    app.use(yandexApiProxyMiddleware);
+
+    app.use('/test', (_, res) => {
+        res.send('ok');
+    });
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
 
@@ -81,8 +86,6 @@ async function startServer() {
             next(e);
         }
     });
-
-    app.use(yandexApiProxyMiddleware);
 
     app.listen(port, () => {
         console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
