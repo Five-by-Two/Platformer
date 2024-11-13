@@ -1,11 +1,11 @@
-import serialize from 'serialize-javascript';
-import cors from 'cors';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
-import express from 'express';
-import * as path from 'path';
-import * as fs from 'fs';
-import dotenv from 'dotenv';
 import axios from 'axios';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import serialize from 'serialize-javascript';
+import { createServer as createViteServer, ViteDevServer } from 'vite';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import { GetServiceIdModel } from './models/GetServiceIdModel';
 
@@ -20,10 +20,10 @@ async function startServer() {
     app.use(
         cors({
             origin: CLIENT_URL,
-            optionsSuccessStatus: 200,
             credentials: true,
         }),
     );
+
     const port = Number(SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
@@ -45,6 +45,33 @@ async function startServer() {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
     }
 
+    app.post('/api/yandex-callback', async req => {
+        const code = req.body as string;
+        try {
+            return await axios.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
+                code: code,
+                redirect_url: CLIENT_URL,
+            });
+        } catch (error) {
+            console.error('Error oauth authorize', error);
+            throw error;
+        }
+    });
+
+    app.post('/api/signin-by-yandex', (_, res) => {
+        axios
+            .get(`${API_URL}/api/v2/oauth/yandex/service-id`)
+            .then(result => {
+                const model = result.data as GetServiceIdModel;
+                const url = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${model.service_id}&redirect_uri=${SERVER_URL}/api/yandex-callback`;
+                res.json(url);
+            })
+            .catch(error => {
+                console.error(error);
+                throw error;
+            });
+    });
+    app.use(yandexApiProxyMiddleware);
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
 
@@ -83,35 +110,6 @@ async function startServer() {
             }
             next(e);
         }
-    });
-
-    app.use(yandexApiProxyMiddleware);
-
-    app.post('/api/yandex-callback', req => {
-        const code = req.body as string;
-        return axios
-            .post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
-                code: code,
-                redirect_url: CLIENT_URL,
-            })
-            .catch(error => {
-                console.error('Error oauth authorize', error);
-                throw error;
-            });
-    });
-
-    app.post('/api/signin-by-yandex', (_, res) => {
-        axios
-            .get(`${API_URL}/api/v2/oauth/yandex/service-id`)
-            .then(result => {
-                const model = result.data as GetServiceIdModel;
-                const url = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${model.service_id}&redirect_uri=${SERVER_URL}/api/yandex-callback`;
-                res.json(url);
-            })
-            .catch(error => {
-                console.error(error);
-                throw error;
-            });
     });
 
     app.listen(port, () => {

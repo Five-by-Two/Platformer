@@ -1,6 +1,7 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 export const yandexApiProxyMiddleware = createProxyMiddleware({
+    pathFilter: '/yandex-api',
     changeOrigin: true,
     cookieDomainRewrite: {
         '*': '',
@@ -8,5 +9,5 @@ export const yandexApiProxyMiddleware = createProxyMiddleware({
     pathRewrite: {
         '^/yandex-api': '/api',
     },
-    target: process.env.API_URL ?? 'http://localhost',
+    target: 'https://ya-praktikum.tech/',
 });
