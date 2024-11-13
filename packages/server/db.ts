@@ -3,10 +3,10 @@ import reactionConfigure from './sequelizeConfigurations/reactionConfigure';
 import replyConfigure from './sequelizeConfigurations/replyConfigure';
 import topicConfigure from './sequelizeConfigurations/topicConfigure';
 import { SequelizeService } from './services/SequelizeService';
-export const checkDatabaseConnection = async () => {
+export const configureDatabase = async () => {
     try {
         await SequelizeService.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log('Connection success!');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }

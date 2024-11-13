@@ -5,7 +5,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-import { checkDatabaseConnection } from './db';
+import { configureDatabase } from './db';
+import { authenticateMiddleware } from './middlewares/authenticateMiddleware';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 dotenv.config();
 
@@ -13,7 +14,7 @@ const isDev = () => process.env.NODE_ENV === 'development';
 
 const CLIENT_URL = 'http://localhost:3000';
 
-checkDatabaseConnection();
+configureDatabase();
 
 async function startServer() {
     const app = express();
@@ -47,9 +48,10 @@ async function startServer() {
 
     app.use(yandexApiProxyMiddleware);
 
-    app.use('/test', (_, res) => {
+    app.use('/test', authenticateMiddleware, (_, res) => {
         res.send('ok');
     });
+
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
 
