@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 import * as path from 'path';
+import sass from 'sass';
 
 dotenv.config();
 
@@ -28,11 +29,14 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
+                api: 'modern',
                 additionalData: `
-              @use '@/assets/styles/_mixins.scss' as *;
-              @use '@/assets/styles/_typography.scss' as *;
-              @use '@/assets/styles/_vars.scss' as *;
-            `,
+                    @use '@/assets/styles/_vars.scss' as *;
+                    @use '@/assets/styles/_mixins.scss' as *;
+                    @use '@/assets/styles/_typography.scss' as *;
+                `,
+                silenceDeprecations: ['legacy-js-api'],
+                implementation: sass,
             },
         },
     },
