@@ -1,6 +1,6 @@
 import { SequelizeService } from './services/SequelizeService';
 
-export const createClientAndConnect = async () => {
+export const checkDatabaseConnection = async () => {
     try {
         await SequelizeService.authenticate();
         console.log('Connection has been established successfully.');

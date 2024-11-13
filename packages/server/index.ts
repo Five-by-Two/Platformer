@@ -5,12 +5,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { checkDatabaseConnection } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 dotenv.config();
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const CLIENT_URL = 'http://localhost:3000';
+
+checkDatabaseConnection();
 
 async function startServer() {
     const app = express();
