@@ -1,17 +1,21 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { SequelizeService } from '../services/SequelizeService';
 
-export const Topic = SequelizeService.define('Topic', {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false,
+export class Topic extends Model {}
+Topic.init(
+    {
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        authorId: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+        },
     },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-    authorId: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-    },
-});
+    { sequelize: SequelizeService },
+);
