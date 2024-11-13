@@ -1,5 +1,10 @@
 import { Router } from 'express';
+import TopicService from '../services/TopicService';
 
-const topicController = Router();
+export const topicController = Router();
 
-topicController.use('/');
+topicController.use('/', (_, res) => {
+    TopicService.getAllAsync().then(topics => {
+        res.send(JSON.stringify(topics));
+    });
+});

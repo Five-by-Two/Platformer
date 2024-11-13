@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { topicController } from './controllers/topicController';
 import { configureDatabase } from './db';
 import { authenticateMiddleware } from './middlewares/authenticateMiddleware';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
@@ -47,10 +48,7 @@ async function startServer() {
     }
 
     app.use(yandexApiProxyMiddleware);
-
-    app.use('/test', authenticateMiddleware, (_, res) => {
-        res.send('ok');
-    });
+    app.use('/topics', authenticateMiddleware, topicController);
 
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
