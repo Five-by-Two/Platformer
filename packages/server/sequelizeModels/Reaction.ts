@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { SequelizeService } from '../services/SequelizeService';
 
-export const CommentEmoji = SequelizeService.define('CommentEmoji', {
+export const Reaction = SequelizeService.define('Reaction', {
     emojiCode: {
         type: DataTypes.STRING,
         allowNull: false,

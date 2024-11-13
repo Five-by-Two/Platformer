@@ -1,5 +1,5 @@
 import commentConfigure from './sequelizeConfigurations/commentConfigure';
-import commentEmojiConfigure from './sequelizeConfigurations/commentEmojiConfigure';
+import reactionConfigure from './sequelizeConfigurations/reactionConfigure';
 import replyConfigure from './sequelizeConfigurations/replyConfigure';
 import topicConfigure from './sequelizeConfigurations/topicConfigure';
 import { SequelizeService } from './services/SequelizeService';
@@ -14,7 +14,7 @@ export const checkDatabaseConnection = async () => {
         topicConfigure();
         commentConfigure();
         replyConfigure();
-        commentEmojiConfigure();
+        reactionConfigure();
         await SequelizeService.sync();
     } catch (error) {
         console.error('Error configure tables', error);
