@@ -27,3 +27,9 @@ reactionController.post('/create', (req: Request, res: Response) => {
         .then(result => res.send(result))
         .catch(error => res.status(400).send(JSON.stringify(error.message)));
 });
+
+reactionController.delete('/delete/:reactionId', (req: Request, res: Response) => {
+    ReactionService.deleteAsync(Number(req.params['reactionId']))
+        .then(() => res.send('ok'))
+        .catch(error => res.status(400).send(JSON.stringify(error.message)));
+});

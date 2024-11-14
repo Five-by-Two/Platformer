@@ -29,7 +29,7 @@ class TopicService {
 
     public async updateAsync(model: UpdateTopicDto) {
         return Topic.update(
-            { title: model.title },
+            { title: model.title, description: model.description },
             {
                 where: {
                     id: model.topicId,

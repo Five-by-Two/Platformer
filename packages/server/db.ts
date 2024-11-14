@@ -15,7 +15,7 @@ export const configureDatabase = async () => {
         commentConfigure();
         replyConfigure();
         reactionConfigure();
-        await SequelizeService.sync({ force: true });
+        await SequelizeService.sync();
     } catch (error) {
         console.error('Error configure tables', error);
     }
