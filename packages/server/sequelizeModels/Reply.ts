@@ -8,8 +8,8 @@ reply.init(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        authorId: {
-            type: DataTypes.BIGINT,
+        authorName: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },

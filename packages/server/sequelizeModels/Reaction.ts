@@ -14,8 +14,8 @@ reaction.init(
                 },
             },
         },
-        authorId: {
-            type: DataTypes.BIGINT,
+        authorName: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },

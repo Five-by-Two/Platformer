@@ -22,11 +22,7 @@ class TopicService {
 
     public async createAsync(model: CreateTopicDto): Promise<topic> {
         return topic
-            .create({
-                title: model.title,
-                description: model.description,
-                authorId: model.authorId,
-            })
+            .create(model)
             .then(result => result as topic)
             .catch(error => {
                 throw new Error(`Error create topic: ${error}`);

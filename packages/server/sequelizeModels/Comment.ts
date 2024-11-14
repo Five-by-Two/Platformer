@@ -7,9 +7,15 @@ comment.init(
         message: {
             type: DataTypes.TEXT,
             allowNull: false,
+            validate: {
+                len: {
+                    args: [10, 500],
+                    msg: 'Error validate, min lenght 10, max lenght 500',
+                },
+            },
         },
-        authorId: {
-            type: DataTypes.BIGINT,
+        authorName: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
