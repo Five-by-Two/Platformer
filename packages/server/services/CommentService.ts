@@ -1,4 +1,5 @@
 import { CreateCommentDto } from '../dtos/CreateCommentDto';
+import { UpdateCommentDto } from '../dtos/UpdateCommentDto';
 import { Comment } from '../sequelizeModels/Comment';
 import { Reply } from '../sequelizeModels/Reply';
 import { Topic } from '../sequelizeModels/Topic';
@@ -33,6 +34,26 @@ class CommentService {
             .catch(error => {
                 throw new Error(`Error create comment: ${error}`);
             });
+    }
+    public async updateAsync(model: UpdateCommentDto) {
+        return Comment.update(
+            { message: model.message },
+            {
+                where: {
+                    id: model.commentId,
+                },
+            },
+        ).catch(error => {
+            console.error(error);
+        });
+    }
+
+    public async deleteAsync(id: number) {
+        return Comment.destroy({
+            where: { id: id },
+        }).catch(error => {
+            console.error(error);
+        });
     }
 }
 

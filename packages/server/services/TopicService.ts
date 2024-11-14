@@ -1,3 +1,4 @@
+import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
 import { CreateTopicDto } from '../dtos/createTopicDto';
 import { Comment } from '../sequelizeModels/Comment';
 import { Topic } from '../sequelizeModels/Topic';
@@ -24,6 +25,27 @@ class TopicService {
             .catch(error => {
                 throw new Error(`Error create topic: ${error}`);
             });
+    }
+
+    public async updateAsync(model: UpdateTopicDto) {
+        return Topic.update(
+            { title: model.title },
+            {
+                where: {
+                    id: model.topicId,
+                },
+            },
+        ).catch(error => {
+            console.error(error);
+        });
+    }
+
+    public async deleteAsync(id: number) {
+        return Topic.destroy({
+            where: { id: id },
+        }).catch(error => {
+            console.error(error);
+        });
     }
 }
 

@@ -31,6 +31,14 @@ class ReactionService {
                 throw new Error(`Error create reaction: ${error}`);
             });
     }
+
+    public async deleteAsync(id: number) {
+        return Reaction.destroy({
+            where: { id: id },
+        }).catch(error => {
+            console.error(error);
+        });
+    }
 }
 
 export default new ReactionService();

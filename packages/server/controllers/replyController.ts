@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { CreateReplyDto } from '../dtos/CreateReplyDto';
+import { UpdateReplyDto } from '../dtos/UpdateReplyDto';
 import ReplyService from '../services/ReplyService';
 
 export const replyController = Router();
@@ -33,5 +34,18 @@ replyController.post('/create', (req: Request, res: Response) => {
     const model = req.body as CreateReplyDto;
     ReplyService.createAsync(model)
         .then(result => res.send(result))
+        .catch(error => res.status(400).send(JSON.stringify(error.message)));
+});
+
+replyController.put('/update', (req: Request, res: Response) => {
+    const model = req.body as UpdateReplyDto;
+    ReplyService.updateAsync(model)
+        .then(() => res.send('ok'))
+        .catch(error => res.status(400).send(JSON.stringify(error.message)));
+});
+
+replyController.delete('/delete/:replyId', (req: Request, res: Response) => {
+    ReplyService.deleteAsync(Number(req.params['replyId']))
+        .then(() => res.send('ok'))
         .catch(error => res.status(400).send(JSON.stringify(error.message)));
 });

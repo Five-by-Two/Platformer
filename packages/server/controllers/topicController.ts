@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { CreateTopicDto } from '../dtos/createTopicDto';
+import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
 import TopicService from '../services/TopicService';
 
 export const topicController = Router();
@@ -27,4 +28,17 @@ topicController.post('/create', (req: Request, res: Response) => {
     TopicService.createAsync(model)
         .then(result => res.send(result))
         .catch(error => res.status(400).send(error.message));
+});
+
+topicController.put('/update', (req: Request, res: Response) => {
+    const model = req.body as UpdateTopicDto;
+    TopicService.updateAsync(model)
+        .then(() => res.send('ok'))
+        .catch(error => res.status(400).send(JSON.stringify(error.message)));
+});
+
+topicController.delete('/delete/:topicId', (req: Request, res: Response) => {
+    TopicService.deleteAsync(Number(req.params['topicId']))
+        .then(() => res.send('ok'))
+        .catch(error => res.status(400).send(JSON.stringify(error.message)));
 });

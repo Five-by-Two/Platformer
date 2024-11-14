@@ -1,4 +1,5 @@
 import { CreateReplyDto } from '../dtos/CreateReplyDto';
+import { UpdateReplyDto } from '../dtos/UpdateReplyDto';
 import { Comment } from '../sequelizeModels/Comment';
 import { Reply } from '../sequelizeModels/Reply';
 class ReplyService {
@@ -54,6 +55,26 @@ class ReplyService {
             .catch(error => {
                 throw new Error(`Error create reply: ${error}`);
             });
+    }
+    public async updateAsync(model: UpdateReplyDto) {
+        return Reply.update(
+            { message: model.message },
+            {
+                where: {
+                    id: model.replyId,
+                },
+            },
+        ).catch(error => {
+            console.error(error);
+        });
+    }
+
+    public async deleteAsync(id: number) {
+        return Reply.destroy({
+            where: { id: id },
+        }).catch(error => {
+            console.error(error);
+        });
     }
 }
 
