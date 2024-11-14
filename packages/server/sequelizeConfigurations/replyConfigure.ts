@@ -1,8 +1,8 @@
-import { comment } from '../sequelizeModels/comment';
-import { reply } from '../sequelizeModels/reply';
+import { Comment } from '../sequelizeModels/Comment';
+import { Reply } from '../sequelizeModels/Reply';
 
 export default function replyConfigure() {
-    reply.belongsTo(comment);
-    reply.hasOne(reply);
-    reply.belongsTo(reply);
+    Reply.belongsTo(Comment);
+    Reply.hasOne(Reply);
+    Reply.belongsTo(Reply);
 }

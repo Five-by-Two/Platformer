@@ -1,6 +1,6 @@
-import { comment } from '../sequelizeModels/comment';
-import { topic } from '../sequelizeModels/topic';
+import { Comment } from '../sequelizeModels/Comment';
+import { Topic } from '../sequelizeModels/Topic';
 
 export default function topicConfigure() {
-    topic.hasMany(comment);
+    Topic.hasMany(Comment);
 }

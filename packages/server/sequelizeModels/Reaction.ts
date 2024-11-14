@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import { SequelizeService } from '../services/SequelizeService';
 
-export class reaction extends Model {}
-reaction.init(
+export class Reaction extends Model {}
+Reaction.init(
     {
         emojiCode: {
             type: DataTypes.STRING,

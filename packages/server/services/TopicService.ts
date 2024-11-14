@@ -1,29 +1,26 @@
 import { CreateTopicDto } from '../dtos/createTopicDto';
-import { comment } from '../sequelizeModels/comment';
-import { topic } from '../sequelizeModels/topic';
+import { Comment } from '../sequelizeModels/Comment';
+import { Topic } from '../sequelizeModels/Topic';
 class TopicService {
-    public async getAllAsync(): Promise<Array<topic>> {
-        return topic
-            .findAll()
-            .then(result => result as Array<topic>)
+    public async getAllAsync(): Promise<Array<Topic>> {
+        return Topic.findAll()
+            .then(result => result as Array<Topic>)
             .catch(error => {
                 throw new Error(`Error get all topics: ${error}`);
             });
     }
 
-    public async getByIdAsync(id: number): Promise<topic | null> {
-        return topic
-            .findByPk(id, { include: comment })
-            .then(result => result as topic)
+    public async getByIdAsync(id: number): Promise<Topic | null> {
+        return Topic.findByPk(id, { include: Comment })
+            .then(result => result as Topic)
             .catch(error => {
                 throw new Error(`Error get topic by id: ${error}`);
             });
     }
 
-    public async createAsync(model: CreateTopicDto): Promise<topic> {
-        return topic
-            .create(model)
-            .then(result => result as topic)
+    public async createAsync(model: CreateTopicDto): Promise<Topic> {
+        return Topic.create(model)
+            .then(result => result as Topic)
             .catch(error => {
                 throw new Error(`Error create topic: ${error}`);
             });

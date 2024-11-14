@@ -1,38 +1,35 @@
 import { CreateCommentDto } from '../dtos/CreateCommentDto';
-import { comment } from '../sequelizeModels/comment';
-import { reply } from '../sequelizeModels/reply';
-import { topic } from '../sequelizeModels/topic';
+import { Comment } from '../sequelizeModels/Comment';
+import { Reply } from '../sequelizeModels/Reply';
+import { Topic } from '../sequelizeModels/Topic';
 class CommentService {
-    public async getByTopicId(topicId: number): Promise<Array<comment>> {
-        return comment
-            .findAll({
-                where: {
-                    topicId: topicId,
-                },
-                include: reply,
-            })
-            .then(result => result as Array<comment>)
+    public async getByTopicId(topicId: number): Promise<Array<Comment>> {
+        return Comment.findAll({
+            where: {
+                TopicId: topicId,
+            },
+            include: Reply,
+        })
+            .then(result => result as Array<Comment>)
             .catch(error => {
                 throw new Error(`Error get all comments: ${error}`);
             });
     }
 
-    public async getByIdAsync(id: number): Promise<comment | null> {
-        return comment
-            .findByPk(id, { include: reply })
-            .then(result => result as topic)
+    public async getByIdAsync(id: number): Promise<Comment | null> {
+        return Comment.findByPk(id, { include: Reply })
+            .then(result => result as Topic)
             .catch(error => {
                 throw new Error(`Error get comment by id: ${error}`);
             });
     }
 
-    public async createAsync(model: CreateCommentDto): Promise<comment> {
-        await topic.findByPk(model.topicId).then(topic => {
+    public async createAsync(model: CreateCommentDto): Promise<Comment> {
+        await Topic.findByPk(model.TopicId).then(topic => {
             if (topic === null) throw new Error('Topic not found');
         });
-        return comment
-            .create(model)
-            .then(result => result as comment)
+        return Comment.create(model)
+            .then(result => result as Comment)
             .catch(error => {
                 throw new Error(`Error create comment: ${error}`);
             });
