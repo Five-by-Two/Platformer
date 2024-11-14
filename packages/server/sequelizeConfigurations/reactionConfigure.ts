@@ -1,6 +1,6 @@
-import { Comment } from '../sequelizeModels/Comment';
-import { Reaction } from '../sequelizeModels/Reaction';
+import { comment } from '../sequelizeModels/comment';
+import { reaction } from '../sequelizeModels/reaction';
 
 export default function reactionConfigure() {
-    Reaction.belongsTo(Comment);
+    reaction.belongsTo(comment);
 }

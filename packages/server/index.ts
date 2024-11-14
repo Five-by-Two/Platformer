@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-import { topicController } from './controllers/topicController';
+import { apiController } from './controllers/apiController';
 import { configureDatabase } from './db';
 import { authenticateMiddleware } from './middlewares/authenticateMiddleware';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
@@ -26,6 +26,7 @@ async function startServer() {
             credentials: true,
         }),
     );
+    app.use(express.json());
     const port = Number(process.env.SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
@@ -48,7 +49,11 @@ async function startServer() {
     }
 
     app.use(yandexApiProxyMiddleware);
-    app.use('/topics', authenticateMiddleware, topicController);
+    if (isDev()) {
+        app.use('/api', apiController);
+    } else {
+        app.use('/api', authenticateMiddleware, apiController);
+    }
 
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;

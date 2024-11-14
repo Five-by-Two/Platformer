@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import { SequelizeService } from '../services/SequelizeService';
 
-export class Comment extends Model {}
-Comment.init(
+export class comment extends Model {}
+comment.init(
     {
         message: {
             type: DataTypes.TEXT,

@@ -1,8 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import { SequelizeService } from '../services/SequelizeService';
 
-export class Topic extends Model {}
-Topic.init(
+export class topic extends Model {}
+topic.init(
     {
         title: {
             type: DataTypes.STRING,

@@ -1,10 +1,10 @@
-import { Comment } from '../sequelizeModels/Comment';
-import { Reaction } from '../sequelizeModels/Reaction';
-import { Reply } from '../sequelizeModels/Reply';
-import { Topic } from '../sequelizeModels/Topic';
+import { comment } from '../sequelizeModels/comment';
+import { reaction } from '../sequelizeModels/reaction';
+import { reply } from '../sequelizeModels/reply';
+import { topic } from '../sequelizeModels/topic';
 
 export default function commentConfigure() {
-    Comment.belongsTo(Topic);
-    Comment.hasMany(Reply);
-    Comment.hasMany(Reaction);
+    comment.belongsTo(topic);
+    comment.hasMany(reply);
+    comment.hasMany(reaction);
 }
