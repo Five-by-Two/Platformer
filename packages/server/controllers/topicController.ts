@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { CreateTopicDto } from '../dtos/createTopicDto';
+import { CreateTopicDto } from '../dtos/CreateTopicDto';
 import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
 import TopicService from '../services/TopicService';
 
