@@ -1,29 +1,29 @@
 import { FC, useState, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
-import { mockTopics } from '../mocks';
 import { TopicCardItem } from '../components';
 import { useNavigate } from 'react-router';
 import { Button, IconArrowLeft, IconArrowRight } from '@/ui';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { topicsSelector } from '@/store/forumSlice/selectors';
 
 const TOPICS_PER_PAGE = 5;
 
 export const ForumList: FC = () => {
+    const topics = useAppSelector(topicsSelector);
+
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredTopics = mockTopics.filter(topic =>
-        topic.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filteredTopics = topics
+        .filter(topic => topic.title.toLowerCase().includes(searchTerm.toLowerCase()))
+        .reverse();
 
     const totalPages = Math.ceil(filteredTopics.length / TOPICS_PER_PAGE);
-    const paginatedTopics = filteredTopics.slice(
-        (currentPage - 1) * TOPICS_PER_PAGE,
-        currentPage * TOPICS_PER_PAGE,
-    );
+    const paginatedTopics = filteredTopics.slice((currentPage - 1) * TOPICS_PER_PAGE, currentPage * TOPICS_PER_PAGE);
 
-    const handleTopicSelect = (topicId: string) => {
-        navigate(topicId);
+    const handleTopicSelect = (topicId: number) => {
+        navigate(String(topicId));
     };
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,11 +58,7 @@ export const ForumList: FC = () => {
 
             <ul className={styles.forumList__list}>
                 {paginatedTopics.map(topic => (
-                    <TopicCardItem
-                        key={topic.id}
-                        topic={topic}
-                        onSelect={handleTopicSelect}
-                    />
+                    <TopicCardItem key={topic.id} topic={topic} onSelect={handleTopicSelect} />
                 ))}
             </ul>
             <div className={styles.forumList__pagination}>

@@ -1,4 +1,4 @@
-import AxiosService from '../AxiosService/AxiosService';
+import { AxiosYandexService } from '../AxiosService/AxiosService';
 import { AxiosError } from 'axios';
 import { UpdateAvatarModel } from './Models/UpdateAvatarModel';
 import { UserModel } from './Models/UserModel';
@@ -12,7 +12,7 @@ class UserService {
         const formData = new FormData();
         formData.append('avatar', avatar[0]);
 
-        return AxiosService.put<UserModel>('user/profile/avatar', formData)
+        return AxiosYandexService.put<UserModel>('user/profile/avatar', formData)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 alert('Ошибка изменения аватара');
@@ -27,7 +27,7 @@ class UserService {
             newPassword: data.newPassword,
         };
 
-        return AxiosService.put('user/password', JSON.stringify(dataRequest), {
+        return AxiosYandexService.put('user/password', JSON.stringify(dataRequest), {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -38,15 +38,11 @@ class UserService {
     }
 
     UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
-        return AxiosService.put<UserModel>(
-            'user/profile',
-            JSON.stringify(data),
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        return AxiosYandexService.put<UserModel>('user/profile', JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
             },
-        )
+        })
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка изменения данных', ex);

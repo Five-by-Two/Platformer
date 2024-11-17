@@ -1,38 +1,59 @@
-import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { FC, useLayoutEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { CommentList, CreateComment } from '../components';
-import { mockTopics } from '../mocks';
 import { Topic } from '@/pages/Forum/models/forumTypes';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { commentsSelector, topicsSelector } from '@/store/forumSlice/selectors';
+import { loginSelector } from '@/services/UserService/UserSelectors';
+import { Button } from '@/ui';
+import { deleteTopic, getComments } from '@/store/forumSlice/forumThunks';
 
 export const ForumTopic: FC = () => {
     const { topicId } = useParams<{
         topicId: string;
     }>();
-    const [topic, setTopic] = useState<Topic | null>(null);
 
-    useEffect(() => {
+    const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+    const [topic, setTopic] = useState<Topic | null>(null);
+    const topics = useAppSelector(topicsSelector);
+    const login = useAppSelector(loginSelector);
+    const comments = useAppSelector(commentsSelector);
+
+    async function handleDeleteClick() {
         if (topicId) {
-            const topicSelected = mockTopics.find(item => item.id === topicId);
-            if (topicSelected) setTopic(topicSelected);
+            await dispatch(deleteTopic(topicId));
+
+            navigate('/forum');
+        } else {
+            throw new Error('ошибка получения id топика');
         }
-    }, [topicId]);
+    }
+
+    useLayoutEffect(() => {
+        if (topicId) {
+            const topicSelected = topics.find(item => item.id === Number(topicId));
+            if (topicSelected) setTopic(topicSelected);
+
+            dispatch(getComments(topicId));
+        }
+    }, [topicId, topics]);
 
     return (
         <div className={styles.forumTopic}>
             {topicId ? (
                 !topic ? null : (
                     <div className={styles.forumTopic__content}>
-                        <h2 className={styles.forumTopic__author}>
-                            {topic.author}
-                        </h2>
-                        <h3 className={styles.forumTopic__title}>
-                            {topic.title}
-                        </h3>
-                        <p className={styles.forumTopic__description}>
-                            {topic.content}
-                        </p>
-                        <CommentList comments={topic.comments} />
+                        <div className={styles.forumTopic__container}>
+                            <h2 className={styles.forumTopic__author}>{topic.authorName}</h2>
+                            {topic.authorName === login && <Button onClick={handleDeleteClick}>Удалить</Button>}
+                        </div>
+                        <h3 className={styles.forumTopic__title}>{topic.title}</h3>
+                        <p className={styles.forumTopic__description}>{topic.description}</p>
+                        {/* comments={topic.comments} */}
+                        <CommentList comments={comments} />
                         <CreateComment topicId={topicId} />
                     </div>
                 )

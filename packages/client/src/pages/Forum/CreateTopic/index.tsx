@@ -2,6 +2,10 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/ui';
 import styles from './styles.module.scss';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { createTopic } from '@/store/forumSlice/forumThunks';
+import { loginSelector } from '@/services/UserService/UserSelectors';
+import { useNavigate } from 'react-router';
 
 interface FormData {
     title: string;
@@ -16,16 +20,28 @@ export const CreateTopic: FC = () => {
         reset,
     } = useForm<FormData>();
 
-    const onSubmit = (data: FormData) => {
-        console.log('Новая тема:', data.title);
-        console.log('Описание темы:', data.description);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const login = useAppSelector(loginSelector);
+
+    async function onSubmit(data: FormData) {
+        console.log(data);
+        if (login) {
+            await dispatch(
+                createTopic({
+                    title: data.title,
+                    description: data.description,
+                    authorName: login,
+                }),
+            );
+
+            navigate('/forum');
+        }
         reset();
-    };
+    }
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={styles.createTopicForm}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.createTopicForm}>
             <div className={styles.createTopicForm__field}>
                 <input
                     type="text"
@@ -39,11 +55,7 @@ export const CreateTopic: FC = () => {
                     })}
                     className={styles.createTopicForm__input}
                 />
-                {errors.title && (
-                    <span className={styles.createTopicForm__error}>
-                        {errors.title.message}
-                    </span>
-                )}
+                {errors.title && <span className={styles.createTopicForm__error}>{errors.title.message}</span>}
             </div>
             <div className={`${styles.createTopicForm__field} ${styles.full}`}>
                 <textarea
@@ -59,9 +71,7 @@ export const CreateTopic: FC = () => {
                     rows={5}
                 />
                 {errors.description && (
-                    <span className={styles.createTopicForm__error}>
-                        {errors.description.message}
-                    </span>
+                    <span className={styles.createTopicForm__error}>{errors.description.message}</span>
                 )}
             </div>
 
