@@ -51,8 +51,6 @@ export const ForumTopic: FC = () => {
                             {topic.authorName === login && <Button onClick={handleDeleteClick}>Удалить</Button>}
                         </div>
                         <h3 className={styles.forumTopic__title}>{topic.title}</h3>
-                        <p className={styles.forumTopic__description}>{topic.description}</p>
-                        {/* comments={topic.comments} */}
                         <CommentList comments={comments} />
                         <CreateComment topicId={topicId} />
                     </div>

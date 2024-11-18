@@ -3,6 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setComments, setTopics } from './forumSlice';
 import { TCommentReq, TIdData, TTopicData } from './types';
 
+const regExp = /[TZ]|[.-]|:|/g;
+
 export const getTopics = createAsyncThunk('forum/setTopics', async function (_, { rejectWithValue, dispatch }) {
     try {
         const response = await ForumService.GetTopics();
@@ -11,7 +13,11 @@ export const getTopics = createAsyncThunk('forum/setTopics', async function (_, 
             throw new Error('Ошибка получения топиков');
         }
 
-        dispatch(setTopics({ topics: response }));
+        const topicsSorted = response.sort((a, b) => {
+            console.log(a.createdAt.replaceAll(regExp, ''));
+            return Number(a.createdAt.replace(regExp, '')) - Number(b.createdAt.replace(regExp, ''));
+        });
+        dispatch(setTopics({ topics: topicsSorted }));
     } catch (error) {
         if (error instanceof Error) {
             return rejectWithValue(error.message);
@@ -67,7 +73,13 @@ export const getComments = createAsyncThunk(
                 throw new Error('Ошибка получения комментариев');
             }
 
-            dispatch(setComments({ comments: response }));
+            const commentsSorted = response.sort((a, b) => {
+                return Number(b.createdAt.replace(regExp, '')) - Number(a.createdAt.replace(regExp, ''));
+            });
+
+            console.log(commentsSorted);
+
+            dispatch(setComments({ comments: commentsSorted }));
         } catch (error) {
             if (error instanceof Error) {
                 return rejectWithValue(error.message);
