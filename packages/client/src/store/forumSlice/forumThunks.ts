@@ -14,7 +14,6 @@ export const getTopics = createAsyncThunk('forum/setTopics', async function (_, 
         }
 
         const topicsSorted = response.sort((a, b) => {
-            console.log(a.createdAt.replaceAll(regExp, ''));
             return Number(a.createdAt.replace(regExp, '')) - Number(b.createdAt.replace(regExp, ''));
         });
         dispatch(setTopics({ topics: topicsSorted }));
@@ -76,8 +75,6 @@ export const getComments = createAsyncThunk(
             const commentsSorted = response.sort((a, b) => {
                 return Number(b.createdAt.replace(regExp, '')) - Number(a.createdAt.replace(regExp, ''));
             });
-
-            console.log(commentsSorted);
 
             dispatch(setComments({ comments: commentsSorted }));
         } catch (error) {

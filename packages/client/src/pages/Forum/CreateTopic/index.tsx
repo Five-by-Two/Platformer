@@ -25,7 +25,6 @@ export const CreateTopic: FC = () => {
     const login = useAppSelector(loginSelector);
 
     async function onSubmit(data: FormData) {
-        console.log(data);
         if (login) {
             await dispatch(
                 createTopic({

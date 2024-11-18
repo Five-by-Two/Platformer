@@ -26,7 +26,6 @@ export const CreateComment: FC<CreateCommentProps> = ({ topicId }) => {
     const login = useAppSelector(loginSelector);
 
     const onSubmit = (data: FormData) => {
-        console.log('Комментарий', data.comment, topicId);
         if (login) {
             dispatch(
                 createComment({
