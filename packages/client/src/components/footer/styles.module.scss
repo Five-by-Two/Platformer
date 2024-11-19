@@ -1,8 +1,23 @@
+@use '@/assets/styles/themes' as *;
+
 .footer {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: $bg-header-footer-main;
+    
+    .switcherWrapper {
+        top: 8px;
+        left: 10px;
+        position: absolute;
+    }
+
+    @include themed {
+        background-color: t('bg-header-footer-main');
+        &__item {
+            color: t('text-primary'),
+        }
+    }
     justify-content: center;
 
     &__items {
@@ -15,7 +30,6 @@
     &__item {
         @include text-xs;
         padding: 0;
-        color: #000;
         margin: 0 auto;
         text-align: center;
         display: flex;

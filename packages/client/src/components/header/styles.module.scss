@@ -1,10 +1,14 @@
+@use '@/assets/styles/themes' as *;
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: $bg-header-footer-main;
-    color: #fff;
+    @include themed {
+        background-color: t('bg-header-footer-main');
+        color: t('text-primary');
+    }
 }
 
 .header-right {

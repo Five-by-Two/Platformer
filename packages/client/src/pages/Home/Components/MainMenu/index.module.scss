@@ -1,3 +1,5 @@
+@use '@/assets/styles/themes' as *;
+
 .menu-wrap {
     @include container;
     text-align: center;
@@ -16,10 +18,15 @@
     .title {
         padding: 1.2rem;
         font-size: x-large;
-        color: $title-color;
+        @include themed {
+            color: t('title-color');
+        }
     }
 
     p {
+        @include themed {
+            color: t('text-secondary');
+        }
         font-size: small;
         margin-bottom: 1.3rem;
     }
@@ -34,7 +41,6 @@
             font-size: small;
             background-color: var(--main-page-btn-bg-color);
             color: var(--white);
-            box-shadow: (6px 6px 0px $btn-shadow);
             border-radius: 0;
 
             &:hover {
