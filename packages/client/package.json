@@ -4,10 +4,10 @@
     "type": "commonjs",
     "scripts": {
         "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node server/index.js",
-        "build": "vite build && vite build --mode ssr",
-        "preview": "node server/index.js",
-        "start": "node dist/server/server.mjs",
+        "build": "tsc --noEmit && vite build && vite build --mode ssr",
+        "start": "node -r dotenv/config dist/server/server.mjs dotenv_config_path=../../.env",
         "clean": "rimraf dist",
+        "rebuild": "yarn clean && yarn build",
         "lint": "eslint .",
         "format": "prettier --write .",
         "test": "jest ./"

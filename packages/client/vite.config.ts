@@ -46,11 +46,15 @@ export default defineConfig(({ mode }) => {
                 include: '**/*.svg',
             }),
             VitePWA({
-                strategies: 'injectManifest',
-                srcDir: 'src',
-                filename: 'service-worker.ts',
-                injectManifest: {
-                    injectionPoint: undefined,
+                strategies: 'generateSW',
+                registerType: 'autoUpdate',
+                filename: 'service-worker.js',
+                manifest: {
+                    name: 'My App',
+                    short_name: 'App',
+                    start_url: '/',
+                    display: 'standalone',
+                    icons: [],
                 },
             }),
         ],
