@@ -29,7 +29,6 @@ export default defineConfig(({ mode }) => {
             port: Number(process.env.CLIENT_PORT) || 3000,
         },
         define: {
-            __SERVER_PORT__: process.env.SERVER_PORT || 3001,
             __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
             __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
         },
@@ -74,6 +73,8 @@ export default defineConfig(({ mode }) => {
         },
         resolve: {
             alias: {
+                '@client': path.resolve(__dirname, 'src'),
+                '@server': path.resolve(__dirname, 'server'),
                 '@': path.resolve(__dirname, 'src'),
             },
         },

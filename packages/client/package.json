@@ -4,8 +4,10 @@
     "type": "commonjs",
     "scripts": {
         "dev": "tsc --project tsconfig.server.json && cross-env NODE_ENV=development EXTERNAL_SERVER_URL='http://localhost:3001' INTERNAL_SERVER_URL='http://localhost:3001' node server/index.js",
-        "build": "tsc --noEmit && vite build && vite build --mode ssr",
-        "start": "node -r dotenv/config dist/server/server.mjs dotenv_config_path=../../.env",
+        "preview": "node server/index.js",
+        "start": "node dist/server/server.mjs",
+        "start:ssr": "cross-env CLIENT_URL=http://localhost:3000 CLIENT_PORT=3000 SERVER_URL=http://localhost:3001 API_URL=https://ya-praktikum.tech/ node dist/server/server.mjs",
+        "build": "vite build && vite build --mode ssr",
         "clean": "rimraf dist",
         "rebuild": "yarn clean && yarn build",
         "lint": "eslint .",
