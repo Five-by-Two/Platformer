@@ -1,11 +1,8 @@
-// eslint-disable   @typescript-eslint/no-require-imports
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-export default {
+module.exports = {
     preset: 'ts-jest',
     setupFiles: ['jest-canvas-mock'],
     testEnvironment: 'jsdom',
