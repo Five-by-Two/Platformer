@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import axios from 'axios';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -30,7 +31,7 @@ async function startServer() {
     );
 
     app.use(express.json());
-    const port = Number(process.env.SERVER_PORT) || 3001;
+    const port = Number(SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
     const distPath = path.dirname(require.resolve('client/dist/index.html'));
