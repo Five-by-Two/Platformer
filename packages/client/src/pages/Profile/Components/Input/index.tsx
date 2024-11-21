@@ -1,4 +1,3 @@
-import { ObjectKeys } from 'react-hook-form/dist/types/path/common';
 import styles from './input.module.scss';
 import {
     TAllTypesFormProfile,
@@ -10,14 +9,12 @@ import { useFormContext } from 'react-hook-form';
 import { InputHTMLAttributes } from 'react';
 
 type TProps = {
-    name: ObjectKeys<TAllTypesFormProfile>;
+    name: keyof TAllTypesFormProfile;
     validateErrorText?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 function Input({ validateErrorText, name, ...other }: TProps) {
-    const { register } = useFormContext<
-        TFormProfileData | TFormPasswordData | TFormAvatarData
-    >();
+    const { register } = useFormContext<TFormProfileData | TFormPasswordData | TFormAvatarData>();
 
     return (
         <div className={styles.inputWrapper}>

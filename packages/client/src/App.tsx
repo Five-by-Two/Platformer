@@ -1,19 +1,7 @@
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import { Router } from './router';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import AppRouter from './router';
 
 function App() {
-    return (
-        <div className="App">
-            <BrowserRouter>
-                <Provider store={store}>
-                    <Router />
-                </Provider>
-            </BrowserRouter>
-        </div>
-    );
+    return <AppRouter />;
 }
 
 export default App;

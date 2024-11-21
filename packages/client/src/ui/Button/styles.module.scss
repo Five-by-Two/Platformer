@@ -1,3 +1,5 @@
+@use '@/assets/styles/themes' as *;
+
 .button {
     display: flex;
     align-items: center;
@@ -7,14 +9,22 @@
     border: none;
     cursor: pointer;
     transform: translate(-3px, -3px);
-    box-shadow: (6px 6px 0px $btn-shadow);
-    transition: background-color 0.3s ease, transform 0.3s ease,
+    @include themed {
+        background-color: t('main-page-btn-bg-color');
+        color: t('text-primary');
+        box-shadow: (6px 6px 0px t('btn-shadow'));
+    }
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease,
         box-shadow 0.3s ease;
     @include text-base;
 
     &.primary {
-        background-color: $main-page-btn-bg-color;
-        color: $white;
+        @include themed {
+            background-color: t('main-page-btn-bg-color');
+            color: t('text-primary');
+        }
         &:hover:not([disabled]) {
             background-color: $orange-hover;
         }

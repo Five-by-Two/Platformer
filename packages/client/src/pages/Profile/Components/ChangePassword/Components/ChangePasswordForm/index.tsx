@@ -6,9 +6,7 @@ import { TFormPasswordData } from '../../../../Models/IFormProfileData';
 import userService from '../../../../../../services/UserService/UserService';
 
 type TProps = {
-    setDisabledWindowChangePassword: React.Dispatch<
-        React.SetStateAction<boolean>
-    >;
+    setDisabledWindowChangePassword: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function ChangePasswordForm({ setDisabledWindowChangePassword }: TProps) {
@@ -20,10 +18,7 @@ function ChangePasswordForm({ setDisabledWindowChangePassword }: TProps) {
 
     function submitForm(data: TFormPasswordData) {
         console.log(data);
-        if (
-            data.newPassword === data.newPasswordAgain &&
-            data.oldPassword !== data.newPassword
-        ) {
+        if (data.newPassword === data.newPasswordAgain && data.oldPassword !== data.newPassword) {
             userService.UpdatePassword(data);
             setDisabledWindowChangePassword(true);
         } else {
@@ -35,21 +30,9 @@ function ChangePasswordForm({ setDisabledWindowChangePassword }: TProps) {
     return (
         <FormProvider {...methods}>
             <form className={styles.form} onSubmit={handleSubmit(submitForm)}>
-                <Input
-                    name={'oldPassword'}
-                    type="password"
-                    placeholder="Введите старый пароль"
-                />
-                <Input
-                    name={'newPassword'}
-                    type="password"
-                    placeholder="Введите новый пароль"
-                />
-                <Input
-                    name={'newPasswordAgain'}
-                    type="password"
-                    placeholder="Повторите новый пароль"
-                />
+                <Input name={'oldPassword'} type="password" placeholder="Введите старый пароль" />
+                <Input name={'newPassword'} type="password" placeholder="Введите новый пароль" />
+                <Input name={'newPasswordAgain'} type="password" placeholder="Повторите новый пароль" />
                 <Button text="Изменить" className={styles.button} />
             </form>
         </FormProvider>

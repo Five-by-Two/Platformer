@@ -1,0 +1,17 @@
+@use '@/assets/styles/themes' as *;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    @include themed {
+        background-color: t('bg-header-footer-main');
+        color: t('text-primary');
+    }
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+}

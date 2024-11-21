@@ -1,6 +1,5 @@
 // Переменные SCSS
 $white: white;
-$black: rgb(33, 33, 33);
 $orange: rgb(255, 110, 1);
 $orange-light: rgb(255, 165, 0);
 $yellow-light: rgb(206, 202, 87);
@@ -10,11 +9,14 @@ $gray-dark: rgb(130, 130, 130);
 $gray-light: rgb(220, 220, 220);
 $gray-light-hover: rgba(213, 213, 213, 0.3);
 $blue: rgb(32, 156, 238);
-$main-page-btn-bg-color: rgb(184, 88, 0);
 $container-bg-color: rgba(241, 241, 241, 0.6);
+$bg-header-footer-main: rgba(15, 15, 15, 0.3);
 $btn-shadow: #12161dcc;
 $primary: #209cee;
-$success: #92cc41;
 $warning: #e59400;
 $error: #e76e55;
 $disabled: #d3d3d3;
+$main-color: #24a3ae;
+$focus-color: #b85800;
+$danger-color: #dc0303;
+

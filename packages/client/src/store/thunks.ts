@@ -4,6 +4,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { clearUser, setUser } from './userSlice';
 import { UpdateAvatarModel } from '@/services/UserService/Models/UpdateAvatarModel';
 import AuthService from '@/services/AuthService/AuthService';
+import { RootState } from '.';
+import LeaderBoardService from '@/services/LeaderBoardService/LeaderBoardService';
+import { setLeaders } from './leaderBoardSlice/leaderBoardSlice';
+import { setSessionStorage } from '@/utils/storageUtill';
 
 export const changeUser = createAsyncThunk(
     'user/changeUser',
@@ -41,17 +45,46 @@ export const changeAvatar = createAsyncThunk(
     },
 );
 
-export const deleteUser = createAsyncThunk(
-    'user/deleteUser',
-    async function (_, { rejectWithValue, dispatch }) {
+export const deleteUser = createAsyncThunk('user/deleteUser', async function (_, { rejectWithValue, dispatch }) {
+    try {
+        const response = await AuthService.LogOut();
+
+        if (!response) {
+            throw new Error('Ошибка выхода из системы');
+        }
+
+        dispatch(clearUser());
+    } catch (error) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+        }
+    }
+});
+
+export const getUser = createAsyncThunk('user/getUser', async function (_, { rejectWithValue, dispatch }) {
+    try {
+        const response = await AuthService.GetUser();
+
+        if (!response) {
+            throw new Error('Ошибка получения данных пользователя');
+        }
+        dispatch(setUser(response));
+    } catch (error) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+        }
+    }
+});
+
+export const postPoints = createAsyncThunk<void, number, { state: RootState }>(
+    'leaderBoard/postLeaderData',
+    async function (points: number, { rejectWithValue, getState }) {
         try {
-            const response = await AuthService.LogOut();
+            const login = getState().user.user?.login;
 
-            if (!response) {
-                throw new Error('Ошибка выхода из системы');
+            if (login) {
+                await LeaderBoardService.PostUserPoints(login, points);
             }
-
-            dispatch(clearUser());
         } catch (error) {
             if (error instanceof Error) {
                 return rejectWithValue(error.message);
@@ -60,16 +93,24 @@ export const deleteUser = createAsyncThunk(
     },
 );
 
-export const getUser = createAsyncThunk(
-    'user/getUser',
-    async function (_, { rejectWithValue, dispatch }) {
+export const setLeaderBoards = createAsyncThunk<void, number | undefined>(
+    'leaderBoard/setLeaders',
+    async function (cursor = 0, { rejectWithValue, dispatch }) {
         try {
-            const response = await AuthService.GetUser();
+            const response = await LeaderBoardService.GetLeaders(cursor);
 
             if (!response) {
-                throw new Error('Ошибка получения данных пользователя');
+                throw new Error('Ошибка получения данных таблицы лидеров');
             }
-            dispatch(setUser(response));
+
+            setSessionStorage('cursor', cursor.toString());
+
+            const data = {
+                leaders: response,
+                cursor: cursor,
+            };
+
+            dispatch(setLeaders(data));
         } catch (error) {
             if (error instanceof Error) {
                 return rejectWithValue(error.message);

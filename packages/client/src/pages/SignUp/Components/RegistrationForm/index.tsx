@@ -73,9 +73,7 @@ export default function RegisterForm() {
                     <button
                         className={styles.button_secondary}
                         type="button"
-                        onClick={() =>
-                            navigate(`/${EPageRoutes.SIGN_IN_PAGE}`)
-                        }>
+                        onClick={() => navigate(`/${EPageRoutes.SIGN_IN_PAGE}`)}>
                         Войти
                     </button>
                 </div>

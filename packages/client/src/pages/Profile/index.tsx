@@ -14,13 +14,11 @@ export function ProfilePage(): JSX.Element {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const userLogin = useAppSelector(state => state.user.user.login);
-    const userAvatar = useAppSelector(state => state.user.user.avatar);
+    const userLogin = useAppSelector(state => state.user.user?.login);
+    const userAvatar = useAppSelector(state => state.user.user?.avatar);
 
-    const [disabledWindowChangePassword, setDisabledWindowChangePassword] =
-        useState(true);
-    const [disabledWindowChangeAvatar, setDisabledWindowChangeAvatar] =
-        useState(true);
+    const [disabledWindowChangePassword, setDisabledWindowChangePassword] = useState(true);
+    const [disabledWindowChangeAvatar, setDisabledWindowChangeAvatar] = useState(true);
 
     function handleClickButtonBack() {
         navigate(-1);
@@ -37,20 +35,9 @@ export function ProfilePage(): JSX.Element {
     return (
         <section className={`${styles.profile}`}>
             <div className={`${styles.container}`}>
-                <Button
-                    text="Назад"
-                    className={styles.buttonBack}
-                    onClick={handleClickButtonBack}
-                />
-                <Button
-                    text="Выйти"
-                    className={styles.buttonLogout}
-                    onClick={handleClickButtonLogout}
-                />
-                <Avatar
-                    link={userAvatar}
-                    onClick={() => setDisabledWindowChangeAvatar(false)}
-                />
+                <Button text="Назад" className={styles.buttonBack} onClick={handleClickButtonBack} />
+                <Button text="Выйти" className={styles.buttonLogout} onClick={handleClickButtonLogout} />
+                <Avatar link={userAvatar} onClick={() => setDisabledWindowChangeAvatar(false)} />
                 <h2 className={styles.login}>{userLogin}</h2>
                 <div>
                     <ProfileForm />
@@ -64,18 +51,10 @@ export function ProfilePage(): JSX.Element {
                 />
             </div>
             {!disabledWindowChangePassword && (
-                <ChangePassword
-                    setDisabledWindowChangePassword={
-                        setDisabledWindowChangePassword
-                    }
-                />
+                <ChangePassword setDisabledWindowChangePassword={setDisabledWindowChangePassword} />
             )}
             {!disabledWindowChangeAvatar && (
-                <ChangeAvatar
-                    setDisabledWindowChangeAvatar={
-                        setDisabledWindowChangeAvatar
-                    }
-                />
+                <ChangeAvatar setDisabledWindowChangeAvatar={setDisabledWindowChangeAvatar} />
             )}
         </section>
     );

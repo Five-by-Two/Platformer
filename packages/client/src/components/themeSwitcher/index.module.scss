@@ -1,0 +1,49 @@
+@use '@/assets/styles/themes' as *;
+
+.container {
+    display: flex;
+  }
+  
+  .checkbox {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  
+  .background {
+    @include themed {
+        background-color: t('switcher-bg');
+        .button {
+            background-color: t('switcher-btn-bg');
+        }
+    }
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 4.75em;
+    height: 2em;
+    position: relative;
+    transition: background-color 0.2s;
+    border-radius: 50px;
+  }
+  
+  .background .button {
+      position: absolute;
+      display: flex;
+      top: 2px;
+      left: 2px;
+      width: calc(100% / 2);
+      height: calc(100% - 4px);
+      transition: 0.2s;
+      box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+      border-radius: 45px;
+  }
+  
+  .checkbox:checked + .background .button {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+  }
+  
+  .background:active .button {
+    width: 2.75em;
+  }

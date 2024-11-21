@@ -10,7 +10,7 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
-        "moduleResolution": "Node",
+        "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -20,7 +20,7 @@
             "@/*": ["*"]
         }
     },
-    "include": ["src"],
+    "include": ["src", "ssr.tsx", "ssr.config.ts", "global.d.ts"],
     "exclude": ["serviceWorkers.js"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

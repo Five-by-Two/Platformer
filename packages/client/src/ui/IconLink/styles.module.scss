@@ -1,0 +1,72 @@
+@use '@/assets/styles/themes' as *;
+
+.nav-icon {
+    color: $orange;
+    padding: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        outline 0.3s ease;
+    max-height: 32px;
+    max-width: 32px;
+
+    & svg {
+        padding: 0;
+        margin: auto;
+        filter: drop-shadow(6px 6px 0 $btn-shadow);
+        overflow: visible;
+        transform: translate(-2px, -2px);
+        transition: all 0.3s ease;
+    }
+
+    &:active {
+        & svg {
+            transform: translate(2px, 2px);
+            filter: none;
+            overflow: visible;
+            transition: all 0.3s ease;
+        }
+    }
+
+    &.active {
+        & svg {
+            filter: drop-shadow(0 0 10px $orange-light);
+            transform: none;
+            transition: all 0.3s ease;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        filter: brightness(1.2);
+    }
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+
+    .tooltip {
+        @include text-xs;
+        @include themed {
+            background-color: t('container-bg-color');
+        }
+        position: fixed;
+        color: $orange;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-50%);
+        transition: opacity 0.3s;
+        z-index: 1000;
+    }
+
+    &:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+}
