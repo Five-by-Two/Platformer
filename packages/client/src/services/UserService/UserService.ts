@@ -27,27 +27,30 @@ class UserService {
             newPassword: data.newPassword,
         };
 
-        return AxiosYandexService.put('user/password', JSON.stringify(dataRequest), {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).catch((ex: AxiosError) => {
+        try {
+            return await AxiosYandexService.put('user/password', JSON.stringify(dataRequest), {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (ex) {
             console.error('Ошибка изменения пароля', ex);
             return false;
-        });
+        }
     }
 
-    UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
-        return AxiosYandexService.put<UserModel>('user/profile', JSON.stringify(data), {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.data)
-            .catch((ex: AxiosError) => {
-                console.error('Ошибка изменения данных', ex);
-                return false;
+    async UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
+        try {
+            const res = await AxiosYandexService.put<UserModel>('user/profile', JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
+            return res.data;
+        } catch (ex) {
+            console.error('Ошибка изменения данных', ex);
+            return false;
+        }
     }
 }
 

@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios';
-import { AxiosYandexService } from '../AxiosService/AxiosService';
+import { AxiosYandexService, AxiosAppService } from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
-import { SignUpModel } from './Models/SignUpModel';
 import { GetUserModel } from './Models/GetUserModel';
+import { SignUpModel } from './Models/SignUpModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
@@ -51,6 +51,14 @@ class AuthService {
             .catch((ex: AxiosError) => {
                 console.error('Ошибка регистрации', ex);
                 return false;
+            });
+    }
+
+    async SignInByYandex() {
+        return AxiosAppService.post('signin-by-yandex')
+            .then(result => result.data as string)
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка авторизации через Яндекс', ex);
             });
     }
 }
