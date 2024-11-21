@@ -39,6 +39,11 @@
 10. Для остановки контейнеров выполните команду `docker compose stop`
 11. После завершения работы контейнеров выполните команду `docker compose down`, чтобы удалить контейнеры
 
+### FAQ
+> Если не собирается контейнер и ошибка на `RUN yarn install --frozen-lockfile`, то выполните команду `docker system prune -f`
+Использовать другую версию `Node` в `Dockerfile`
+`NODE_VERSION-buster => NODE_VERSION-alpine`
+
 ## Используемые технологии
 
 ![Static Badge](https://img.shields.io/badge/typescript-blue)
