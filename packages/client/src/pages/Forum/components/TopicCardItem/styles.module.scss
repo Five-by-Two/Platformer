@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use '@/assets/styles/themes' as *;
 
 .topicCardItem {
     padding: 0.75rem;
@@ -20,7 +21,10 @@
 
     &__title {
         @include text-lg;
-        color: $white;
+        color: $orange;
+        @include themed {
+            text-shadow: (1px 1px 1px t('btn-shadow'));
+        }
         margin: 0;
         padding-bottom: 0.25rem;
         border-bottom: 1px solid color.adjust($white, $alpha: -0.9);
@@ -28,6 +32,8 @@
         white-space: nowrap;
         overflow: hidden;
         flex-grow: 1;
+
+        
     }
 
     &__content {

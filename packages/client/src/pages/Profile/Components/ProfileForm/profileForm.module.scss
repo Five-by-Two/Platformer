@@ -1,3 +1,5 @@
+@use '@/assets/styles/themes' as *;
+
 .form {
     display: flex;
     align-items: center;
@@ -20,4 +22,10 @@
 .button {
     margin-top: 60px;
     width: 330px;
+}
+
+.inputTitle {
+    @include themed {
+        color: t('title-color');
+    }
 }

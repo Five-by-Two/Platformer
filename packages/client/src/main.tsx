@@ -3,11 +3,14 @@ import '@/assets/styles/index.scss';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import AppRouter from '@/router';
+import { ThemeProvider } from './contexts/ThemeContext/ThemeProvider';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 const app = (
     <Provider store={store}>
-        <AppRouter />
+        <ThemeProvider>
+            <AppRouter />
+        </ThemeProvider>
     </Provider>
 );
 
