@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { reducer as userReducer } from './userSlice';
 import leaderBoardReducer from './leaderBoardSlice/leaderBoardSlice';
 import { gameReducer } from './gameSlice/Reducer';
+import forumReducer from './forumSlice/forumSlice';
 import { themeReducer } from './themeSlice/Reducer';
 
 export const reducer = combineReducers({
@@ -9,6 +10,7 @@ export const reducer = combineReducers({
     user: userReducer,
     game: gameReducer,
     leaderBoard: leaderBoardReducer,
+    forum: forumReducer,
 });
 
 export const store = configureStore({
@@ -18,3 +20,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;
+
