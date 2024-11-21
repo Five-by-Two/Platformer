@@ -1,9 +1,9 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-module.exports = {
-    preset: 'ts-jest',
+export default {
+    preset: 'ts-jest/presets/default-esm',
     setupFiles: ['jest-canvas-mock'],
     testEnvironment: 'jsdom',
     testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
