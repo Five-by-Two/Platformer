@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+// eslint-disable-file
 const dotenv = require('dotenv');
 
 dotenv.config();
