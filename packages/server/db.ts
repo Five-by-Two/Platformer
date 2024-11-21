@@ -1,28 +1,22 @@
-import { Client } from 'pg';
-
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-    process.env;
-
-export const createClientAndConnect = async (): Promise<Client | null> => {
+import commentConfigure from './sequelizeConfigurations/commentConfigure';
+import reactionConfigure from './sequelizeConfigurations/reactionConfigure';
+import replyConfigure from './sequelizeConfigurations/replyConfigure';
+import topicConfigure from './sequelizeConfigurations/topicConfigure';
+import { SequelizeService } from './services/SequelizeService';
+export const configureDatabase = async () => {
     try {
-        const client = new Client({
-            user: POSTGRES_USER,
-            host: 'localhost',
-            database: POSTGRES_DB,
-            password: POSTGRES_PASSWORD,
-            port: Number(POSTGRES_PORT),
-        });
-
-        await client.connect();
-
-        const res = await client.query('SELECT NOW()');
-        console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now);
-        client.end();
-
-        return client;
-    } catch (e) {
-        console.error(e);
+        await SequelizeService.authenticate();
+        console.log('Connection success!');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
     }
-
-    return null;
+    try {
+        topicConfigure();
+        commentConfigure();
+        replyConfigure();
+        reactionConfigure();
+        await SequelizeService.sync();
+    } catch (error) {
+        console.error('Error configure tables', error);
+    }
 };
