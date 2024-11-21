@@ -56,7 +56,7 @@ class AuthService {
 
     async SignInByYandex() {
         return AxiosService.post('api/signin-by-yandex')
-            .then(result => result.data as string)
+            .then(({ data: { url } }) => url as string)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка авторизации через Яндекс', ex);
             });

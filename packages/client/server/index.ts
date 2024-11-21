@@ -24,6 +24,8 @@ async function startServer() {
     const app = express();
     app.use(cors({ origin: CLIENT_URL, credentials: true }));
 
+    app.use(express.json());
+
     app.use('/registerSW.js', express.static(path.resolve('dist/server', 'registerSW.js')));
     app.get('/manifest.webmanifest', (req, res) => {
         res.sendFile(path.resolve('dist/server', 'manifest.webmanifest'), {
