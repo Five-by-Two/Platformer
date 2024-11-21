@@ -1,12 +1,15 @@
 @use './vars' as *;
+@use '@/assets/styles/themes' as *;
 
 @mixin background-container() {
+    @include themed {
+        background-color: t('background');
+        background-image: url(t('background-image'));
+    }
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url('../../assets/images/background-blurred.jpg');
     background-size: cover;
     background-attachment: fixed;
-    color: $black;
 }
 
 @mixin page-container() {
@@ -21,9 +24,11 @@
 
 // Миксин для контейнера с эффектом размытия
 @mixin container() {
+    @include themed {
+        background-color: t('container-bg-color');
+    }
     display: flex;
     flex-direction: column;
     backdrop-filter: blur(4px);
     border-radius: 32px;
-    background: $container-bg-color;
 }

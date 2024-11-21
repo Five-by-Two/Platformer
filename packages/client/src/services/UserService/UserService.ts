@@ -1,9 +1,9 @@
 import { AxiosYandexService } from '../AxiosService/AxiosService';
 import { AxiosError } from 'axios';
 import { UpdateAvatarModel } from './Models/UpdateAvatarModel';
-import { UserModel } from './Models/UserModel';
-import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
 import { UpdatePasswordModel } from './Models/UpdatePasswordModel';
+import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
+import { UserModel } from './Models/UserModel';
 
 class UserService {
     UpdateAvatar(data: UpdateAvatarModel): Promise<void | UserModel> {
@@ -21,7 +21,7 @@ class UserService {
             });
     }
 
-    UpdatePassword(data: UpdatePasswordModel) {
+    async UpdatePassword(data: UpdatePasswordModel) {
         const dataRequest = {
             oldPassword: data.oldPassword,
             newPassword: data.newPassword,

@@ -1,11 +1,13 @@
-$btn-shadow: #12161dcc;
+@use '@/assets/styles/themes' as *;
 
 .button {
     padding: 0.5rem 3rem;
     font-size: small;
-    background-color: var(--main-page-btn-bg-color);
-    color: var(--white);
-    box-shadow: (6px 6px 0px $btn-shadow);
+    @include themed {
+        background-color: t('main-page-btn-bg-color');
+        color: t('text-primary');
+        box-shadow: (6px 6px 0px t('btn-shadow'));
+    }
     border-radius: 0;
 
     &:hover {
