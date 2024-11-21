@@ -1,3 +1,5 @@
+@use '@/assets/styles/themes' as *;
+
 .nav-icon {
     color: $orange;
     padding: 0.25rem;
@@ -48,8 +50,10 @@
 
     .tooltip {
         @include text-xs;
+        @include themed {
+            background-color: t('container-bg-color');
+        }
         position: fixed;
-        background-color: $container-bg-color;
         color: $orange;
         padding: 0.25rem 0.5rem;
         border-radius: 4px;

@@ -9,12 +9,16 @@ export const Header: FC = () => {
 
     return (
         <header className={styles.header}>
-            <IconLink to={`/${EPageRoutes.HOME_PAGE}`} tooltip="На главную">
-                <IconHome width={24} height={24} />
-            </IconLink>
+            <div className={styles['header-left']}>
+                <IconLink to={`/${EPageRoutes.HOME_PAGE}`} tooltip="На главную">
+                    <IconHome width={24} height={24} />
+                </IconLink>
+            </div>
+
             <Button variant={isFullScreen ? 'secondary' : 'primary'} onClick={toggleFullScreen}>
                 {isFullScreen ? 'Выйти из полноэкранного режима' : 'Полноэкранный режим'}
             </Button>
+
             <div className={styles['header-right']}>
                 <IconLink to={`/${EPageRoutes.PROFILE_PAGE}`} tooltip="Профиль">
                     <IconAccount width={24} height={24} />

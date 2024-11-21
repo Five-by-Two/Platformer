@@ -1,8 +1,15 @@
 @use 'sass:color';
+@use '@/assets/styles/themes' as *;
 
 .forumList {
     max-height: 100%;
     width: 100%;
+    @include themed {
+        &__title {
+            color: t('text-primary');
+        }
+    }
+
 
     &__header {
         display: flex;
