@@ -23,5 +23,9 @@ COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
 RUN yarn install --production=true
 
+# Добавить netcat для проверки доступности PostgreSQL
+RUN apt-get update && apt-get install -y netcat && apt-get clean
+
 EXPOSE $SERVER_PORT
 CMD [ "node", "/app/index.js" ]
+CMD ["sh", "-c", "until nc -z postgres 5432; do echo 'Waiting for PostgreSQL...'; sleep 2; done; node /app/index.js"]
