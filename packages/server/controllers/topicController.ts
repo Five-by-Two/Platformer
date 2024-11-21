@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import { CreateTopicDto } from '../dtos/createTopicDto';
 import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
 import TopicService from '../services/TopicService';
+import { CreateTopicDto } from '../dtos/CreateTopicDto';
 
 export const topicController = Router();
 

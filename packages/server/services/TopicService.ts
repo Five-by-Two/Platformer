@@ -1,5 +1,5 @@
 import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
-import { CreateTopicDto } from '../dtos/createTopicDto';
+import { CreateTopicDto } from '../dtos/CreateTopicDto';
 import { Comment } from '../sequelizeModels/Comment';
 import { Topic } from '../sequelizeModels/Topic';
 class TopicService {

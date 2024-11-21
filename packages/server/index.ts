@@ -52,7 +52,6 @@ async function startServer() {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
     }
 
-    app.use(yandexApiProxyMiddleware);
     if (isDev()) {
         app.use('/api', apiController);
     } else {
