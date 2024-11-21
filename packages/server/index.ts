@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import axios from 'axios';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -6,6 +7,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
+import { apiController } from './controllers/apiController';
+import { configureDatabase } from './db';
+import { authenticateMiddleware } from './middlewares/authenticateMiddleware';
 import { yandexApiProxyMiddleware } from './middlewares/yandexApiProxyMiddleware';
 import { GetServiceIdModel } from './models/GetServiceIdModel';
 
@@ -14,6 +18,8 @@ dotenv.config();
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const { CLIENT_URL, SERVER_URL, API_URL, SERVER_PORT } = process.env;
+
+configureDatabase();
 
 async function startServer() {
     const app = express();
@@ -24,6 +30,7 @@ async function startServer() {
         }),
     );
 
+    app.use(express.json());
     const port = Number(SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
@@ -43,6 +50,13 @@ async function startServer() {
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
+    }
+
+    app.use(yandexApiProxyMiddleware);
+    if (isDev()) {
+        app.use('/api', apiController);
+    } else {
+        app.use('/api', authenticateMiddleware, apiController);
     }
 
     app.post('/api/yandex-callback', async req => {
@@ -72,6 +86,7 @@ async function startServer() {
             });
     });
     app.use(yandexApiProxyMiddleware);
+
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
 
