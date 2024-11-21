@@ -1,7 +1,7 @@
 ARG NODE_VERSION=20
 ARG CLIENT_PORT=3000
 
-FROM node:$NODE_VERSION-buster as base
+FROM node:$NODE_VERSION-alpine as base
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY . .
 RUN yarn lerna bootstrap
 RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
 
-FROM node:$NODE_VERSION-buster-slim as production
+FROM node:$NODE_VERSION-alpine as production
 WORKDIR /app
 
 # Копирование собранного приложения
