@@ -1,17 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import App from './src/App';
 import { reducer } from '@/store';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import AppRouter from '@/router';
 
-export async function render() {
+interface RenderResult {
+    html: string;
+    initialState: unknown;
+}
+
+export async function render(): Promise<RenderResult> {
     const store = configureStore({
         reducer,
     });
 
     const html = renderToString(
         <Provider store={store}>
-            <App />
+            <AppRouter />
         </Provider>,
     );
 

@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
-import { AxiosYandexService } from '../AxiosService/AxiosService';
+import { AxiosService } from '../AxiosService/AxiosService';
 import { baseEndpoint, ratingFieldName, TResLeader } from './Models/Constants';
 
 class LeaderBoardService {
     async GetLeaders(cursor = 0): Promise<TResLeader[] | [] | void> {
-        return AxiosYandexService.post<TResLeader[] | []>('/' + baseEndpoint + '/all', {
+        return AxiosService.post<TResLeader[] | []>('/' + baseEndpoint + '/all', {
             ratingFieldName: ratingFieldName,
             cursor: cursor,
             limit: 7,
@@ -17,7 +17,7 @@ class LeaderBoardService {
     }
 
     async PostUserPoints(login: string, points: number): Promise<boolean> {
-        return AxiosYandexService.post('/' + baseEndpoint, {
+        return AxiosService.post('/' + baseEndpoint, {
             data: {
                 login: login,
                 infinityJumpPoint: points,

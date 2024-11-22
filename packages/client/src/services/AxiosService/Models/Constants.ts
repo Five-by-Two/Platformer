@@ -1,2 +1,1 @@
-export const BASE_YANDEX_API_URL = 'http://localhost:3001/yandex-api/v2/';
-export const BASE_APP_API_UPL = 'http://localhost:3001/api/';
+export const BASE_SERVER_URL = process.env.SERVER_URL || 'http://localhost:3001';

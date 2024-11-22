@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { AxiosYandexService, AxiosAppService } from '../AxiosService/AxiosService';
+import { AxiosService } from '../AxiosService/AxiosService';
 import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
 import { GetUserModel } from './Models/GetUserModel';
@@ -7,7 +7,7 @@ import { SignUpModel } from './Models/SignUpModel';
 
 class AuthService {
     async SignIn(model: SignInModel): Promise<boolean> {
-        return AxiosYandexService.post('auth/signin', model)
+        return AxiosService.post('yandex-api/v2/auth/signin', model)
             .then(() => true)
             .catch((ex: AxiosError) => {
                 if (ex.response?.status == 400) {
@@ -24,7 +24,7 @@ class AuthService {
     }
 
     async LogOut(): Promise<boolean> {
-        return AxiosYandexService.post('auth/logout')
+        return AxiosService.post('yandex-api/v2/auth/logout')
             .then(() => {
                 return true;
             })
@@ -35,7 +35,7 @@ class AuthService {
     }
 
     async GetUser(): Promise<GetUserModel | void> {
-        return AxiosYandexService.get<GetUserModel>('auth/user')
+        return AxiosService.get<GetUserModel>('yandex-api/v2/auth/user')
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения данных пользователя', ex);
@@ -44,7 +44,7 @@ class AuthService {
     }
 
     async SignUp(model: SignUpModel): Promise<boolean> {
-        return AxiosYandexService.post('auth/signup', model)
+        return AxiosService.post('yandex-api/v2/auth/signup', model)
             .then(() => {
                 return true;
             })
@@ -55,8 +55,8 @@ class AuthService {
     }
 
     async SignInByYandex() {
-        return AxiosAppService.post('signin-by-yandex')
-            .then(result => result.data as string)
+        return AxiosService.post('api/signin-by-yandex')
+            .then(({ data: { url } }) => url as string)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка авторизации через Яндекс', ex);
             });

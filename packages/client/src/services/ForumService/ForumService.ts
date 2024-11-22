@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { AxiosAppService } from '../AxiosService/AxiosService';
+import { AxiosService } from '../AxiosService/AxiosService';
 import {
     CreateCommentModel,
     CreateCommentReqModel,
@@ -11,7 +11,7 @@ import {
 
 class ForumService {
     async GetTopics(): Promise<GetTopicsModel | void> {
-        return AxiosAppService.get<GetTopicsModel>('topics/all')
+        return AxiosService.get<GetTopicsModel>('/api/topics/all')
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения топиков', ex);
@@ -20,7 +20,10 @@ class ForumService {
     }
 
     async CreateTopic(topicData: CreateTopicModel): Promise<TopicModel | void> {
-        return AxiosAppService.post<TopicModel, AxiosResponse<TopicModel>, CreateTopicModel>('topics/create', topicData)
+        return AxiosService.post<TopicModel, AxiosResponse<TopicModel>, CreateTopicModel>(
+            '/api/topics/create',
+            topicData,
+        )
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка создания топика', ex);
@@ -29,7 +32,7 @@ class ForumService {
     }
 
     async DeleteTopic(topicId: string): Promise<string | void> {
-        return AxiosAppService.delete<string>(`topics/delete/${topicId}`)
+        return AxiosService.delete<string>(`/api/topics/delete/${topicId}`)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка удаления топика', ex);
@@ -38,7 +41,7 @@ class ForumService {
     }
 
     async GetComments(topicId: string): Promise<GetCommentsModel | void> {
-        return AxiosAppService.get<GetCommentsModel>(`/comments/by-topic/${topicId}`)
+        return AxiosService.get<GetCommentsModel>(`/api/comments/by-topic/${topicId}`)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка получения комментариев', ex);
@@ -47,8 +50,8 @@ class ForumService {
     }
 
     async CreateComment(data: CreateCommentReqModel): Promise<CreateCommentModel | void> {
-        return AxiosAppService.post<CreateCommentModel, AxiosResponse<CreateCommentModel>, CreateCommentReqModel>(
-            'comments/create',
+        return AxiosService.post<CreateCommentModel, AxiosResponse<CreateCommentModel>, CreateCommentReqModel>(
+            'api/comments/create',
             data,
         )
             .then(res => res.data)
@@ -59,7 +62,7 @@ class ForumService {
     }
 
     async DeleteComment(commentId: string): Promise<string | void> {
-        return AxiosAppService.delete<string>(`comments/delete/${commentId}`)
+        return AxiosService.delete<string>(`/api/comments/delete/${commentId}`)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка удаления комментария', ex);

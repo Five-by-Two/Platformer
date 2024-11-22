@@ -15,12 +15,14 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "baseUrl": "src",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["*"]
+            "@/*": ["src/*"],
+            "@client/*": ["src/*"],
+            "@server/*": ["server/*"],
         }
     },
-    "include": ["src", "ssr.tsx", "ssr.config.ts", "global.d.ts"],
+    "include": ["src", "global.d.ts"],
     "exclude": ["serviceWorkers.js"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.server.json" }]
 }
