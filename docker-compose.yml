@@ -18,6 +18,8 @@ services:
             SERVER_PORT: ${SERVER_PORT}
         networks:
             - awesome
+        depends_on:
+            - server
     server:
         container_name: prakticum-server
         image: prackicum-server
@@ -35,7 +37,6 @@ services:
         networks:
             - awesome
         depends_on:
-            - client
             - postgres
     postgres:
         image: postgres:14
@@ -61,7 +62,7 @@ services:
             PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
             PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
         ports:
-            - '${PGADMIN_PORT}:80'
+            - '${PGADMIN_PORT}:${PGADMIN_PORT}'
         volumes:
             - pgadmin-data:/var/lib/pgadmin
         depends_on:
