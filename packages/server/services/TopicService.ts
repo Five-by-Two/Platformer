@@ -1,7 +1,7 @@
 import { UpdateTopicDto } from '../dtos/UpdateTopicDto';
+import { CreateTopicDto } from '../dtos/CreateTopicDto';
 import { Comment } from '../sequelizeModels/Comment';
 import { Topic } from '../sequelizeModels/Topic';
-import { CreateTopicDto } from '../dtos/CreateTopicDto';
 class TopicService {
     public async getAllAsync(): Promise<Array<Topic>> {
         return Topic.findAll()

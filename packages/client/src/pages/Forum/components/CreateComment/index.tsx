@@ -2,6 +2,9 @@ import type { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
 import { Button } from '@/ui';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { loginSelector } from '@/services/UserService/UserSelectors';
+import { createComment } from '@/store/forumSlice/forumThunks';
 
 interface CreateCommentProps {
     topicId: string;
@@ -19,15 +22,26 @@ export const CreateComment: FC<CreateCommentProps> = ({ topicId }) => {
         reset,
     } = useForm<FormData>();
 
+    const dispatch = useAppDispatch();
+    const login = useAppSelector(loginSelector);
+
     const onSubmit = (data: FormData) => {
-        console.log('Комментарий', data.comment, topicId);
+        if (login) {
+            dispatch(
+                createComment({
+                    message: data.comment,
+                    authorName: login,
+                    TopicId: Number(topicId),
+                }),
+            );
+        } else {
+            throw new Error('Ошибка получения логина');
+        }
         reset();
     };
 
     return (
-        <form
-            className={styles.createComment}
-            onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.createComment} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.createComment__textareaContainer}>
                 <textarea
                     placeholder="Оставить комментарий..."
@@ -41,11 +55,7 @@ export const CreateComment: FC<CreateCommentProps> = ({ topicId }) => {
                     className={styles.createComment__textarea}
                     rows={2}
                 />
-                {errors.comment && (
-                    <span className={styles.createComment__error}>
-                        {errors.comment.message}
-                    </span>
-                )}
+                {errors.comment && <span className={styles.createComment__error}>{errors.comment.message}</span>}
             </div>
 
             <div className={styles.createComment__buttonContainer}>

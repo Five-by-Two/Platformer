@@ -1,5 +1,5 @@
+import { AxiosYandexService } from '../AxiosService/AxiosService';
 import { AxiosError } from 'axios';
-import AxiosService from '../AxiosService/AxiosService';
 import { UpdateAvatarModel } from './Models/UpdateAvatarModel';
 import { UpdatePasswordModel } from './Models/UpdatePasswordModel';
 import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
@@ -12,7 +12,7 @@ class UserService {
         const formData = new FormData();
         formData.append('avatar', avatar[0]);
 
-        return AxiosService.put<UserModel>('yandex-api/v2/user/profile/avatar', formData)
+        return AxiosYandexService.put<UserModel>('user/profile/avatar', formData)
             .then(res => res.data)
             .catch((ex: AxiosError) => {
                 alert('Ошибка изменения аватара');
@@ -28,7 +28,7 @@ class UserService {
         };
 
         try {
-            return await AxiosService.put('yandex-api/v2/user/password', JSON.stringify(dataRequest), {
+            return await AxiosYandexService.put('user/password', JSON.stringify(dataRequest), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -41,7 +41,7 @@ class UserService {
 
     async UpdateUserData(data: UpdateUserDataModel): Promise<false | UserModel> {
         try {
-            const res = await AxiosService.put<UserModel>('yandex-api/v2/user/profile', JSON.stringify(data), {
+            const res = await AxiosYandexService.put<UserModel>('user/profile', JSON.stringify(data), {
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -1,24 +1,13 @@
-export interface Topic {
-    id: string;
-    title: string;
-    content: string;
-    author: string;
-    createdAt: string | Date;
-    comments: Comment[];
-}
+import { TComment, TTopic } from '@/store/forumSlice/types';
+
+export type Topic = TTopic;
 
 export interface CreateTopicData {
     title: string;
     content: string;
 }
 
-export interface Comment {
-    id: string;
-    topicId: string;
-    content: string;
-    author: string;
-    createdAt: string | Date;
-}
+export type Comment = TComment;
 
 export interface CreateCommentData {
     topicId: string;
