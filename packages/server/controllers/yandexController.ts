@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import axios from 'axios';
 
 type GetServiceIdModel = {
@@ -9,7 +9,7 @@ type GetServiceIdModel = {
 export const getYandexServiceId = async (_req: Request, res: Response): Promise<void> => {
     try {
         const { data } = await axios.get<GetServiceIdModel>(`${process.env.API_URL}/api/v2/oauth/yandex/service-id`);
-        const redirectUri = `${process.env.CLIENT_URL}/api/yandex-callback`;
+        const redirectUri = `${process.env.SERVER_URL}/api/yandex-callback`;
         const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
         res.json({ url: authUrl });
     } catch (error) {
@@ -30,7 +30,7 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
     try {
         const response = await axios.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
             code: code,
-            redirect_url: process.env.CLIENT_URL,
+            redirect_url: process.env.SERVER_URL,
         });
         res.json(response.data);
     } catch (error) {
@@ -38,3 +38,8 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
         res.status(500).send('Failed to process Yandex OAuth callback');
     }
 };
+
+export const yandexRouter = Router();
+
+yandexRouter.post('/signin-by-yandex', getYandexServiceId);
+yandexRouter.post('/yandex-callback', yandexCallback);

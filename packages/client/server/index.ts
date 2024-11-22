@@ -5,24 +5,22 @@ import * as fs from 'fs';
 import * as path from 'path';
 import serialize from 'serialize-javascript';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-import { yandexRouter } from './routes/yandex';
-import { yandexApiProxyMiddleware } from './middlewares/auth';
 
 dotenv.config();
 
-const requiredEnv = ['CLIENT_URL', 'API_URL', 'CLIENT_PORT'];
+const requiredEnv = ['CLIENT_URL', 'API_URL', 'CLIENT_PORT', 'SERVER_URL'];
 requiredEnv.forEach(key => {
     if (!process.env[key]) {
         throw new Error(`Missing required environment variable: ${key}`);
     }
 });
 
-const { CLIENT_URL, CLIENT_PORT } = process.env;
+const { CLIENT_URL, CLIENT_PORT, SERVER_URL } = process.env;
 const isDev = process.env.NODE_ENV === 'development';
 
 async function startServer() {
     const app = express();
-    app.use(cors({ origin: CLIENT_URL, credentials: true }));
+    app.use(cors({ origin: SERVER_URL, credentials: true }));
 
     app.use('/registerSW.js', express.static(path.resolve('dist/server', 'registerSW.js')));
     app.get('/manifest.webmanifest', (req, res) => {
@@ -54,9 +52,6 @@ async function startServer() {
     } else {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
     }
-    app.use(yandexApiProxyMiddleware);
-
-    app.use('/api', yandexRouter);
 
     app.use('*', async (req, res, next) => {
         try {
