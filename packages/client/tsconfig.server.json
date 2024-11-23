@@ -11,6 +11,6 @@
         },
         "outDir": "dist/server",
         "rootDir": "./",
-        "include": ["server/**/*", "routes/**/*", "middlewares/**/*", "controllers/**/*", "types/**/*"]
-    }
+    },
+    "include": ["server/**/*", "routes/**/*", "middlewares/**/*", "controllers/**/*", "types/**/*"]
 }
