@@ -1,4 +1,5 @@
 export type CreateReactionDto = {
     emojiCode: string;
-    CommentId?: number;
+    TopicId: number;
+    authorName: string;
 };
