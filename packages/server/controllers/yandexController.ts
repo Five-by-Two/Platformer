@@ -41,5 +41,5 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
 
 export const yandexRouter = Router();
 
-yandexRouter.post('/signin-by-yandex', getYandexServiceId);
-yandexRouter.post('/yandex-callback', yandexCallback);
+yandexRouter.get('/signin-by-yandex', getYandexServiceId);
+yandexRouter.get('/yandex-callback', yandexCallback);
