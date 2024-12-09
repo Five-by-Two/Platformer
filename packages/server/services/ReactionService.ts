@@ -1,44 +1,60 @@
 import { CreateReactionDto } from '../dtos/CreateReactionDto';
-import { Comment } from '../sequelizeModels/Comment';
 import { Reaction } from '../sequelizeModels/Reaction';
-import { Reply } from '../sequelizeModels/Reply';
-class ReactionService {
-    public async getByCommentId(commentId: number): Promise<Array<Reaction>> {
-        return Reaction.findAll({
-            where: {
-                CommentId: commentId,
-            },
-        })
-            .then(result => result as Array<Reaction>)
-            .catch(error => {
-                throw new Error(`Error get all reactions: ${error}`);
-            });
-    }
-    public async getByIdAsync(id: number): Promise<Reaction | null> {
+import { Topic } from '../sequelizeModels/Topic';
+
+const ReactionService = {
+    getByIdAsync: async (id: number): Promise<Reaction | null> => {
         return Reaction.findByPk(id)
             .then(result => result as Reaction)
             .catch(error => {
                 throw new Error(`Error get reaction by id: ${error}`);
             });
-    }
-    public async createAsync(model: CreateReactionDto): Promise<Reply> {
-        await Comment.findByPk(model.CommentId).then(comment => {
-            if (comment === null) throw new Error('comment not found');
-        });
-        return Reaction.create(model)
-            .then(result => result as Reaction)
-            .catch(error => {
-                throw new Error(`Error create reaction: ${error}`);
-            });
-    }
+    },
 
-    public async deleteAsync(id: number) {
+    deleteAsync: async (id: number) => {
         return Reaction.destroy({
             where: { id: id },
         }).catch(error => {
             console.error(error);
         });
-    }
-}
+    },
 
-export default new ReactionService();
+    addTopicReaction: async (model: CreateReactionDto): Promise<Reaction> => {
+        await Topic.findByPk(model.TopicId).then(topic => {
+            if (topic === null) throw new Error('Topic not found');
+        });
+
+        const existingReaction = await Reaction.findOne({
+            where: {
+                TopicId: model.TopicId,
+                authorName: model.authorName,
+            },
+        });
+
+        if (existingReaction) {
+            if (existingReaction.emojiCode === model.emojiCode) {
+                await existingReaction.destroy();
+                throw new Error('Reaction already exists and has been deleted');
+            } else {
+                existingReaction.emojiCode = model.emojiCode;
+                await existingReaction.save();
+                return existingReaction;
+            }
+        } else {
+            const newReaction = await Reaction.create(model);
+            return newReaction;
+        }
+    },
+
+    getReactionsByTopic: async (topicId: number): Promise<Array<Reaction>> => {
+        return await Reaction.findAll({
+            where: { TopicId: topicId },
+            include: { model: Topic },
+        }).catch(error => {
+            console.error('Error while getting reactions:', error);
+            throw new Error('Error while getting reactions');
+        });
+    },
+};
+
+export default ReactionService;

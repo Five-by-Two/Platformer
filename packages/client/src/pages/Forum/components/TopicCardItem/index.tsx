@@ -4,7 +4,7 @@ import { Topic } from '@/pages/Forum/models/forumTypes';
 
 interface TopicCardItemProps {
     topic: Topic;
-    onSelect: (topicId: string) => void;
+    onSelect: (topicId: number) => void;
 }
 export const TopicCardItem: FC<TopicCardItemProps> = ({ topic, onSelect }) => {
     const handleClick = () => {
@@ -14,10 +14,11 @@ export const TopicCardItem: FC<TopicCardItemProps> = ({ topic, onSelect }) => {
     return (
         <div className={styles.topicCardItem} onClick={handleClick}>
             <h3 className={styles.topicCardItem__title}>{topic.title}</h3>
-            <p className={styles.topicCardItem__content}>{topic.content}</p>
-            <span className={styles.topicCardItem__comments}>
+            <p className={styles.topicCardItem__content}>{topic.description}</p>
+            {/* <span className={styles.topicCardItem__comments}>
                 Комментарии: {topic.comments.length}
-            </span>
+            </span> */}
+            <span className={styles.topicCardItem__comments}>Автор: {topic.authorName}</span>
         </div>
     );
 };

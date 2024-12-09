@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { BASE_API_URL } from './Models/Constants';
+import { BASE_SERVER_URL } from './Models/Constants';
 
-const AxiosService = axios.create({
-    baseURL: BASE_API_URL,
+export const AxiosService = axios.create({
+    baseURL: BASE_SERVER_URL,
     withCredentials: true,
 });
-
-export default AxiosService;

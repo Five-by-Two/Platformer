@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { routerConfig } from './routerConfig';
+import { routerConfig } from '@/router/routerConfig';
 import { Router } from '@remix-run/router';
 
 const AppRouter = () => {

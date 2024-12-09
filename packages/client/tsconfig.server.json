@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "target": "es2019",
+        "module": "commonjs",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "lib": ["es2019", "DOM", "esnext.asynciterable"],
+        "paths": {
+            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"]
+        },
+        "outDir": "dist/server",
+        "rootDir": "./",
+    },
+    "include": ["server/**/*", "routes/**/*", "middlewares/**/*", "controllers/**/*", "types/**/*"]
+}

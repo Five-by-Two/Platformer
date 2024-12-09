@@ -1,5 +1,5 @@
+import { AxiosService } from '../AxiosService/AxiosService';
 import { AxiosError } from 'axios';
-import AxiosService from '../AxiosService/AxiosService';
 import { UpdateAvatarModel } from './Models/UpdateAvatarModel';
 import { UpdatePasswordModel } from './Models/UpdatePasswordModel';
 import { UpdateUserDataModel } from './Models/UpdateUserDataModel';
