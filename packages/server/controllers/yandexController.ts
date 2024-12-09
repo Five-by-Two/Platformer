@@ -8,7 +8,9 @@ type GetServiceIdModel = {
 // Получение сервисного идентификатора от Yandex OAuth
 export const getYandexServiceId = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const { data } = await axios.get<GetServiceIdModel>(`${process.env.API_URL}/api/v2/oauth/yandex/service-id`);
+        const { data } = await axios.get<GetServiceIdModel>(
+            `${process.env.API_URL}/api/v2/oauth/yandex/service-id?redirect_uri=https%3A%2F%2Fplatformer5x2.ya-praktikum.tech%2Foauth%2Fyandex-callback`,
+        );
         const redirectUri = `https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`;
         const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
         res.json({ url: authUrl });
