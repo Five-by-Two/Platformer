@@ -30,7 +30,7 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
     try {
         const response = await axios.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
             code: code,
-            redirect_url: process.env.SERVER_URL,
+            redirect_url: 'https://platformer5x2.ya-praktikum.tech',
         });
         res.json(response.data);
     } catch (error) {
