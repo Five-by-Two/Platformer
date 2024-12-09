@@ -30,14 +30,14 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
     }
 
     try {
-        const response = await AxiosService.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
+        await AxiosService.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
             code: code,
             redirect_url: 'https://platformer5x2.ya-praktikum.tech',
         });
-        res.json(response.data);
+        //res.json(response.data);
     } catch (error) {
         console.error('Error during Yandex OAuth callback:', error);
-        res.status(500).send('Failed to process Yandex OAuth callback');
+        //res.status(500).send('Failed to process Yandex OAuth callback');
     }
 };
 
