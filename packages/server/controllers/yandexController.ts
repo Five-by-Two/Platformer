@@ -1,5 +1,5 @@
-import { Request, Response, Router } from 'express';
 import axios from 'axios';
+import { Request, Response, Router } from 'express';
 
 type GetServiceIdModel = {
     service_id: string;
@@ -9,7 +9,7 @@ type GetServiceIdModel = {
 export const getYandexServiceId = async (_req: Request, res: Response): Promise<void> => {
     try {
         const { data } = await axios.get<GetServiceIdModel>(`${process.env.API_URL}/api/v2/oauth/yandex/service-id`);
-        const redirectUri = `${process.env.SERVER_URL}/api/yandex-callback`;
+        const redirectUri = `https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`;
         const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
         res.json({ url: authUrl });
     } catch (error) {
