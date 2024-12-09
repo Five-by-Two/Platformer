@@ -9,7 +9,7 @@ type GetServiceIdModel = {
 export const getYandexServiceId = async (_req: Request, res: Response): Promise<void> => {
     try {
         const { data } = await AxiosService.get<GetServiceIdModel>(
-            `${process.env.API_URL}/api/v2/oauth/yandex/service-id?redirect_uri=https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`,
+            `${process.env.API_URL}api/v2/oauth/yandex/service-id?redirect_uri=https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`,
         );
         const redirectUri = `https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`;
         const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
@@ -30,7 +30,7 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
     }
 
     try {
-        return await AxiosService.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
+        return await AxiosService.post(`${process.env.API_URL}api/v2/oauth/yandex`, {
             code: code,
             redirect_uri: 'https://platformer5x2.ya-praktikum.tech',
         });
