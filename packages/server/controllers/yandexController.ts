@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { Request, Response, Router } from 'express';
+import { AxiosService } from '../services/AxiosService';
 
 type GetServiceIdModel = {
     service_id: string;
@@ -8,9 +8,8 @@ type GetServiceIdModel = {
 // Получение сервисного идентификатора от Yandex OAuth
 export const getYandexServiceId = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const { data } = await axios.get<GetServiceIdModel>(
+        const { data } = await AxiosService.get<GetServiceIdModel>(
             `${process.env.API_URL}/api/v2/oauth/yandex/service-id?redirect_uri=https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`,
-            { withCredentials: true },
         );
         const redirectUri = `https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`;
         const authUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${data.service_id}&redirect_uri=${redirectUri}`;
@@ -31,14 +30,10 @@ export const yandexCallback = async (req: Request, res: Response): Promise<void>
     }
 
     try {
-        const response = await axios.post(
-            `${process.env.API_URL}/api/v2/oauth/yandex`,
-            {
-                code: code,
-                redirect_url: 'https://platformer5x2.ya-praktikum.tech',
-            },
-            { withCredentials: true },
-        );
+        const response = await AxiosService.post(`${process.env.API_URL}/api/v2/oauth/yandex`, {
+            code: code,
+            redirect_url: 'https://platformer5x2.ya-praktikum.tech',
+        });
         res.json(response.data);
     } catch (error) {
         console.error('Error during Yandex OAuth callback:', error);
