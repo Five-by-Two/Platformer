@@ -22,7 +22,7 @@ export const getYandexServiceId = async (_req: Request, res: Response): Promise<
 
 // Обработка обратного вызова от Yandex OAuth
 export const yandexCallback = async (req: Request, res: Response): Promise<void> => {
-    const { code } = req.body;
+    const { code } = req.params;
 
     if (!code) {
         res.status(400).send('Missing authorization code');
