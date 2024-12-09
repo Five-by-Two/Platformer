@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { AxiosService } from '../AxiosService/AxiosService';
-import { SignInModel } from './Models/SignInModel';
 import { ErrorData } from './Models/ErrorData';
 import { GetUserModel } from './Models/GetUserModel';
+import { SignInModel } from './Models/SignInModel';
 import { SignUpModel } from './Models/SignUpModel';
 
 class AuthService {
@@ -55,7 +55,7 @@ class AuthService {
     }
 
     async SignInByYandex() {
-        return AxiosService.post('api/signin-by-yandex')
+        return AxiosService.post('oauth/signin-by-yandex')
             .then(({ data: { url } }) => url as string)
             .catch((ex: AxiosError) => {
                 console.error('Ошибка авторизации через Яндекс', ex);
