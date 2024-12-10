@@ -8,11 +8,11 @@ export function YandexCallBackPage(): JSX.Element {
     useEffect(() => {
         const { code } = queryString.parse(window.location.search);
         if (!code || typeof code !== 'string') {
-            window.location.href = process.env.CLIENT_URL!;
+            window.location.href = 'https://platformer5x2.ya-praktikum.tech/';
             return;
         }
         AuthService.SignInByYandex(code).then(() => {
-            window.location.href = process.env.CLIENT_URL!;
+            window.location.href = 'https://platformer5x2.ya-praktikum.tech/';
         });
     }, [navigate]);
     return <section>YandexCallback</section>;
