@@ -25,7 +25,7 @@ export default function LoginForm() {
 
     const onYandexOAuth = async () => {
         await AuthService.GetServiceId().then(serviceId => {
-            window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}`;
+            window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`;
         });
     };
 
