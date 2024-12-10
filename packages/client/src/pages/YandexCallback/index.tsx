@@ -7,7 +7,10 @@ export function YandexCallBackPage(): JSX.Element {
     const navigate = useNavigate();
     useEffect(() => {
         const { code } = queryString.parse(window.location.search);
-        if (!code || typeof code !== 'string') return;
+        if (!code || typeof code !== 'string') {
+            navigate(EPageRoutes.HOME_PAGE);
+            return;
+        }
         AuthService.SignInByYandex(code).then(() => {
             navigate(EPageRoutes.HOME_PAGE);
         });
