@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AxiosService } from '../AxiosService/AxiosService';
 import { ErrorData } from './Models/ErrorData';
 import { GetServiceIdModel } from './Models/GetServiceIdModel';
@@ -66,16 +66,18 @@ class AuthService {
     }
 
     async SignInByYandex(code: string) {
-        return AxiosService.post(
-            `${process.env.SERVER_URL}/yandex-api/v2/oauth/yandex`,
-            {
-                code: code,
-                redirect_uri: 'https://platformer5x2.ya-praktikum.tech',
-            },
-            { baseURL: '' },
-        ).catch((ex: AxiosError) => {
-            console.error('Ошибка авторизации через Яндекс', ex);
-        });
+        return axios
+            .post(
+                `https://platformer5x2.ya-praktikum.tech/yandex-api/v2/oauth/yandex`,
+                {
+                    code: code,
+                    redirect_uri: 'https://platformer5x2.ya-praktikum.tech',
+                },
+                { withCredentials: true },
+            )
+            .catch((ex: AxiosError) => {
+                console.error('Ошибка авторизации через Яндекс', ex);
+            });
     }
 }
 
