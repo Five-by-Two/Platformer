@@ -36,6 +36,7 @@
         "react-hook-form": "^7.53.1",
         "react-redux": "^9.1.2",
         "react-router": "^6.27.0",
+        "query-string": "^9.1.0",
         "react-router-dom": "^6.28.0",
         "rimraf": "^6.0.1",
         "serialize-javascript": "^6.0.2",
