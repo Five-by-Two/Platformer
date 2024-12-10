@@ -1,10 +1,21 @@
-import { CANVAS_HEIGHT } from '../configs/main';
+import {
+    CAMERA_HEIGHT,
+    CAMERA_OFFSET_X,
+    CAMERA_UPPER_LIMIT,
+    CAMERA_WIDTH,
+    CANVAS_HEIGHT,
+    GRAVITY,
+    HITBOX_HEIGHT,
+    HITBOX_OFFSET_X,
+    HITBOX_OFFSET_Y,
+    HITBOX_WIDTH,
+    POSITION_OFFSET,
+    SCALE_FACTOR,
+} from '../configs/main';
 import { ICoordinates } from '../../models';
 import { collision, platformCollision } from '../../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
 import { Sprite } from './Sprite';
-
-const gravity = 0.05;
 
 interface IAnimations {
     imageSrc: string;
@@ -53,44 +64,32 @@ export class Player extends Sprite {
     lastDirection: string;
     cameraBox: ICameraBox;
 
-    constructor({
-        canvas,
-        position,
-        collisionBlocks,
-        platformCollisionBlocks,
-        imgSrc,
-        animations,
-        frameRate,
-        scale = 0.5,
-    }: IPlayerConstructor) {
-        super(canvas.getContext('2d') as CanvasRenderingContext2D, {
-            position,
-            imgSrc,
-            frameRate,
-            scale,
+    constructor(params: IPlayerConstructor) {
+        super(params.canvas.getContext('2d') as CanvasRenderingContext2D, {
+            position: params.position,
+            imgSrc: params.imgSrc,
+            frameRate: params.frameRate,
+            scale: params.scale,
         });
-        this.velocity = { x: 0, y: 1 };
-        this.position = position;
 
-        this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        this.collisionBlocks = collisionBlocks;
-        this.platformCollisionBlocks = platformCollisionBlocks;
+        this.velocity = { x: 0, y: 1 };
+        this.position = params.position;
+
+        this.canvas = params.canvas;
+        this.context = params.canvas.getContext('2d');
+        this.collisionBlocks = params.collisionBlocks;
+        this.platformCollisionBlocks = params.platformCollisionBlocks;
         this.lastDirection = 'right';
         this.hitbox = {
-            position: {
-                x: this.position.x,
-                y: this.position.y,
-            },
-            width: 10,
-            height: 10,
+            position: { x: this.position.x, y: this.position.y },
+            width: HITBOX_WIDTH,
+            height: HITBOX_HEIGHT,
         };
 
-        this.animations = animations;
+        this.animations = params.animations;
         for (const key in this.animations) {
             const image = new Image();
             image.src = this.animations[key].imageSrc;
-
             this.animations[key].image = image;
         }
 
@@ -99,8 +98,8 @@ export class Player extends Sprite {
                 x: this.position.x,
                 y: this.position.y,
             },
-            width: 200,
-            height: 80,
+            width: CAMERA_WIDTH,
+            height: CAMERA_HEIGHT,
         };
     }
 
@@ -116,11 +115,11 @@ export class Player extends Sprite {
     updateCameraBox() {
         this.cameraBox = {
             position: {
-                x: this.position.x - 60,
+                x: this.position.x - CAMERA_OFFSET_X,
                 y: this.position.y,
             },
-            width: 200,
-            height: 80,
+            width: CAMERA_WIDTH,
+            height: CAMERA_HEIGHT,
         };
     }
 
@@ -160,8 +159,9 @@ export class Player extends Sprite {
     }
 
     shouldPanCameraUpwards(canvas: HTMLCanvasElement, camera: ICamera) {
-        if (this.cameraBox.position.y + this.cameraBox.height + this.velocity.y >= 432) return;
-        const scaledCanvasHeight = canvas.height / 4;
+        if (this.cameraBox.position.y + this.cameraBox.height + this.velocity.y >= CAMERA_UPPER_LIMIT) return;
+
+        const scaledCanvasHeight = canvas.height / SCALE_FACTOR;
 
         if (this.cameraBox.position.y + this.cameraBox.height >= Math.abs(camera.position.y) + scaledCanvasHeight) {
             camera.position.y -= this.velocity.y;
@@ -187,25 +187,23 @@ export class Player extends Sprite {
     updateHitBox() {
         this.hitbox = {
             position: {
-                x: this.position.x + 35,
-                y: this.position.y + 26,
+                x: this.position.x + HITBOX_OFFSET_X,
+                y: this.position.y + HITBOX_OFFSET_Y,
             },
-            width: 14,
-            height: 27,
+            width: HITBOX_WIDTH,
+            height: HITBOX_HEIGHT,
         };
     }
 
     checkForHorizontalCollisions() {
-        for (let i = 0; i < this.collisionBlocks.length; i++) {
-            const collisionBlock = this.collisionBlocks[i];
-
+        for (const collisionBlock of this.collisionBlocks) {
             if (collision(this.hitbox, collisionBlock)) {
                 if (this.velocity.x > 0) {
                     this.velocity.x = 0;
 
                     const offset = this.hitbox.position.x - this.position.x + this.hitbox.width;
 
-                    this.position.x = collisionBlock.position.x - offset - 0.01;
+                    this.position.x = collisionBlock.position.x - offset - POSITION_OFFSET;
                     break;
                 }
 
@@ -214,7 +212,7 @@ export class Player extends Sprite {
 
                     const offset = this.hitbox.position.x - this.position.x;
 
-                    this.position.x = collisionBlock.position.x + collisionBlock.width - offset + 0.01;
+                    this.position.x = collisionBlock.position.x + collisionBlock.width - offset + POSITION_OFFSET;
                     break;
                 }
             }
@@ -222,27 +220,26 @@ export class Player extends Sprite {
     }
 
     applyGravity() {
-        this.velocity.y += gravity;
+        this.velocity.y += GRAVITY;
         this.position.y += this.velocity.y;
     }
 
     checkForVerticalCollisions() {
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const collisionBlock = this.collisionBlocks[i];
-
             if (collision(this.hitbox, collisionBlock)) {
                 if (this.velocity.y > 0) {
                     this.velocity.y = 0;
 
                     const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
 
-                    this.position.y = collisionBlock.position.y - offset - 0.01;
+                    this.position.y = collisionBlock.position.y - offset - POSITION_OFFSET;
                     break;
                 }
 
                 if (this.velocity.y < 0) {
                     this.velocity.y = 0;
-                    this.position.y = collisionBlock.position.y + collisionBlock.height + 0.01;
+                    this.position.y = collisionBlock.position.y + collisionBlock.height + POSITION_OFFSET;
                     break;
                 }
             }
@@ -251,7 +248,6 @@ export class Player extends Sprite {
         // коллизии с платформами.
         for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
             const platformCollisionBlock = this.platformCollisionBlocks[i];
-
             if (platformCollision(this.hitbox, platformCollisionBlock)) {
                 if (this.velocity.y > 0) {
                     this.velocity.y = 0;
