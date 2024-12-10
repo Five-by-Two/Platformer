@@ -57,7 +57,7 @@ class AuthService {
 
     async GetServiceId(): Promise<string> {
         return AxiosService.get<GetServiceIdModel>(
-            `yandex-api/v2/oauth/yandex/service-id?redirect_uri=${process.env.OAUTH_REDIRECT_URI}`,
+            `yandex-api/v2/oauth/yandex/service-id?redirect_uri=https://platformer5x2.ya-praktikum.tech/oauth/yandex-callback`,
         )
             .then(result => result.data.service_id)
             .catch(error => {
@@ -66,10 +66,14 @@ class AuthService {
     }
 
     async SignInByYandex(code: string) {
-        return AxiosService.post('yandex-api/v2/oauth/yandex', {
-            code: code,
-            redirect_uri: process.env.CLIENT_URL,
-        }).catch((ex: AxiosError) => {
+        return AxiosService.post(
+            `${process.env.SERVER_URL}/yandex-api/v2/oauth/yandex`,
+            {
+                code: code,
+                redirect_uri: 'https://platformer5x2.ya-praktikum.tech',
+            },
+            { baseURL: '' },
+        ).catch((ex: AxiosError) => {
             console.error('Ошибка авторизации через Яндекс', ex);
         });
     }
