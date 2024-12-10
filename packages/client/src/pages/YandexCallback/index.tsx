@@ -1,5 +1,5 @@
-import { EPageRoutes } from '@/router/Enums';
 import AuthService from '@/services/AuthService/AuthService';
+import 'dotenv';
 import queryString from 'query-string';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
@@ -8,11 +8,11 @@ export function YandexCallBackPage(): JSX.Element {
     useEffect(() => {
         const { code } = queryString.parse(window.location.search);
         if (!code || typeof code !== 'string') {
-            navigate(EPageRoutes.HOME_PAGE);
+            window.location.href = process.env.CLIENT_URL!;
             return;
         }
         AuthService.SignInByYandex(code).then(() => {
-            navigate(EPageRoutes.HOME_PAGE);
+            window.location.href = process.env.CLIENT_URL!;
         });
     }, [navigate]);
     return <section>YandexCallback</section>;
