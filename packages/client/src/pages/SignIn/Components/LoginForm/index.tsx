@@ -1,10 +1,10 @@
+import { EPageRoutes } from '@/router/Enums';
+import AuthService from '@/services/AuthService/AuthService';
 import { Button } from '@/ui';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import YandexButtonIcon from '../../../../assets/icons/yandex-button.svg';
-import { EPageRoutes } from '@/router/Enums';
-import AuthService from '@/services/AuthService/AuthService';
 import styles from './index.module.scss';
 import IFormData from './Models/IFormData';
 export default function LoginForm() {
@@ -23,9 +23,9 @@ export default function LoginForm() {
             .catch((error: Error) => setErrorText(error.message));
     };
 
-    const onYandexOAuth = () => {
-        AuthService.SignInByYandex().then(url => {
-            if (url) window.location.href = url;
+    const onYandexOAuth = async () => {
+        await AuthService.GetServiceId().then(serviceId => {
+            window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}`;
         });
     };
 

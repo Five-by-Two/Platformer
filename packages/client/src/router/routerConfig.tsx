@@ -1,12 +1,20 @@
-import { RouteObject } from 'react-router-dom';
+import { AuthLayout } from '@/layouts';
+import { MainLayout } from '@/layouts/MainLayout/MainLayout';
 import * as Pages from '@/pages';
+import { RouteObject } from 'react-router-dom';
 import { EPageRoutes } from './Enums';
 import PrivateRoute from './privateRoute';
-import { MainLayout } from '@/layouts/MainLayout/MainLayout';
-import { AuthLayout } from '@/layouts';
 
 /** Конфигурация используемых в проекте страниц. */
 export const routerConfig: RouteObject[] = [
+    {
+        path: EPageRoutes.OAUTH_CALLBACK,
+        element: (
+            <AuthLayout>
+                <Pages.YandexCallBackPage />
+            </AuthLayout>
+        ),
+    },
     {
         path: EPageRoutes.SIGN_IN_PAGE,
         element: (
