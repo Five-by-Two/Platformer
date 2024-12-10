@@ -2,7 +2,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { apiController } from './controllers/apiController';
-import { yandexRouter } from './controllers/yandexController';
 import { configureDatabase } from './db';
 import { yandexApiProxyMiddleware } from './middlewares/auth';
 import { authenticateMiddleware } from './middlewares/authenticateMiddleware';
@@ -25,7 +24,6 @@ if (isDev()) {
 } else {
     app.use('/api', authenticateMiddleware, apiController);
 }
-app.use('/oauth', yandexRouter);
 
 app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`);

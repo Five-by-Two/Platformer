@@ -8,4 +8,5 @@ export enum EPageRoutes {
     FORUM_PAGE = 'forum',
     NOT_FOUND = '*',
     SERVER_ERROR = 'server-error',
+    OAUTH_CALLBACK = 'oauth/yandex-callback',
 }

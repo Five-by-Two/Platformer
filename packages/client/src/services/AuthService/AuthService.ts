@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { AxiosService } from '../AxiosService/AxiosService';
 import { ErrorData } from './Models/ErrorData';
+import { GetServiceIdModel } from './Models/GetServiceIdModel';
 import { GetUserModel } from './Models/GetUserModel';
 import { SignInModel } from './Models/SignInModel';
 import { SignUpModel } from './Models/SignUpModel';
@@ -54,12 +55,23 @@ class AuthService {
             });
     }
 
-    async SignInByYandex() {
-        return AxiosService.get('oauth/signin-by-yandex')
-            .then(({ data: { url } }) => url as string)
-            .catch((ex: AxiosError) => {
-                console.error('Ошибка авторизации через Яндекс', ex);
+    async GetServiceId(): Promise<string> {
+        return AxiosService.get<GetServiceIdModel>(
+            `yandex-api/v2/oauth/yandex/service-id?redirect_uri=${process.env.OAUTH_REDIRECT_URI}`,
+        )
+            .then(result => result.data.service_id)
+            .catch(error => {
+                throw error;
             });
+    }
+
+    async SignInByYandex(code: string) {
+        return AxiosService.post('yandex-api/v2/oauth/yandex', {
+            code: code,
+            redirect_uri: process.env.CLIENT_URL,
+        }).catch((ex: AxiosError) => {
+            console.error('Ошибка авторизации через Яндекс', ex);
+        });
     }
 }
 
