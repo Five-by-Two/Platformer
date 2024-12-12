@@ -1,10 +1,24 @@
-import { CANVAS_HEIGHT } from '../configs/main';
+import {
+    CAMERA_HEIGHT,
+    CAMERA_OFFSET_X,
+    CAMERA_UPPER_LIMIT,
+    CAMERA_WIDTH,
+    GRAVITY,
+    HITBOX_HEIGHT,
+    HITBOX_OFFSET_X,
+    HITBOX_OFFSET_Y,
+    HITBOX_WIDTH,
+    MAP_WIDTH,
+    POSITION_OFFSET,
+    SCALE_FACTOR,
+    TILE_SIZE,
+} from '../configs/main';
 import { ICoordinates } from '../../models';
 import { collision, platformCollision } from '../../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
-import { Sprite } from './Sprite';
+import { PlatformBlock } from './PlatformBlock';
 
-const gravity = 0.05;
+import { Sprite } from './Sprite';
 
 interface IAnimations {
     imageSrc: string;
@@ -35,7 +49,7 @@ interface IPlayerConstructor {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
-    platformCollisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: PlatformBlock[];
     animations: Record<string, IAnimations>;
     frameRate?: number;
     scale?: number;
@@ -47,50 +61,38 @@ export class Player extends Sprite {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
-    platformCollisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: PlatformBlock[];
     animations: Record<string, IAnimations>;
     hitbox: IHitBox;
     lastDirection: string;
     cameraBox: ICameraBox;
 
-    constructor({
-        canvas,
-        position,
-        collisionBlocks,
-        platformCollisionBlocks,
-        imgSrc,
-        animations,
-        frameRate,
-        scale = 0.5,
-    }: IPlayerConstructor) {
-        super(canvas.getContext('2d') as CanvasRenderingContext2D, {
-            position,
-            imgSrc,
-            frameRate,
-            scale,
+    constructor(params: IPlayerConstructor) {
+        super(params.canvas.getContext('2d') as CanvasRenderingContext2D, {
+            position: params.position,
+            imgSrc: params.imgSrc,
+            frameRate: params.frameRate,
+            scale: params.scale,
         });
-        this.velocity = { x: 0, y: 1 };
-        this.position = position;
 
-        this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        this.collisionBlocks = collisionBlocks;
-        this.platformCollisionBlocks = platformCollisionBlocks;
+        this.velocity = { x: 0, y: 1 };
+        this.position = params.position;
+
+        this.canvas = params.canvas;
+        this.context = params.canvas.getContext('2d');
+        this.collisionBlocks = params.collisionBlocks;
+        this.platformCollisionBlocks = params.platformCollisionBlocks;
         this.lastDirection = 'right';
         this.hitbox = {
-            position: {
-                x: this.position.x,
-                y: this.position.y,
-            },
-            width: 10,
-            height: 10,
+            position: { x: this.position.x, y: this.position.y },
+            width: HITBOX_WIDTH,
+            height: HITBOX_HEIGHT,
         };
 
-        this.animations = animations;
+        this.animations = params.animations;
         for (const key in this.animations) {
             const image = new Image();
             image.src = this.animations[key].imageSrc;
-
             this.animations[key].image = image;
         }
 
@@ -99,8 +101,8 @@ export class Player extends Sprite {
                 x: this.position.x,
                 y: this.position.y,
             },
-            width: 200,
-            height: 80,
+            width: CAMERA_WIDTH,
+            height: CAMERA_HEIGHT,
         };
     }
 
@@ -116,52 +118,53 @@ export class Player extends Sprite {
     updateCameraBox() {
         this.cameraBox = {
             position: {
-                x: this.position.x - 60,
+                x: this.position.x - CAMERA_OFFSET_X,
                 y: this.position.y,
             },
-            width: 200,
-            height: 80,
+            width: CAMERA_WIDTH,
+            height: CAMERA_HEIGHT,
         };
     }
 
     checkForHorizontalCanvasCollision() {
-        if (
-            this.hitbox.position.x + this.hitbox.width + this.velocity.x >= CANVAS_HEIGHT ||
-            this.hitbox.position.x + this.velocity.x <= 0
-        ) {
+        if (this.hitbox.position.x + this.velocity.x <= 0) {
+            this.velocity.x = 0;
+        }
+        const MAP_WIDTH_IN_PIXELS = MAP_WIDTH * TILE_SIZE;
+        if (this.hitbox.position.x + HITBOX_WIDTH + this.velocity.x >= MAP_WIDTH_IN_PIXELS) {
             this.velocity.x = 0;
         }
     }
 
-    shouldPanCameraToTheLeft(canvas: HTMLCanvasElement, camera: ICamera) {
-        const cameraBoxRightSide = this.cameraBox.position.x + this.cameraBox.width;
-        const scaledDownCanvasWIdth = canvas.width / 4;
+    shouldPanCameraToTheLeft(camera: ICamera) {
+        const MAP_WIDTH_IN_PIXELS = MAP_WIDTH * TILE_SIZE;
+        const cameraRightEdge = this.cameraBox.width + Math.abs(camera.position.x);
 
-        if (cameraBoxRightSide >= CANVAS_HEIGHT) return;
+        if (MAP_WIDTH_IN_PIXELS <= this.cameraBox.width + this.cameraBox.position.x + TILE_SIZE) return;
+        if (this.hitbox.position.x <= cameraRightEdge) return;
 
-        if (cameraBoxRightSide >= scaledDownCanvasWIdth + Math.abs(camera.position.x)) {
-            camera.position.x -= this.velocity.x;
-        }
+        camera.position.x -= this.velocity.x;
     }
     shouldPanCameraToTheRight(camera: ICamera) {
         if (this.cameraBox.position.x <= 0) return;
-
         if (this.cameraBox.position.x <= Math.abs(camera.position.x)) {
             camera.position.x -= this.velocity.x;
         }
     }
 
     shouldPanCameraDown(camera: ICamera) {
-        if (this.cameraBox.position.y + this.velocity.y <= 0) return;
-
-        if (this.cameraBox.position.y <= Math.abs(camera.position.y)) {
+        if (this.cameraBox.position.y < 0) {
+            // 'Отрицательное положение камеры'
+            if (Math.abs(this.cameraBox.position.y) > Math.abs(camera.position.y)) camera.position.y -= this.velocity.y;
+        } else if (this.cameraBox.position.y <= Math.abs(camera.position.y)) {
             camera.position.y -= this.velocity.y;
         }
     }
 
     shouldPanCameraUpwards(canvas: HTMLCanvasElement, camera: ICamera) {
-        if (this.cameraBox.position.y + this.cameraBox.height + this.velocity.y >= 432) return;
-        const scaledCanvasHeight = canvas.height / 4;
+        if (this.cameraBox.position.y + this.cameraBox.height + this.velocity.y >= CAMERA_UPPER_LIMIT) return;
+
+        const scaledCanvasHeight = canvas.height / SCALE_FACTOR;
 
         if (this.cameraBox.position.y + this.cameraBox.height >= Math.abs(camera.position.y) + scaledCanvasHeight) {
             camera.position.y -= this.velocity.y;
@@ -187,25 +190,23 @@ export class Player extends Sprite {
     updateHitBox() {
         this.hitbox = {
             position: {
-                x: this.position.x + 35,
-                y: this.position.y + 26,
+                x: this.position.x + HITBOX_OFFSET_X,
+                y: this.position.y + HITBOX_OFFSET_Y,
             },
-            width: 14,
-            height: 27,
+            width: HITBOX_WIDTH,
+            height: HITBOX_HEIGHT,
         };
     }
 
     checkForHorizontalCollisions() {
-        for (let i = 0; i < this.collisionBlocks.length; i++) {
-            const collisionBlock = this.collisionBlocks[i];
-
+        for (const collisionBlock of this.collisionBlocks) {
             if (collision(this.hitbox, collisionBlock)) {
                 if (this.velocity.x > 0) {
                     this.velocity.x = 0;
 
                     const offset = this.hitbox.position.x - this.position.x + this.hitbox.width;
 
-                    this.position.x = collisionBlock.position.x - offset - 0.01;
+                    this.position.x = collisionBlock.position.x - offset - POSITION_OFFSET;
                     break;
                 }
 
@@ -214,7 +215,7 @@ export class Player extends Sprite {
 
                     const offset = this.hitbox.position.x - this.position.x;
 
-                    this.position.x = collisionBlock.position.x + collisionBlock.width - offset + 0.01;
+                    this.position.x = collisionBlock.position.x + collisionBlock.width - offset + POSITION_OFFSET;
                     break;
                 }
             }
@@ -222,27 +223,26 @@ export class Player extends Sprite {
     }
 
     applyGravity() {
-        this.velocity.y += gravity;
+        this.velocity.y += GRAVITY;
         this.position.y += this.velocity.y;
     }
 
     checkForVerticalCollisions() {
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const collisionBlock = this.collisionBlocks[i];
-
             if (collision(this.hitbox, collisionBlock)) {
                 if (this.velocity.y > 0) {
                     this.velocity.y = 0;
 
                     const offset = this.hitbox.position.y - this.position.y + this.hitbox.height;
 
-                    this.position.y = collisionBlock.position.y - offset - 0.01;
+                    this.position.y = collisionBlock.position.y - offset - POSITION_OFFSET;
                     break;
                 }
 
                 if (this.velocity.y < 0) {
                     this.velocity.y = 0;
-                    this.position.y = collisionBlock.position.y + collisionBlock.height + 0.01;
+                    this.position.y = collisionBlock.position.y + collisionBlock.height + POSITION_OFFSET;
                     break;
                 }
             }
@@ -251,7 +251,6 @@ export class Player extends Sprite {
         // коллизии с платформами.
         for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
             const platformCollisionBlock = this.platformCollisionBlocks[i];
-
             if (platformCollision(this.hitbox, platformCollisionBlock)) {
                 if (this.velocity.y > 0) {
                     this.velocity.y = 0;
@@ -263,5 +262,9 @@ export class Player extends Sprite {
                 }
             }
         }
+    }
+
+    updatePlatformBlocks(newPlatformBlocks: PlatformBlock[]) {
+        this.platformCollisionBlocks = newPlatformBlocks;
     }
 }
