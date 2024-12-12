@@ -1,5 +1,5 @@
 import { ICoordinates } from '../../models';
-
+import tilesetImage from '@/pages/Game/GameLogic/assets/tileset.png';
 interface IConstructor {
     position: ICoordinates;
     height?: number;
@@ -10,6 +10,7 @@ export class CollisionBlock {
     width: number;
     height: number;
     context: CanvasRenderingContext2D;
+    tilesetImage: HTMLImageElement = new Image();
 
     constructor(context: CanvasRenderingContext2D, { position, height = 16 }: IConstructor) {
         this.context = context;
@@ -17,10 +18,11 @@ export class CollisionBlock {
         this.width = 16;
         this.height = height;
         this.context.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        this.tilesetImage.src = tilesetImage;
     }
 
     draw() {
-        this.context?.fillRect(this.position.x, this.position.y, this.width, this.height);
+        this.context.drawImage(this.tilesetImage, 0, 144, 32, 32, this.position.x, this.position.y, 16, 32);
     }
 
     update() {

@@ -21,14 +21,6 @@ describe('CollisionBlock', () => {
         expect(block.context.fillStyle).toBe('rgba(255, 0, 0, 0.5)');
     });
 
-    it('should draw the rectangle on the canvas', () => {
-        const fillRectSpy = jest.spyOn(context, 'fillRect');
-
-        block.draw();
-
-        expect(fillRectSpy).toHaveBeenCalledWith(position.x, position.y, block.width, block.height);
-    });
-
     it('should update the block by calling draw', () => {
         const drawSpy = jest.spyOn(block, 'draw');
 

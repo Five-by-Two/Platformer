@@ -32,6 +32,7 @@ describe('Game Reducer', () => {
         expect(gameReducer(initialState, setCurrentScore(score))).toEqual({
             ...initialState,
             currentScore: score,
+            bestScore: score,
         });
     });
 

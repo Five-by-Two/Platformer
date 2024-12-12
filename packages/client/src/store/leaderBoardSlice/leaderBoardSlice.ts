@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TLeaderBoardState } from './types';
 import { TResLeader } from '@/services/LeaderBoardService/Models/Constants';
-import { nanoid } from 'nanoid';
 
 const defaultState: TLeaderBoardState = {
     leaders: [],
     cursor: 0,
     isMoreLeaders: false,
 };
+
+const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
 const leaderBoardSlice = createSlice({
     name: 'leaderBoard',
@@ -21,7 +22,7 @@ const leaderBoardSlice = createSlice({
             }
 
             state.leaders = action.payload.leaders.slice(0, 6).map(item => {
-                return Object.assign(item, { id: nanoid() });
+                return Object.assign(item, { id: generateId() });
             });
             state.cursor = action.payload.cursor;
         },
