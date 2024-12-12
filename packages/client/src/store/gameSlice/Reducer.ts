@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { setGameStartedAction, setGameOverAction, setCurrentScore, resetStoreState } from './Actions';
-import { postPoints } from '@/store/thunks';
 
 export interface IGameReducerState {
     isStarted: boolean;
@@ -29,7 +28,6 @@ export const gameReducer = createReducer(INITIAL_STATE, builder => {
         reducerState.currentScore = payload;
         if (payload > reducerState.bestScore) {
             reducerState.bestScore = payload;
-            postPoints(reducerState.currentScore);
         }
     });
 

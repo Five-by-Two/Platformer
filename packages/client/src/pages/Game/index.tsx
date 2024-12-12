@@ -8,6 +8,7 @@ import { initGame } from './GameLogic/scripts/initGame';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { gameOverSelector, gameSelector, gameStartedSelector } from '@/store/gameSlice/Selectors';
 import { setCurrentScore, setGameOverAction, setGameStartedAction } from '@/store/gameSlice/Actions';
+import { postPoints } from '@/store/thunks';
 
 export function GamePage(): JSX.Element {
     const isGameStarted = useAppSelector(gameStartedSelector);
@@ -15,6 +16,7 @@ export function GamePage(): JSX.Element {
     const { currentScore, bestScore } = useAppSelector(gameSelector);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
 
     const startGame = useCallback(() => {
@@ -26,6 +28,7 @@ export function GamePage(): JSX.Element {
         (score: number) => {
             dispatch(setGameOverAction(true));
             dispatch(setCurrentScore(score));
+            dispatch(postPoints(score));
         },
         [dispatch],
     );
