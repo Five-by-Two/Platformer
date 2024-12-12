@@ -4,6 +4,7 @@ import { CollisionBlock } from './CollisionBlock';
 import idleImage from '../assets/warrior/Idle.png';
 import runImage from '../assets/warrior/Run.png';
 import { PlatformBlock } from '@/pages/Game/GameLogic/classes/PlatformBlock';
+import { HITBOX_HEIGHT, HITBOX_WIDTH } from '@/pages/Game/GameLogic/configs/main';
 
 describe('Player', () => {
     let canvas: HTMLCanvasElement;
@@ -54,8 +55,8 @@ describe('Player', () => {
         expect(player.animations).toEqual(animations);
         expect(player.hitbox).toEqual({
             position: { x: position.x, y: position.y },
-            width: 10,
-            height: 10,
+            width: HITBOX_WIDTH,
+            height: HITBOX_HEIGHT,
         });
         expect(player.cameraBox).toEqual({
             position: { x: position.x, y: position.y },
