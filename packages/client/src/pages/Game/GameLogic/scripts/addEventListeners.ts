@@ -15,6 +15,7 @@ export const addEventListeners = (player: Player) => {
                 break;
             case 'KeyW':
             case 'ArrowUp':
+            case 'Space':
                 if (player.velocity.y === 0) {
                     player.velocity.y = JUMP_SPEED;
                 }
@@ -37,7 +38,6 @@ export const addEventListeners = (player: Player) => {
 
     window?.addEventListener('click', () => {
         GAME_KEYS.mbl.pressed = true;
-        console.log('click');
         setTimeout(() => {
             GAME_KEYS.mbl.pressed = false;
         }, 100);

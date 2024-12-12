@@ -26,7 +26,7 @@ export const CAMERA_UPPER_LIMIT = 432;
 // Допустимая погрешность при позиционировании
 export const POSITION_OFFSET = 0.01;
 // Масштабирование игрового поля
-export const SCALE_FACTOR = 3;
+export const SCALE_FACTOR = 4;
 // Расстояние для генерации платформ
 export const PLATFORM_GENERATION_OFFSET = 100;
 // Смещение для проверки окончания игры

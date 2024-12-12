@@ -1,20 +1,19 @@
 /* eslint-disable no-unused-expressions */
 import { EPlayerState } from '../../Enums';
 import { Player } from '../classes/Player';
-import { Sprite } from '../classes/Sprite';
 import { GAME_KEYS } from '../configs/keys';
 import {
     CAMERA_UPPER_LIMIT,
     camera,
     IDLE_OFFSET_Y,
-    PLATFORM_GENERATION_OFFSET,
     PLAYER_START_X,
     PLAYER_START_Y,
     SCALE_FACTOR,
     scaledCanvas,
+    TILE_SIZE,
 } from '../configs/main';
 import { initializeCollisions } from '@/pages/Game/GameLogic/scripts/initializeCollisions';
-import { CollisionBlock } from '@/pages/Game/GameLogic/classes/CollisionBlock';
+import { Background } from '@/pages/Game/GameLogic/classes/Background';
 
 /**
  * Анимация игры
@@ -28,25 +27,18 @@ import { CollisionBlock } from '@/pages/Game/GameLogic/classes/CollisionBlock';
 export function animateGame(
     player: Player,
     canvas: HTMLCanvasElement,
-    background: Sprite,
+    background: Background,
     isGameStarted: boolean,
-    gameOver: VoidFunction,
+    gameOver: (score: number) => void,
 ) {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const { collisionBlocks } = initializeCollisions(context);
-
-    /**
-     * Генерация новых платформ выше игрока
-     */
-    function generatePlatforms() {
-        const newPlatform = new CollisionBlock(context, {
-            position: {
-                x: Math.random() * canvas.width, // Случайная позиция по X
-                y: player.position.y - PLATFORM_GENERATION_OFFSET, // Выше текущей позиции игрока
-            },
-        });
-        collisionBlocks.push(newPlatform);
-    }
+    const { collisionBlocks, platformCollisionBlocks, generatePlatforms, lastY } = initializeCollisions(context);
+    let platformGenerationCooldown = false;
+    const startHeight = player.position.y;
+    let maxHeight = player.position.y;
+    let score = 0;
+    let lastColl = lastY;
+    const PLATFORM_GENERATION_DELAY = 2000;
 
     /**
      * Основная функция анимации
@@ -61,16 +53,33 @@ export function animateGame(
         context.scale(SCALE_FACTOR, SCALE_FACTOR);
         context.translate(camera.position.x, camera.position.y);
 
-        // Обновление фона и игрока
-        background.update();
+        // Обновление и отрисовка фона
+        background.draw(camera.position.y, Math.abs(lastY * TILE_SIZE) + CAMERA_UPPER_LIMIT);
+
         player.checkForHorizontalCanvasCollision();
         player.update();
 
-        // Генерация платформ при достижении определенной высоты
-        if (player.position.y < canvas.height / 2) {
-            generatePlatforms();
+        // Проверяем достижение новой максимальной высоты
+        if (player.position.y < maxHeight) {
+            maxHeight = player.position.y; // Обновляем максимальную высоту
+            score = Math.round(Math.abs(maxHeight - startHeight)); // Обновляем счёт
         }
 
+        // Проверяем приближение игрока к границе карты
+        if (lastColl * TILE_SIZE > player.position.y && !platformGenerationCooldown) {
+            lastColl = generatePlatforms();
+            player.updatePlatformBlocks(platformCollisionBlocks);
+            // Обновление и отрисовка фона
+            background.draw(camera.position.y, Math.abs(lastY * TILE_SIZE) + CAMERA_UPPER_LIMIT);
+
+            platformGenerationCooldown = true;
+            setTimeout(() => {
+                platformGenerationCooldown = false;
+            }, PLATFORM_GENERATION_DELAY);
+        }
+
+        platformCollisionBlocks.forEach(platform => platform.update());
+        collisionBlocks.forEach(collision => collision.update());
         // Сброс горизонтальной скорости игрока
         player.velocity.x = 0;
 
@@ -85,7 +94,7 @@ export function animateGame(
                 player.switchSprite(EPlayerState.Run);
                 player.velocity.x = 1;
                 player.lastDirection = 'right';
-                player.shouldPanCameraToTheLeft(canvas, camera);
+                player.shouldPanCameraToTheLeft(camera);
             } else if (GAME_KEYS.a.pressed) {
                 // Движение влево
                 player.switchSprite(EPlayerState.RunLeft);
@@ -114,7 +123,7 @@ export function animateGame(
             const lowerCameraLimit: number = camera.position.y - scaledCanvas.height;
             if (-player.position.y - IDLE_OFFSET_Y < lowerCameraLimit) {
                 window.cancelAnimationFrame(animationId);
-                gameOver();
+                gameOver(score);
             }
         } else {
             // Сброс позиций при начале игры
@@ -129,7 +138,19 @@ export function animateGame(
             });
         }
 
+        // Отображение счёта
         context.restore();
+        context.font = '24px Arial';
+
+        // Настройка свечения
+        context.shadowColor = 'rgba(255, 255, 0, 0.8)'; // Цвет свечения (жёлтый)
+        context.shadowBlur = 10; // Размытие свечения
+        context.fillStyle = 'white'; // Цвет текста
+        context.fillText(`Score: ${Math.round(score)}`, 10, 30);
+
+        // Сброс настроек свечения
+        context.shadowColor = 'none';
+        context.shadowBlur = 0;
     }
 
     return animate;

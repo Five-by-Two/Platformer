@@ -3,18 +3,21 @@ import {
     CAMERA_OFFSET_X,
     CAMERA_UPPER_LIMIT,
     CAMERA_WIDTH,
-    CANVAS_HEIGHT,
     GRAVITY,
     HITBOX_HEIGHT,
     HITBOX_OFFSET_X,
     HITBOX_OFFSET_Y,
     HITBOX_WIDTH,
+    MAP_WIDTH,
     POSITION_OFFSET,
     SCALE_FACTOR,
+    TILE_SIZE,
 } from '../configs/main';
 import { ICoordinates } from '../../models';
 import { collision, platformCollision } from '../../utils/collision';
 import { CollisionBlock } from './CollisionBlock';
+import { PlatformBlock } from './PlatformBlock';
+
 import { Sprite } from './Sprite';
 
 interface IAnimations {
@@ -46,7 +49,7 @@ interface IPlayerConstructor {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
-    platformCollisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: PlatformBlock[];
     animations: Record<string, IAnimations>;
     frameRate?: number;
     scale?: number;
@@ -58,7 +61,7 @@ export class Player extends Sprite {
     position: ICoordinates;
     velocity: ICoordinates;
     collisionBlocks: CollisionBlock[];
-    platformCollisionBlocks: CollisionBlock[];
+    platformCollisionBlocks: PlatformBlock[];
     animations: Record<string, IAnimations>;
     hitbox: IHitBox;
     lastDirection: string;
@@ -124,36 +127,36 @@ export class Player extends Sprite {
     }
 
     checkForHorizontalCanvasCollision() {
-        if (
-            this.hitbox.position.x + this.hitbox.width + this.velocity.x >= CANVAS_HEIGHT ||
-            this.hitbox.position.x + this.velocity.x <= 0
-        ) {
+        if (this.hitbox.position.x + this.velocity.x <= 0) {
+            this.velocity.x = 0;
+        }
+        const MAP_WIDTH_IN_PIXELS = MAP_WIDTH * TILE_SIZE;
+        if (this.hitbox.position.x + HITBOX_WIDTH + this.velocity.x >= MAP_WIDTH_IN_PIXELS) {
             this.velocity.x = 0;
         }
     }
 
-    shouldPanCameraToTheLeft(canvas: HTMLCanvasElement, camera: ICamera) {
-        const cameraBoxRightSide = this.cameraBox.position.x + this.cameraBox.width;
-        const scaledDownCanvasWIdth = canvas.width / 4;
+    shouldPanCameraToTheLeft(camera: ICamera) {
+        const MAP_WIDTH_IN_PIXELS = MAP_WIDTH * TILE_SIZE;
+        const cameraRightEdge = this.cameraBox.width + Math.abs(camera.position.x);
 
-        if (cameraBoxRightSide >= CANVAS_HEIGHT) return;
+        if (MAP_WIDTH_IN_PIXELS <= this.cameraBox.width + this.cameraBox.position.x + TILE_SIZE) return;
+        if (this.hitbox.position.x <= cameraRightEdge) return;
 
-        if (cameraBoxRightSide >= scaledDownCanvasWIdth + Math.abs(camera.position.x)) {
-            camera.position.x -= this.velocity.x;
-        }
+        camera.position.x -= this.velocity.x;
     }
     shouldPanCameraToTheRight(camera: ICamera) {
         if (this.cameraBox.position.x <= 0) return;
-
         if (this.cameraBox.position.x <= Math.abs(camera.position.x)) {
             camera.position.x -= this.velocity.x;
         }
     }
 
     shouldPanCameraDown(camera: ICamera) {
-        if (this.cameraBox.position.y + this.velocity.y <= 0) return;
-
-        if (this.cameraBox.position.y <= Math.abs(camera.position.y)) {
+        if (this.cameraBox.position.y < 0) {
+            // 'Отрицательное положение камеры'
+            if (Math.abs(this.cameraBox.position.y) > Math.abs(camera.position.y)) camera.position.y -= this.velocity.y;
+        } else if (this.cameraBox.position.y <= Math.abs(camera.position.y)) {
             camera.position.y -= this.velocity.y;
         }
     }
@@ -259,5 +262,9 @@ export class Player extends Sprite {
                 }
             }
         }
+    }
+
+    updatePlatformBlocks(newPlatformBlocks: PlatformBlock[]) {
+        this.platformCollisionBlocks = newPlatformBlocks;
     }
 }

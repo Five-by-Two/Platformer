@@ -1,20 +1,20 @@
 import GameStart from './Components/GameStart';
 import { useNavigate } from 'react-router-dom';
-import { EPageRoutes } from '../../router/Enums';
+import { EPageRoutes } from '@/router/Enums';
 import GameOver from './Components/GameOver';
 import styles from './index.module.scss';
 import { useCallback, useEffect, useRef } from 'react';
 import { initGame } from './GameLogic/scripts/initGame';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { gameOverSelector, gameStartedSelector } from '@/store/gameSlice/Selectors';
-import { setGameOverAction, setGameStartedAction } from '@/store/gameSlice/Actions';
+import { gameOverSelector, gameSelector, gameStartedSelector } from '@/store/gameSlice/Selectors';
+import { setCurrentScore, setGameOverAction, setGameStartedAction } from '@/store/gameSlice/Actions';
 
 export function GamePage(): JSX.Element {
     const isGameStarted = useAppSelector(gameStartedSelector);
     const isGameOver = useAppSelector(gameOverSelector);
+    const { currentScore, bestScore } = useAppSelector(gameSelector);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const dispatch = useAppDispatch();
-
     const navigate = useNavigate();
 
     const startGame = useCallback(() => {
@@ -22,9 +22,13 @@ export function GamePage(): JSX.Element {
         dispatch(setGameOverAction(false));
     }, [dispatch]);
 
-    const gameOver = useCallback(() => {
-        dispatch(setGameOverAction(true));
-    }, [dispatch]);
+    const gameOver = useCallback(
+        (score: number) => {
+            dispatch(setGameOverAction(true));
+            dispatch(setCurrentScore(score));
+        },
+        [dispatch],
+    );
 
     const restartGame = useCallback(() => {
         dispatch(setGameStartedAction(false));
@@ -57,7 +61,12 @@ export function GamePage(): JSX.Element {
             )}
 
             {isGameOver && isGameStarted && (
-                <GameOver onStart={restartGame} onBackToMenu={handleBackToMenu} score={1} bestScore={1000} />
+                <GameOver
+                    onStart={restartGame}
+                    onBackToMenu={handleBackToMenu}
+                    score={currentScore}
+                    bestScore={bestScore}
+                />
             )}
         </>
     );
